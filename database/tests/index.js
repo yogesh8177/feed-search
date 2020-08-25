@@ -76,7 +76,7 @@ describe('Search Engine basic functionality tests', () => {
             isSorted = false;
             break;
           }
-          console.log(`index[${i}] > index[${i-1}] = ${engine.titleIndex[i].title} > ${engine.titleIndex[i-1].title}`);
+          //console.log(`index[${i}] > index[${i-1}] = ${engine.titleIndex[i].title} > ${engine.titleIndex[i-1].title}`);
         }
         assert.equal(isSorted, true);
        // console.log(engine.titleIndex);
@@ -84,11 +84,16 @@ describe('Search Engine basic functionality tests', () => {
 
       it('Search should return 2 documents for search term `the lion king` ', () => {
         engine.createInvertedTextIndex();
-        let result = engine.searchKeywords(['the lion king']);
+        const params =  {
+          page: 1, 
+          pageSize: 10, 
+          sort: {sortField: 'dateLastEdited', order: 'asc', type: 'string'}
+        };
+        let result = engine.searchKeywords(['the lion king'], params);
         assert.equal(result.hasOwnProperty('total'), true);
         assert.equal(result.hasOwnProperty('documents'), true);
         assert.equal(Array.isArray(result.documents), true);
-        //assert.equal(result.total, 2);
+        assert.equal(result.total, 2);
         console.log(result);
         //console.log(engine.invertedIndex);
         //console.log({result: JSON.stringify(result)});

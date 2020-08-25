@@ -1,10 +1,13 @@
 class SearchEngine {
     constructor() {
+        // initial documentId value
         this.documentId = 0;
         // raw documents inserted in natural order
         this.documentsMap = {};
         // words to document inverted index.
         this.invertedIndex = {};
+        // max result size
+        this.maxPageSize = 10;
     }
 
     /**
@@ -126,7 +129,7 @@ class SearchEngine {
      * Search for given words and return the matching document(s);
      * @param {array} keyWords 
      */
-    searchKeywords(keyWords) {
+    searchKeywords(keyWords, params) {
         if (!Array.isArray(keyWords)) {
             return Promise.reject(new Error(`Please supply an array as a parameter`));
         }
@@ -145,8 +148,43 @@ class SearchEngine {
             resultSet.documents.push(this.documentsMap[id]);
         });
         resultSet.total = resultIds.size;
-
+        resultSet.documents = this.paginateSearchResults(resultSet.documents, params);
+        
         return resultSet;
+    }
+
+    /**
+     * Paginate results for a search query
+     * @param {array}  searchResults
+     * @param {object} params 
+     */
+    paginateSearchResults(searchResults, params) {
+        const { page, pageSize, sort } = params;
+        if (isNaN(page) || page <= 0 || isNaN(pageSize) || pageSize <= 0) throw new Error(`Please supply valid params for paginating`);
+        const offset = (page - 1) * pageSize;
+        const {sortField, order, type} = sort;
+
+        if (type === 'Date' || type === 'number') {
+            console.log('sorting', sortField, order);
+            searchResults.sort((a,b) => (order === 'asc') ? a[sortField] - b[sortField] : b[sortField] - a[sortField]);
+        }
+        else {
+            searchResults.sort((a,b) => {
+                if (order === 'asc') {
+                    if (a[sortField] < b[sortField]) return -1;
+                    if (a[sortField] > b[sortField]) return 1;
+                    return 0;
+                }
+                if (a[sortField] < b[sortField]) return 1;
+                if (a[sortField] > b[sortField]) return -1;
+                return 0;
+            });
+        }
+        let currenRange = (offset + pageSize);
+        if (currenRange >= searchResults.length)
+            return searchResults.slice(offset, searchResults.length);
+        else
+            return searchResults.slice(offset, offset + pageSize);
     }
 }
 
