@@ -37,13 +37,13 @@ class SearchEngine {
      * Created a timeStamp based sorted document array
      */
     createFieldIndexOn(indexField, type = 'Date') {
+        if (!['Date', 'string'].includes(type)) return new Error(`Invalid field and type encountered`);
+        
         this.sortedIndex = Object.keys(this.documentsMap).map(key => {
                 const item = this.documentsMap[key];
                 item.id = key;
                 if (type === 'Date' && !isNaN(Date.parse(item[indexField]))) return {id: item.id, [indexField]: new Date(item[indexField]).getTime()};
                 if (type === 'string') return {id: item.id, [indexField]: item[indexField]};
-
-                return new Error(`Invalid field and type encountered`);
             });
         // sort the documents based on indexField.
         if (type === 'string') {
