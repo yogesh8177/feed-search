@@ -2,7 +2,9 @@ class SearchEngine {
     constructor() {
         this.documentId = 0;
         // raw documents inserted in natural order
-        this.documents = [];
+        //this.documents = [];
+        // documents hash map
+        this.documentsMap = {};
         // documents sorted by timeStamp by default
         this.sortedIndex = [];
         // words to document inverted index.
@@ -23,21 +25,21 @@ class SearchEngine {
                 let doc = Object.assign({}, item);
                 delete doc['name'];
                 doc.title = item.name;
-                doc.id = ++this.documentId;
-                this.documents.push(doc);
+                this.documentsMap[++this.documentId] = doc;
             });
             return;
         }
         let doc = Object.assign({}, data);
-        doc.id = ++this.documentId;
-        this.documents.push(doc);
+        this.documentsMap[++this.documentId] = doc;
     }
 
     /**
      * Created a timeStamp based sorted document array
      */
     createFieldIndexOn(indexField, type = 'Date') {
-        this.sortedIndex = this.documents.map(item => {
+        this.sortedIndex = Object.keys(this.documentsMap).map(key => {
+                const item = this.documentsMap[key];
+                item.id = key;
                 if (type === 'Date' && !isNaN(Date.parse(item[indexField]))) return {id: item.id, [indexField]: new Date(item[indexField]).getTime()};
                 if (type === 'string') return {id: item.id, [indexField]: item[indexField]};
 
@@ -60,7 +62,9 @@ class SearchEngine {
      * Create inverted index for words and phrases to their respective documents.
      */
     createInvertedTextIndex() {
-        this.documents.forEach(document => {
+        Object.keys(this.documentsMap).forEach(key => {
+            const document        = this.documentsMap[key];
+            document.id           = key;
             let titleTokens       = document.title.toLowerCase().replace(/[.:!]/g, '').split(' ');
             let descriptionTokens = document.description.toLowerCase().replace(/[.:!]/g, '').split(' ');
             titleTokens.forEach(token => {
@@ -142,7 +146,7 @@ class SearchEngine {
         });
 
         resultIds.forEach(id => {
-            resultSet.documents.push(this.documents[id - 1]);
+            resultSet.documents.push(this.documentsMap[id]);
         });
         resultSet.total = resultIds.size;
 
