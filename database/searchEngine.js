@@ -38,8 +38,8 @@ class SearchEngine {
      */
     createFieldIndexOn(indexField, type = 'Date') {
         if (!['Date', 'string'].includes(type)) return new Error(`Invalid field and type encountered`);
-        
-        this.sortedIndex = Object.keys(this.documentsMap).map(key => {
+
+        this[`${indexField}Index`] = Object.keys(this.documentsMap).map(key => {
                 const item = this.documentsMap[key];
                 item.id = key;
                 if (type === 'Date' && !isNaN(Date.parse(item[indexField]))) return {id: item.id, [indexField]: new Date(item[indexField]).getTime()};
@@ -47,14 +47,14 @@ class SearchEngine {
             });
         // sort the documents based on indexField.
         if (type === 'string') {
-            this.sortedIndex.sort((a, b) => {
+            this[`${indexField}Index`].sort((a, b) => {
                 if (a[indexField] < b[indexField]) return -1;
                 if (a[indexField] > b[indexField]) return 1;
                 return 0;
             });
         }
         else {
-            this.sortedIndex.sort((a, b) => a[indexField] - b[indexField]);
+            this[`${indexField}Index`].sort((a, b) => a[indexField] - b[indexField]);
         }
     }
 

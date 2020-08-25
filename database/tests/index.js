@@ -50,18 +50,36 @@ describe('Search Engine basic functionality tests', () => {
         assert.equal(documentMapKeyLength, engine.documentId);
       });
 
-      it('SortedIndex must be sorted in ascending order', () => {
+      it('dateLastEdited must be sorted in ascending order', () => {
         engine.createFieldIndexOn('dateLastEdited', 'Date');
         const isSorted = true;
-        const indexLength = engine.sortedIndex.length;
+        // Note, index name will be indexFieldIndex => dateLastEditedIndex in this case.
+        const indexLength = engine.dateLastEditedIndex.length;
         for (let i = indexLength - 1; i >= 1; i--) {
-          if (engine.sortedIndex[i] < engine.sortedIndex[i - 1]) {
+          if (engine.dateLastEditedIndex[i] < engine.dateLastEditedIndex[i - 1]) {
             isSorted = false;
             break;
           }
-          //console.log(`index[${i}] > index[${i-1}] = ${engine.sortedIndex[i].timeStamp} > ${engine.sortedIndex[i-1].timeStamp}`);
+          //console.log(`index[${i}] > index[${i-1}] = ${engine.dateLastEditedIndex[i].dateLastEdited} > ${engine.dateLastEditedIndex[i-1].dateLastEdited}`);
         }
         assert.equal(isSorted, true);
+       // console.log(engine.dateLastEdited);
+      });
+
+      it('titleIndex must be sorted in ascending order', () => {
+        engine.createFieldIndexOn('title', 'string');
+        const isSorted = true;
+        // Note, index name will be indexFieldIndex => titleIndex in this case.
+        const indexLength = engine.titleIndex.length;
+        for (let i = indexLength - 1; i >= 1; i--) {
+          if (engine.titleIndex[i] < engine.titleIndex[i - 1]) {
+            isSorted = false;
+            break;
+          }
+          console.log(`index[${i}] > index[${i-1}] = ${engine.titleIndex[i].title} > ${engine.titleIndex[i-1].title}`);
+        }
+        assert.equal(isSorted, true);
+       // console.log(engine.titleIndex);
       });
 
       it('Search should return 2 documents for search term `the lion king` ', () => {
