@@ -2,11 +2,7 @@ class SearchEngine {
     constructor() {
         this.documentId = 0;
         // raw documents inserted in natural order
-        //this.documents = [];
-        // documents hash map
         this.documentsMap = {};
-        // documents sorted by timeStamp by default
-        this.sortedIndex = [];
         // words to document inverted index.
         this.invertedIndex = {};
     }
