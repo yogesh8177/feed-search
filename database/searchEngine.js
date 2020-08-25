@@ -36,12 +36,24 @@ class SearchEngine {
     /**
      * Created a timeStamp based sorted document array
      */
-    createDocumentIndexBasedOnTime() {
+    createFieldIndexOn(indexField, type = 'Date') {
         this.sortedIndex = this.documents.map(item => {
-                return {id: item.id, timeStamp: new Date(item.dateLastEdited).getTime()};
+                if (type === 'Date' && !isNaN(Date.parse(item[indexField]))) return {id: item.id, [indexField]: new Date(item[indexField]).getTime()};
+                if (type === 'string') return {id: item.id, [indexField]: item[indexField]};
+
+                return new Error(`Invalid field and type encountered`);
             });
-        // sort the documents based on timestamps.
-        this.sortedIndex.sort((a, b) => a.timeStamp - b.timeStamp);
+        // sort the documents based on indexField.
+        if (type === 'string') {
+            this.sortedIndex.sort((a, b) => {
+                if (a[indexField] < b[indexField]) return -1;
+                if (a[indexField] > b[indexField]) return 1;
+                return 0;
+            });
+        }
+        else {
+            this.sortedIndex.sort((a, b) => a[indexField] - b[indexField]);
+        }
     }
 
     /**

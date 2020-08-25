@@ -4,14 +4,19 @@ const mockData = require('../../data/mock_data.json');
 
 /**
  * 1. Load data into engine
- * 2. Total mock items must match total items pushed into our engine
+ * 2. Should load all 100 items present in mock data
  * 3. Each item inserted into our engine must have auto incremented id starting from 1
+ * 4. Every document must have id, title, image, description and dateLastEdited
+ * 5. Auto increment document id inside engine must equal to total document length
+ * 6. SortedIndex must be sorted in ascending order
+ * 7. 'Search should return 2 documents for search term `the lion king` 
  */
 
 describe('Search Engine basic functionality tests', () => {
   const engine = new SearchEngine();
   
   describe('Loading mock data inside engine', () => {
+
     it('Should load all 100 items present in mock data', () => {
         engine.loadDataIntoDb(mockData);
         assert.equal(engine.documents.length, mockData.length);
@@ -42,7 +47,7 @@ describe('Search Engine basic functionality tests', () => {
       });
 
       it('SortedIndex must be sorted in ascending order', () => {
-        engine.createDocumentIndexBasedOnTime();
+        engine.createFieldIndexOn('title', 'string');
         const isSorted = true;
         const indexLength = engine.sortedIndex.length;
         for (let i = indexLength - 1; i >= 1; i--) {
