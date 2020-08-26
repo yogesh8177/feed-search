@@ -114,6 +114,9 @@ describe('Search Engine basic functionality tests', () => {
       //console.log({result: JSON.stringify(result)});
     });
 
+  });
+  
+  describe('Sorting in our db', () => {
     it('Should return results without search keys and sort by dateLastEdited asc', () => {
       const params = {
         page: 1,
@@ -122,7 +125,7 @@ describe('Search Engine basic functionality tests', () => {
       };
       let result = engine.searchKeywords([], params);
       let isSorted = true;
-
+  
       for (let i = params.pageSize - 1; i >= 1; i--) {
         //console.log(`ran`,i, isSorted, result.documents[i][params.sort.sortField]);
         if (result.documents[i][params.sort.sortField] < result.documents[i - i][params.sort.sortField]) {
@@ -134,11 +137,11 @@ describe('Search Engine basic functionality tests', () => {
       assert.equal(result.total, 100);
       assert.equal(result.documents.length, params.pageSize);
       assert.equal(isSorted, true);
-
+  
       //console.log(engine.dateLastEditedIndex);
       //console.log(result);
     });
-
+  
     it('Should return results without search keys and sort by title asc', () => {
       const params = {
         page: 1,
@@ -147,7 +150,7 @@ describe('Search Engine basic functionality tests', () => {
       };
       let result = engine.searchKeywords([], params);
       let isSorted = true;
-
+  
       for (let i = params.pageSize - 1; i >= 1; i--) {
         //console.log(`ran`,i, isSorted, result.documents[i][params.sort.sortField]);
         if (result.documents[i][params.sort.sortField] < result.documents[i - i][params.sort.sortField]) {
@@ -156,12 +159,62 @@ describe('Search Engine basic functionality tests', () => {
           break;
         }
       }
-
+  
       assert.equal(result.total, 100);
       assert.equal(result.documents.length, params.pageSize);
       assert.equal(isSorted, true);
       //console.log(engine.dateLastEditedIndex);
       //console.log(result);
+    });
+
+    it('Should return results without search keys and sort by dateLastEdited desc', () => {
+      const params = {
+        page: 1,
+        pageSize: 8,
+        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+      };
+      let result = engine.searchKeywords([], params);
+      let isSorted = true;
+  
+      for (let i = params.pageSize - 1; i >= 1; i--) {
+        //console.log(`ran`,i, isSorted, result.documents[i][params.sort.sortField]);
+        if (result.documents[i][params.sort.sortField] > result.documents[i - i][params.sort.sortField]) {
+          isSorted = false;
+          console.log(`${result.documents[i][params.sort.sortField]} > ${result.documents[i - 1][params.sort.sortField]}`)
+          break;
+        }
+      }
+      //console.log(engine.dateLastEditedIndex);
+      //console.log(result);
+      assert.equal(result.total, 100);
+      assert.equal(result.documents.length, params.pageSize);
+      assert.equal(isSorted, true);
+  
+    });
+  
+    it('Should return results without search keys and sort by title desc', () => {
+      const params = {
+        page: 1,
+        pageSize: 8,
+        sort: { sortField: 'title', order: 'desc', type: 'string' }
+      };
+      let result = engine.searchKeywords([], params);
+      let isSorted = true;
+  
+      for (let i = params.pageSize - 1; i >= 1; i--) {
+        //console.log(`ran`,i, isSorted, result.documents[i][params.sort.sortField]);
+        if (result.documents[i][params.sort.sortField] > result.documents[i - i][params.sort.sortField]) {
+          isSorted = false;
+          //console.log(`${result.documents[i][params.sort.sortField]} < ${result.documents[i - 1][params.sort.sortField]}`)
+          break;
+        }
+      }
+  
+      //console.log(engine.dateLastEditedIndex);
+      //console.log(result);
+      assert.equal(result.total, 100);
+      assert.equal(result.documents.length, params.pageSize);
+      assert.equal(isSorted, true);
     });
   });
 

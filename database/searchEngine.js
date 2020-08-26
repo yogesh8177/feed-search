@@ -180,6 +180,7 @@ class SearchEngine {
             }
             
             resultIds = this[`${sortField}Index`].slice(start, end).map(item => item.id);
+            order !== 'asc' && resultIds.reverse();
             // if order is descending, invert start and end as slice expects smaller start and larger end
             const resultSet = {
                 total: this[`${sortField}Index`].length,
