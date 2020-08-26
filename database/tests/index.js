@@ -87,7 +87,7 @@ describe('Search Engine basic functionality tests', () => {
         const params =  {
           page: 1, 
           pageSize: 10, 
-          sort: {sortField: 'dateLastEdited', order: 'desc', type: 'string'}
+          sort: {sortField: 'dateLastEdited', order: 'desc', type: 'Date'}
         };
         let result = engine.searchKeywords(['the lion king'], params);
         assert.equal(result.hasOwnProperty('total'), true);
@@ -103,9 +103,23 @@ describe('Search Engine basic functionality tests', () => {
         const params =  {
           page: 1, 
           pageSize: 8, 
-          sort: {sortField: 'dateLastEdited', order: 'desc', type: 'string'}
+          sort: {sortField: 'dateLastEdited', order: 'asc', type: 'Date'}
         };
         let result = engine.searchKeywords([], params);
+        let isSorted = true;
+        
+        for (let i = params.pageSize - 1; i >= 1; i--) {
+          //console.log(`ran`,i, isSorted, result.documents[i][params.sort.sortField]);
+          if (result.documents[i][params.sort.sortField] < result.documents[i - i][params.sort.sortField]){
+            isSorted = false;
+            //console.log(`${result.documents[i][params.sort.sortField]} < ${result.documents[i - 1][params.sort.sortField]}`)
+            break;
+          }
+        }
+        assert.equal(result.total, 100);
+        assert.equal(result.documents.length, params.pageSize);
+        assert.equal(isSorted, true);
+
         //console.log(engine.dateLastEditedIndex);
         //console.log(result);
       });
@@ -117,6 +131,20 @@ describe('Search Engine basic functionality tests', () => {
           sort: {sortField: 'title', order: 'asc', type: 'string'}
         };
         let result = engine.searchKeywords([], params);
+        let isSorted = true;
+
+        for (let i = params.pageSize - 1; i >= 1; i--) {
+          //console.log(`ran`,i, isSorted, result.documents[i][params.sort.sortField]);
+          if (result.documents[i][params.sort.sortField] < result.documents[i - i][params.sort.sortField]){
+            isSorted = false;
+            //console.log(`${result.documents[i][params.sort.sortField]} < ${result.documents[i - 1][params.sort.sortField]}`)
+            break;
+          }
+        }
+
+        assert.equal(result.total, 100);
+        assert.equal(result.documents.length, params.pageSize);
+        assert.equal(isSorted, true);
         //console.log(engine.dateLastEditedIndex);
         //console.log(result);
       });

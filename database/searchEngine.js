@@ -24,6 +24,7 @@ class SearchEngine {
                 let doc = Object.assign({}, item);
                 delete doc['name'];
                 doc.title = item.name;
+                doc.dateLastEdited = new Date(doc.dateLastEdited);
                 this.documentsMap[++this.documentId] = doc;
             });
             return;
@@ -161,11 +162,9 @@ class SearchEngine {
     paginateOnIndex(params) {
         const { page, pageSize, sort } = params;
         const {sortField, order, type} = sort;
-        console.log('paginating on index', sortField);
         const totalItems = this[`${sortField}Index`].length;
 
         if (this.hasOwnProperty(`${sortField}Index`)) {
-            console.log(`found index field`);
             let start, end = 0;
             let resultIds = [];
 
@@ -214,7 +213,6 @@ class SearchEngine {
         const {sortField, order, type} = sort;
 
         if (type === 'Date' || type === 'number') {
-            console.log('sorting', sortField, order);
             searchResults.sort((a,b) => (order === 'asc') ? a[sortField] - b[sortField] : b[sortField] - a[sortField]);
         }
         else {
