@@ -1,0 +1,22 @@
+{
+  "name": "feed-search",
+  "version": "1.0.0",
+  "description": "This is a `POC` for searching and sorting feed data along with pagination",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yogesh8177/feed-search.git"
+  },
+  "author": "Yogesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yogesh8177/feed-search/issues"
+  },
+  "homepage": "https://github.com/yogesh8177/feed-search#readme"
+}
