@@ -24,7 +24,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-      working-directory: ./database
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: cd ./database && npm ci
+    - run: cd ./database && npm run build --if-present
+    - run: cd ./database && npm test
