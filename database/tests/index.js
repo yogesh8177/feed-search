@@ -87,16 +87,38 @@ describe('Search Engine basic functionality tests', () => {
         const params =  {
           page: 1, 
           pageSize: 10, 
-          sort: {sortField: 'dateLastEdited', order: 'asc', type: 'string'}
+          sort: {sortField: 'dateLastEdited', order: 'desc', type: 'string'}
         };
         let result = engine.searchKeywords(['the lion king'], params);
         assert.equal(result.hasOwnProperty('total'), true);
         assert.equal(result.hasOwnProperty('documents'), true);
         assert.equal(Array.isArray(result.documents), true);
         assert.equal(result.total, 2);
-        console.log(result);
+        //console.log(result);
         //console.log(engine.invertedIndex);
         //console.log({result: JSON.stringify(result)});
+      });
+
+      it('Should return results without search keys and sort by dateLastEdited asc', () => {
+        const params =  {
+          page: 1, 
+          pageSize: 8, 
+          sort: {sortField: 'dateLastEdited', order: 'desc', type: 'string'}
+        };
+        let result = engine.searchKeywords([], params);
+        //console.log(engine.dateLastEditedIndex);
+        //console.log(result);
+      });
+
+      it('Should return results without search keys and sort by title asc', () => {
+        const params =  {
+          page: 1, 
+          pageSize: 8, 
+          sort: {sortField: 'title', order: 'asc', type: 'string'}
+        };
+        let result = engine.searchKeywords([], params);
+        //console.log(engine.dateLastEditedIndex);
+        //console.log(result);
       });
 
     });

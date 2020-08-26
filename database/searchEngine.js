@@ -133,6 +133,11 @@ class SearchEngine {
         if (!Array.isArray(keyWords)) {
             return Promise.reject(new Error(`Please supply an array as a parameter`));
         }
+
+        if (keyWords.length === 0) {
+            return this.paginateOnIndex(params);
+        }
+        // We have search terms, thus we need to search for keywords
         let resultIds = new Set();
         let resultSet = {total: 0, documents: []};
         keyWords.forEach(key => {
@@ -151,6 +156,50 @@ class SearchEngine {
         resultSet.documents = this.paginateSearchResults(resultSet.documents, params);
         
         return resultSet;
+    }
+
+    paginateOnIndex(params) {
+        const { page, pageSize, sort } = params;
+        const {sortField, order, type} = sort;
+        console.log('paginating on index', sortField);
+        const totalItems = this[`${sortField}Index`].length;
+
+        if (this.hasOwnProperty(`${sortField}Index`)) {
+            console.log(`found index field`);
+            let start, end = 0;
+            let resultIds = [];
+
+            // start from the start of index array
+            if (order === 'asc') {
+                start = (page - 1) * pageSize;
+                end   = start + pageSize;
+            }
+            // start from end of the index array
+            else {
+                start = (totalItems - (pageSize * page));
+                end   = start + pageSize;
+            }
+            
+            resultIds = this[`${sortField}Index`].slice(start, end).map(item => item.id);
+            // if order is descending, invert start and end as slice expects smaller start and larger end
+            const resultSet = {
+                total: this[`${sortField}Index`].length,
+                documents: [],
+                resultIds,
+                start,
+                end,
+                page
+            };
+
+            resultIds.forEach(id => {
+                resultSet.documents.push(this.documentsMap[id]);
+            });
+
+            return resultSet;
+        }
+        else {
+            throw new Error('Unexpected index field encountered');
+        }
     }
 
     /**
