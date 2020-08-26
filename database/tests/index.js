@@ -98,7 +98,7 @@ describe('Search Engine basic functionality tests', () => {
   });
 
   describe('Searching in our db', () => {
-    it('Search should return 2 documents for search term `the lion king` ', () => {
+    it('Search should return 2 documents for search term `"the lion king"` ', () => {
       engine.createInvertedTextIndex();
       const params = {
         page: 1,
@@ -110,6 +110,79 @@ describe('Search Engine basic functionality tests', () => {
       assert.equal(result.hasOwnProperty('documents'), true);
       assert.equal(Array.isArray(result.documents), true);
       assert.equal(result.total, 2);
+      //console.log(result);
+      //console.log(engine.invertedIndex);
+      //console.log({result: JSON.stringify(result)});
+    });
+
+    it('Search should return 4 documents for search term `king` ', () => {
+      engine.createInvertedTextIndex();
+      const params = {
+        page: 1,
+        pageSize: 10,
+        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+      };
+      let result = engine.searchKeywords(['king'], params);
+      assert.equal(result.hasOwnProperty('total'), true);
+      assert.equal(result.hasOwnProperty('documents'), true);
+      assert.equal(Array.isArray(result.documents), true);
+      assert.equal(result.total, 4);
+      //console.log(result);
+      //console.log(engine.invertedIndex);
+      //console.log({result: JSON.stringify(result)});
+    });
+
+    it('Search should match 2 documents titles for search term `the king` ', () => {
+      engine.createInvertedTextIndex();
+      const params = {
+        page: 1,
+        pageSize: 10,
+        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+      };
+      const expectedTitles = [
+        'The Lord of the Rings: The Return of the King',
+        'The Lion King'
+      ];
+      let result = engine.searchKeywords(['the','king'], params);
+      let titlesFound = 0;
+      result.documents.forEach(doc => {
+        if (expectedTitles.includes(doc.title)) titlesFound++;
+      });
+
+      assert.equal(result.hasOwnProperty('total'), true);
+      assert.equal(result.hasOwnProperty('documents'), true);
+      assert.equal(Array.isArray(result.documents), true);
+      assert.equal(result.total, 4);
+      assert.equal(titlesFound, expectedTitles.length);
+      //console.log(result);
+      //console.log(engine.invertedIndex);
+      //console.log({result: JSON.stringify(result)});
+    });
+
+    it('Search should match 1 documents titles for search term `"the king"` ', () => {
+      engine.createInvertedTextIndex();
+      const params = {
+        page: 1,
+        pageSize: 10,
+        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+      };
+      const expectedTitles = [
+        'The Lord of the Rings: The Return of the King',
+        'Human Web Agent'
+      ];
+      const unexpectedTitles = ['The Lion King'];
+
+      let result = engine.searchKeywords(['the king'], params);
+      let titlesFound = 0;
+      result.documents.forEach(doc => {
+        if (expectedTitles.includes(doc.title)) titlesFound++;
+        if (unexpectedTitles.includes(doc.title)) titlesFound++;
+      });
+
+      assert.equal(result.hasOwnProperty('total'), true);
+      assert.equal(result.hasOwnProperty('documents'), true);
+      assert.equal(Array.isArray(result.documents), true);
+      assert.equal(titlesFound, expectedTitles.length);
       //console.log(result);
       //console.log(engine.invertedIndex);
       //console.log({result: JSON.stringify(result)});
