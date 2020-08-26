@@ -17,7 +17,18 @@ describe('Search Engine basic functionality tests', () => {
   
   describe('Loading mock data inside engine', () => {
 
-    it('Should load all 100 items present in mock data', () => {
+      it('Should fail if we do not pass any data', async () => {
+        try{
+          await engine.loadDataIntoDb();
+          return Promise.reject(`Should have failed as we didn't pass payload`);
+        }
+        catch(e) {
+          assert.equal(e.message, 'Supplied data is not an Array or Object');
+          return Promise.resolve();
+        }
+      });
+
+      it('Should load all 100 items present in mock data', () => {
         engine.loadDataIntoDb(mockData);
         let documentMapKeyLength = Object.keys(engine.documentsMap).length;
         assert.equal(documentMapKeyLength, mockData.length);
