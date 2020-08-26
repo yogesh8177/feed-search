@@ -1,10 +1,11 @@
-const assert = require('assert');
-const SearchEngine = require('../searchEngine');
-const mockData = require('../../data/mock_data.json');
+const assert        = require('assert');
+const SearchEngine  = require('../searchEngine');
+const mockData      = require('../../data/mock_data.json');
+const totalMockData = mockData.length;
 
 /**
  * 1. Load data into engine
- * 2. Should load all 100 items present in mock data
+ * 2. Should load all totalMockData items present in mock data
  * 3. Each item inserted into our engine must have auto incremented id starting from 1
  * 4. Every document must have id, title, image, description and dateLastEdited
  * 5. Auto increment document id inside engine must equal to total document length
@@ -27,7 +28,7 @@ describe('Search Engine basic functionality tests', () => {
       }
     });
 
-    it('Should load all 100 items present in mock data', () => {
+    it('Should load all totalMockData items present in mock data', () => {
       engine.loadDataIntoDb(mockData);
       let documentMapKeyLength = Object.keys(engine.documentsMap).length;
       assert.equal(documentMapKeyLength, mockData.length);
@@ -37,7 +38,7 @@ describe('Search Engine basic functionality tests', () => {
       let documentId = 1; // initial doc id
       Object.keys(engine.documentsMap).forEach(key => {
         const doc = engine.documentsMap[key];
-        doc.id = key;
+        doc.id    = key;
         assert.equal(doc.id, documentId);
         documentId++; // increment doc id
       });
@@ -123,7 +124,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 8,
         sort: { sortField: 'dateLastEdited', order: 'asc', type: 'Date' }
       };
-      let result = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params);
       let isSorted = true;
   
       for (let i = params.pageSize - 1; i >= 1; i--) {
@@ -134,7 +135,7 @@ describe('Search Engine basic functionality tests', () => {
           break;
         }
       }
-      assert.equal(result.total, 100);
+      assert.equal(result.total, totalMockData);
       assert.equal(result.documents.length, params.pageSize);
       assert.equal(isSorted, true);
   
@@ -148,7 +149,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 8,
         sort: { sortField: 'title', order: 'asc', type: 'string' }
       };
-      let result = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params);
       let isSorted = true;
   
       for (let i = params.pageSize - 1; i >= 1; i--) {
@@ -160,7 +161,7 @@ describe('Search Engine basic functionality tests', () => {
         }
       }
   
-      assert.equal(result.total, 100);
+      assert.equal(result.total, totalMockData);
       assert.equal(result.documents.length, params.pageSize);
       assert.equal(isSorted, true);
       //console.log(engine.dateLastEditedIndex);
@@ -173,20 +174,20 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 8,
         sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
       };
-      let result = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params);
       let isSorted = true;
   
       for (let i = params.pageSize - 1; i >= 1; i--) {
         //console.log(`ran`,i, isSorted, result.documents[i][params.sort.sortField]);
+        //console.log(`${result.documents[i][params.sort.sortField]} < ${result.documents[i - 1][params.sort.sortField]}`)
         if (result.documents[i][params.sort.sortField] > result.documents[i - i][params.sort.sortField]) {
           isSorted = false;
-          console.log(`${result.documents[i][params.sort.sortField]} > ${result.documents[i - 1][params.sort.sortField]}`)
           break;
         }
       }
       //console.log(engine.dateLastEditedIndex);
       //console.log(result);
-      assert.equal(result.total, 100);
+      assert.equal(result.total, totalMockData);
       assert.equal(result.documents.length, params.pageSize);
       assert.equal(isSorted, true);
   
@@ -198,7 +199,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 8,
         sort: { sortField: 'title', order: 'desc', type: 'string' }
       };
-      let result = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params);
       let isSorted = true;
   
       for (let i = params.pageSize - 1; i >= 1; i--) {
@@ -212,7 +213,7 @@ describe('Search Engine basic functionality tests', () => {
   
       //console.log(engine.dateLastEditedIndex);
       //console.log(result);
-      assert.equal(result.total, 100);
+      assert.equal(result.total, totalMockData);
       assert.equal(result.documents.length, params.pageSize);
       assert.equal(isSorted, true);
     });
