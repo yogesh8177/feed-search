@@ -24,7 +24,6 @@ describe('Search Engine basic functionality tests', () => {
         }
         catch(e) {
           assert.equal(e.message, 'Supplied data is not an Array or Object');
-          return Promise.resolve();
         }
       });
 
