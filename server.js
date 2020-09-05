@@ -26,7 +26,7 @@ const feedController = (req, res) => {
         };
      */
     let {searchTerm = '', page = 1, pageSize = 10, sortField = null, order = null, type = null} = queryParams;
-    console.log({page, pageSize, sortField, order, type});
+    //console.log({page, pageSize, sortField, order, type});
     const params = {
         page: parseInt(page),
         pageSize: parseInt(pageSize),
@@ -55,7 +55,6 @@ const feedController = (req, res) => {
 }
 
 const requestListener = (req, res) => {
-    console.log('request url', req.url);
     const url = req.url.split('?');
     res.setHeader("Content-Type", "application/json");
     switch(url[0]) {
@@ -74,3 +73,5 @@ const server = http.createServer(requestListener);
 server.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);
 });
+
+module.exports = server;
