@@ -25,7 +25,20 @@ We have our in memory database which we will use to store mock data. Following a
 
 # Nodejs Webserver
 
-We have our webserver that will host the in memory database mentioned earlier.
+We have our webserver that will host the in memory database mentioned earlier. It will auto initialize the `mock data` and necessary `data structures` given below necessary to start querying our data.
+
+```json
+Initialized in memory db [
+  'documentId',
+  'documentsMap',
+  'invertedIndex',
+  'maxPageSize',
+  'dateLastEditedIndex',
+  'titleIndex'
+]
+```
 
 1. Project is located at: `$PROJECT_ROOT/server.js`
-1. Run `node server.js`
+1. `git clone ...`
+1. Run server: `npm start`
+1. Run test: `npm test`
