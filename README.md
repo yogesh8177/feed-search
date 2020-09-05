@@ -29,12 +29,12 @@ We have our webserver that will host the in memory database mentioned earlier. I
 
 ```json
 Initialized in memory db [
-  'documentId',
-  'documentsMap',
-  'invertedIndex',
-  'maxPageSize',
-  'dateLastEditedIndex',
-  'titleIndex'
+  "documentId",
+  "documentsMap",
+  "invertedIndex",
+  "maxPageSize",
+  "dateLastEditedIndex",
+  "titleIndex"
 ]
 ```
 
