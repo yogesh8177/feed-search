@@ -292,4 +292,8 @@ describe('Search Engine basic functionality tests', () => {
     });
   });
 
+  describe('Pagination tests', () => {
+
+  });
+
 });
