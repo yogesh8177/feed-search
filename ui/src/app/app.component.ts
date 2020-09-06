@@ -17,6 +17,7 @@ export class AppComponent {
   }
   
   ngOnInit() {
+    this.feedQueryParams.searchTerm = '';
     this.feedQueryParams.page       = 1;
     this.feedQueryParams.pageSize   = 9;
     this.feedQueryParams.sortField  = 'dateLastEdited';
