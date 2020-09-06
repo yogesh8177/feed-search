@@ -13,6 +13,7 @@ export class AppComponent {
   feed: Feed[];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   tableHeaders: string[] = ['id', 'title', 'dateLastEdited'];
+  totalResults: number;
 
   constructor(private feedService: FeedService) {
   }
@@ -32,6 +33,7 @@ export class AppComponent {
     this.feedService.getFeed(params).subscribe(
       data => {
         let feedResponse: FeedResponse = data;
+        this.totalResults = data.total;
         this.feed = feedResponse.documents;
         console.log(`feed loaded`, this.feed);
       },
@@ -50,6 +52,12 @@ export class AppComponent {
   onSearchFieldChange(event: string) {
     console.log('searchTerm', event);
     this.feedQueryParams.searchTerm = event;
+    this.loadFeed(this.feedQueryParams);
+  }
+
+  onPageUpdate(event: number) {
+    console.log('Page updated', event);
+    this.feedQueryParams.page = event;
     this.loadFeed(this.feedQueryParams);
   }
 }

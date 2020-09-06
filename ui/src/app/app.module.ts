@@ -7,6 +7,7 @@ import { FeedCardComponent } from './feed-card/feed-card.component';
 import { SearchComponent } from './search/search.component';
 import { SortComponent } from './sort/sort.component';
 import { TableComponent } from './table/table.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TableComponent } from './table/table.component';
     FeedCardComponent,
     SearchComponent,
     SortComponent,
-    TableComponent
+    TableComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

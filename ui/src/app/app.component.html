@@ -1,10 +1,10 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <h1>Feed</h1>
+  <h1 class="app-title">Feed</h1>
 </div>
 
 <div class="content" role="main">
-  <div class="filter card-container">
+  <div class="card-container">
     <app-search class="card" (searchTerm) = "onSearchFieldChange($event)"></app-search>
     <div class="card">Feed</div>
     <app-sort class="card" (sortField) = "onSortFieldChange($event)"></app-sort>
@@ -16,6 +16,14 @@
   <div class="card-container">
     <app-table class="card table" [data]="feed" [headers] = "tableHeaders" style="width: 100%"></app-table>
   </div>
+
+  <app-paginator
+   class="card-container" 
+   [currentPage]="1" 
+   [currentPageSize]="6"
+   [maxPage]="totalResults" 
+   (updatedPage) = "onPageUpdate($event)">
+  </app-paginator>
 
   <!-- Links -->
   <div class="card-container">
