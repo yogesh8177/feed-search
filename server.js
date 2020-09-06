@@ -56,7 +56,10 @@ const feedController = (req, res) => {
 
 const requestListener = (req, res) => {
     const url = req.url.split('?');
-    res.setHeader("Content-Type", "application/json");
+
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET');
     switch(url[0]) {
         case '/feed':
             return feedController(req, res);
