@@ -24,7 +24,7 @@ export class AppComponent {
     this.feedQueryParams.pageSize   = 6;
     this.feedQueryParams.sortField  = 'dateLastEdited';
     this.feedQueryParams.type       = 'Date';
-    this.feedQueryParams.order      = 'desc';
+    this.feedQueryParams.order      = 'asc';
     this.loadFeed(this.feedQueryParams);
   }
   
@@ -42,9 +42,10 @@ export class AppComponent {
   }
 
   onSortFieldChange(event: string) {
-    let [sortField, type]          = event.split(':');
+    let [sortField, type, order]   = event.split(':');
     this.feedQueryParams.sortField = sortField;
     this.feedQueryParams.type      = type;
+    this.feedQueryParams.order     = order;
     console.log('sort field changed', this.feedQueryParams);
     this.loadFeed(this.feedQueryParams);
   }
