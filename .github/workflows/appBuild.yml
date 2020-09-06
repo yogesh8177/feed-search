@@ -48,4 +48,4 @@ jobs:
         run: |
           cd ./ui
           npm ci
-          npm run build:ci
+          npm run build
