@@ -48,5 +48,7 @@ export class AppComponent {
 
   onSearchFieldChange(event: string) {
     console.log('searchTerm', event);
+    this.feedQueryParams.searchTerm = event;
+    this.loadFeed(this.feedQueryParams);
   }
 }
