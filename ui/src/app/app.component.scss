@@ -83,7 +83,6 @@
     border-radius: 4px;
     border: 1px solid #eee;
     background-color: #fafafa;
-    height: 40px;
     width: 200px;
     margin: 0 8px 16px;
     padding: 16px;
@@ -93,6 +92,10 @@
     align-items: center;
     transition: all 0.2s ease-in-out;
     line-height: 24px;
+  }
+
+  .feed-image {
+    width: 200px;
   }
 
   .card-container .card:not(:last-child) {
