@@ -177,6 +177,7 @@ class SearchEngine {
             else {
                 start = (totalItems - (pageSize * page));
                 end   = start + pageSize;
+                start = start < 0 ? 0 : start;
             }
             
             resultIds = this[`${sortField}Index`].slice(start, end).map(item => item.id);
