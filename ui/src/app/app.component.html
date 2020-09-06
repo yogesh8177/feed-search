@@ -1,8 +1,9 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
+  <h1>Feed</h1>
   <app-search></app-search>
   <div class="spacer"></div>
-  <app-sort></app-sort>
+  <app-sort (sortField) = "onSortFieldChange($event)"></app-sort>
 </div>
 
 <div class="content" role="main">

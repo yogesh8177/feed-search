@@ -1,4 +1,4 @@
-<select name="sort">
-    <option value="dateLastEdited">Last Edited</option>
-    <option value="title">Title</option>
+<select name="sort" (change)="setSortField($event.target.value)">
+    <option value="dateLastEdited:Date">Last Edited</option>
+    <option value="title:string">Title</option>
 </select>

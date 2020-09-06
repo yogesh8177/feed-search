@@ -20,6 +20,7 @@ export class FeedService {
     queryParams.set('sortField', params.sortField);
     queryParams.set('type', params.type);
     queryParams.set('order', params.order);
+    queryParams.set('searchTerm', params.searchTerm);
 
     let feedSearchUrl = `${this.feedUrl}?${queryParams.toString()}`;
     console.log(`Feed search url`, feedSearchUrl);

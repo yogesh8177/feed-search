@@ -19,11 +19,16 @@ export class AppComponent {
   ngOnInit() {
     this.feedQueryParams.searchTerm = '';
     this.feedQueryParams.page       = 1;
-    this.feedQueryParams.pageSize   = 9;
+    this.feedQueryParams.pageSize   = 6;
     this.feedQueryParams.sortField  = 'dateLastEdited';
     this.feedQueryParams.type       = 'Date';
     this.feedQueryParams.order      = 'desc';
-    this.feedService.getFeed(this.feedQueryParams).subscribe(
+    this.loadFeed(this.feedQueryParams);
+  }
+  
+  loadFeed(params: FeedQueryParams) {
+    this.feed = [];
+    this.feedService.getFeed(params).subscribe(
       data => {
         let feedResponse: FeedResponse = data;
         this.feed = feedResponse.documents;
@@ -31,5 +36,17 @@ export class AppComponent {
       },
       error => console.error(error)
     );
+  }
+
+  onSortFieldChange(event: string) {
+    let [sortField, type]          = event.split(':');
+    this.feedQueryParams.sortField = sortField;
+    this.feedQueryParams.type      = type;
+    console.log('sort field changed', this.feedQueryParams);
+    this.loadFeed(this.feedQueryParams);
+  }
+
+  onSearchFieldChange(event: string) {
+    console.log('searchTerm', event);
   }
 }
