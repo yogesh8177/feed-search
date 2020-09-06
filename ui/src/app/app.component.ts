@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'ui';
   feed: Feed[];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
-  tableHeaders: string[] = ['id', 'title', 'dateLastEdited'];
+  tableHeaders: string[] = ['id', 'image', 'title', 'dateLastEdited'];
   totalResults: number;
 
   constructor(private feedService: FeedService) {

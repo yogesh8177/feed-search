@@ -1,6 +1,5 @@
 <button class="card" (click) = "goToPrevPage()">Prev</button>
 <div class="card">
-    <label>Page</label>
     <input type="number" min="1" value="{{currentPage}}" (keyup) = "updateCurrentPage($event.target.value)" />
     <button (click) = "jumpToPage()">Go</button>
 </div>
