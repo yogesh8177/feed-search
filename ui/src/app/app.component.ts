@@ -12,6 +12,7 @@ export class AppComponent {
   title = 'ui';
   feed: Feed[];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
+  tableHeaders: string[] = ['id', 'title', 'dateLastEdited'];
 
   constructor(private feedService: FeedService) {
   }

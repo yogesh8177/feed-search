@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Feed } from '../models/Feed';
 
 @Component({
   selector: 'app-table',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
+  @Input() data: Feed[];
+  @Input() headers: string[];
+
   constructor() { }
 
   ngOnInit(): void {
+    console.log('headers', Object.keys(Feed));
   }
 
 }
