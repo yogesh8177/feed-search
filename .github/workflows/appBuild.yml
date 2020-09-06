@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build-database:
+  build-web-server:
 
     runs-on: ubuntu-latest
 
@@ -29,3 +29,23 @@ jobs:
     - run: cd ./database && npm test
     - run: npm ci
     - run: npm test
+  
+    build-ui:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [12.x]
+  
+      steps:
+        - uses: actions/checkout@v1
+  
+        - name: Node $
+          uses: actions/setup-node@v1
+          with:
+            node-version: $
+  
+        - name: npm install and npm run build
+          run: |
+            cd ./ui
+            npm ci
+            npm run build:ci
