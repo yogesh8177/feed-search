@@ -6,7 +6,7 @@
 <div class="content" role="main">
   <div class="card-container">
     <app-search class="card" (searchTerm) = "onSearchFieldChange($event)"></app-search>
-    <div class="card">Feed</div>
+    <div class="card only-desktop">Feed</div>
     <app-sort class="card" (sortField) = "onSortFieldChange($event)"></app-sort>
   </div>
   <div class="card-container">
@@ -14,8 +14,8 @@
   </div>
 
   <div class="card-container">
-    <app-table class="card table" [data]="feed" [headers] = "tableHeaders" style="width: 100%"></app-table>
   </div>
+  <app-table [data]="feed" [headers] = "tableHeaders" style="width: 100%"></app-table>
 
   <app-paginator
    class="card-container" 
