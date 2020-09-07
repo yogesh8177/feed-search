@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Feed } from '../models/Feed';
+import { TableData } from '../models/TableData';
 
 @Component({
   selector: 'app-table',
@@ -9,12 +10,14 @@ import { Feed } from '../models/Feed';
 export class TableComponent implements OnInit {
 
   @Input() data: Feed[];
-  @Input() headers: string[];
+  @Input() headers: object[];
+  @Input() showCount: boolean = false;
+
+  tableData = TableData;
 
   constructor() { }
 
   ngOnInit(): void {
     console.log('headers', Object.keys(Feed));
   }
-
 }
