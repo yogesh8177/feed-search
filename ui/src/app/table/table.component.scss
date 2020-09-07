@@ -4,13 +4,18 @@
     flex-direction: column;
     align-items: center;
     overflow-x: auto;
-    width: 100%;
+    background-color: #fff;
+    min-height: 550px;
 }
 
 .table {
-    background-color: #fff;
     padding: 3px;
     border-collapse: collapse;
+    overflow-x: auto;
+    width: 80%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-spacing: 0;
 }
 
 .table th {
@@ -31,8 +36,27 @@
 @media screen and (max-width: 480px) {
     .table-container {
         display: block;
-        width: 100%;
-        overflow: auto;
+        overflow-x: auto;
+        align-items: initial;
+        width: 400px;
     }
-  }
+}
+
+@media screen and (max-width: 378px) {
+    .table-container {
+        display: block;
+        overflow-x: auto;
+        align-items: initial;
+        width: 330px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .table-container {
+        display: block;
+        overflow-x: auto;
+        align-items: initial;
+        width: 280px;
+    }
+}
 

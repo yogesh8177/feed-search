@@ -3,7 +3,7 @@
         <img src="http://lorempixel.com/640/480" />
     </div>
     <div class="feed-content">
-        <h3>{{feedCard.title}}</h3>
+        <h3>{{(feedCard.title.length > 32) ? (feedCard.title | slice:0:32) + '..' : feedCard.title}}</h3>
         <p>{{feedCard.description | slice:0:120}}...</p>
     </div>
 </div>
