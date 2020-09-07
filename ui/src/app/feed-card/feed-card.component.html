@@ -4,6 +4,6 @@
     </div>
     <div class="feed-content">
         <h3>{{feedCard.title}}</h3>
-        <p>{{feedCard.description.substr(0, 120)}}...</p>
+        <p>{{feedCard.description | slice:0:120}}...</p>
     </div>
 </div>
