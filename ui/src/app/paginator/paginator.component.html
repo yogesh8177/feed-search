@@ -1,7 +1,7 @@
 <button class="card" (click) = "goToPrevPage()">Prev</button>
 <div class="card">
-    <input type="number" min="1" value="{{currentPage}}" (keyup) = "updateCurrentPage($event.target.value)" />
-    <button (click) = "jumpToPage()">Go</button>
+    <input type="number" id="pageInput" min="1" value="{{currentPage}}" (keyup) = "updateCurrentPage($event.target.value)" />
+    <button id="jumpTo" (click) = "jumpToPage()">Go</button>
 </div>
 <button class="card" (click) = "goToNextPage()">Next</button>
 
