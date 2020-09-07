@@ -10,6 +10,7 @@
 .table {
     background-color: #fff;
     padding: 3px;
+    border-collapse: collapse;
 }
 
 .table th {
@@ -29,7 +30,7 @@
 
 @media screen and (max-width: 480px) {
     .table-container {
-        justify-items: right;
+        display: block;
         width: 100%;
         overflow: auto;
     }
