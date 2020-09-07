@@ -1,9 +1,38 @@
-.table {
-    border: 1px solid blue($color: #000000);
-    padding: 2px;
+.table-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto;
+    width: 100%;
 }
 
-.table tr {
-    border: 1px solid black;
+.table {
+    background-color: #fff;
+    padding: 3px;
+    border-collapse: collapse;
 }
+
+.table th {
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.table td {
+    padding: 5px;
+}
+
+.table tr:nth-child(odd) {
+    background-color: lightgrey;
+}
+
+@media screen and (max-width: 480px) {
+    .table-container {
+        display: block;
+        width: 100%;
+        overflow: auto;
+    }
+  }
 
