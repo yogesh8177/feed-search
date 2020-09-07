@@ -43,6 +43,8 @@ Initialized in memory db [
 1. Run server: `npm start`
 1. Run test: `npm test`
 
+>Note: Server will be listening at `http://localhost:8000/feed?page=1&pageSize=6&sortField=dateLastEdited&type=Date&order=asc&searchTerm=`
+
 # Angular UI
 
 Our UI code is situated at `$PROJECT_ROOT/ui` folder.
@@ -52,3 +54,7 @@ Follow the steps below to run the UI:
 1. `npm install -g @angular/cli`
 1. `npm install`
 1. `ng serve`
+
+You can now view the app at: `http://localhost:4200`
+
+>Note: Make sure you are already running the web server so as to fetch the data.
