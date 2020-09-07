@@ -13,16 +13,19 @@
     <app-feed-card class="card" *ngFor="let feedCard of feed" [feedCard]="feedCard"></app-feed-card>
   </div>
 
-  <div class="card-container">
-  </div>
-  <app-table [data]="feed" [headers] = "tableHeaders" style="width: 100%"></app-table>
+  <app-table 
+    [data]      ="feed" 
+    [headers]   = "tableHeaders" 
+    [showCount] = "false"
+  >
+  </app-table>
 
   <app-paginator
-   class="card-container" 
-   [currentPage]="1" 
-   [currentPageSize]="6"
-   [maxPage]="totalResults" 
-   (updatedPage) = "onPageUpdate($event)">
+   class              ="card-container" 
+   [currentPage]      ="1" 
+   [currentPageSize]  ="6"
+   [maxPage]          ="totalResults" 
+   (updatedPage)      = "onPageUpdate($event)">
   </app-paginator>
 
   <!-- Links -->

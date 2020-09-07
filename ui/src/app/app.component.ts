@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FeedService } from './feed.service';
 import { Feed, FeedResponse } from './models/Feed';
+import { TableData } from './models/TableData';
 import { FeedQueryParams } from './models/FeedQueryParams';
 
 @Component({
@@ -12,7 +13,13 @@ export class AppComponent {
   title = 'ui';
   feed: Feed[];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
-  tableHeaders: string[] = ['id', 'image', 'title', 'dateLastEdited'];
+  tableHeaders: object[] = [
+    {title: 'id', type: TableData.STRING},
+    {title: 'image', type: TableData.IMAGE}, 
+    {title: 'title', type: TableData.STRING}, 
+    {title: 'description', type: TableData.STRING},
+    {title: 'dateLastEdited', type: TableData.DATE}
+  ];
   totalResults: number;
 
   constructor(private feedService: FeedService) {

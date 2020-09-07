@@ -1,12 +1,22 @@
 <div class="table-container">
     <table class="table">
         <tr>
-            <th>#</th>
-            <th *ngFor='let header of headers'>{{header}}</th>
+            <th *ngIf="showCount">#</th>
+            <th *ngFor='let header of headers'>{{header.title}}</th>
         </tr>
         <tr *ngFor='let item of data; index as i'>
-            <td>{{i + 1}}</td>
-            <td *ngFor='let header of headers'>{{item[header]}}</td>
+            <td *ngIf="showCount">{{i + 1}}</td>
+            <td *ngFor='let header of headers'>
+                <img *ngIf="header.type === tableData.IMAGE" src="{{item[header.title]}}" width="50px" height="50px" />
+                <span *ngIf="header.type === tableData.DATE">
+                    {{(item[header.title] | date:"dd/MM/yyyy hh:mm")}}
+                </span>
+                <span *ngIf="header.type === tableData.STRING">
+                    {{
+                        item[header.title].length > 120 ? (item[header.title] | slice:0:120) + '...' : item[header.title]
+                    }}
+                </span>
+            </td>
         </tr>
     </table>
 </div>
