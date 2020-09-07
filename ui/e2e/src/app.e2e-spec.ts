@@ -73,7 +73,37 @@ describe('Feed App', () => {
   });
 
   describe('Pagination tests', () => {
-    xit('should not navigate to 2nd page with search term `king`', async () => {
+    it('should return 0 feed cards when we paginate to 100th page as no data exists', async () => {
+      page.navigateTo();
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+
+      await protractor.promise.delayed(1000);
+      await pageInput.clear();
+      await pageInput.sendKeys(100);
+      await pageInput.sendKeys(Key.ENTER);
+      await jumpToButton.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(0);
+    });
+
+    it('should return 4 feed cards when we paginate to 17th page', async () => {
+      await page.navigateTo();
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+
+      await protractor.promise.delayed(1000);
+      await pageInput.clear();
+      await pageInput.sendKeys(17);
+      await pageInput.sendKeys(Key.ENTER);
+      await jumpToButton.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(4);
+    });
+
+    it('should return 0 feed cards when we paginate to 2nd page with search term `king`', async () => {
       page.navigateTo();
       const searchInput  = page.getSearchWebElement();
       const pageInput    = page.getPageInputWebElement();
@@ -82,6 +112,7 @@ describe('Feed App', () => {
       searchInput.sendKeys('king');
       searchInput.sendKeys(Key.ENTER);
       await protractor.promise.delayed(1000);
+      pageInput.clear();
       pageInput.sendKeys(2);
       pageInput.sendKeys(Key.ENTER);
       await jumpToButton.click();

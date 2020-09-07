@@ -30,7 +30,7 @@ export class AppPage {
   }
 
   getJumpToPageButton(): WebElement {
-    return element(by.id('pageInput'));
+    return element(by.id('jumpTo'));
   }
 
 }
