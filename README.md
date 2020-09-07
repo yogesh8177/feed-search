@@ -38,7 +38,17 @@ Initialized in memory db [
 ]
 ```
 
-1. Project is located at: `$PROJECT_ROOT/server.js`
 1. `git clone ...`
+1. Project is located at: `$PROJECT_ROOT/server.js`
 1. Run server: `npm start`
 1. Run test: `npm test`
+
+# Angular UI
+
+Our UI code is situated at `$PROJECT_ROOT/ui` folder.
+Follow the steps below to run the UI:
+
+1. `cd ui`
+1. `npm install -g @angular/cli`
+1. `npm install`
+1. `ng serve`
