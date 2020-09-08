@@ -9,8 +9,8 @@ RUN npm install
 # Install angular cli
 RUN npm install -g @angular/cli
 
-# # Update protractor webdriver
-# RUN ./node_modules/protractor/bin/webdriver-manager update
+# Update protractor webdriver
+RUN ./node_modules/protractor/bin/webdriver-manager update
 
 # # Install chrome for e2e tests
 # RUN apt-get update
