@@ -49,6 +49,7 @@ const feedController = (req, res) => {
         searchTerm,
         params
     };
+    console.log({searchTerm, params});
     const result = engine.searchKeywords(searchTerm, params);
     res.writeHead(200);
     res.end(JSON.stringify(result));
