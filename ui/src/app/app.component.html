@@ -5,9 +5,9 @@
 
 <div class="content" role="main">
   <div class="card-container">
-    <app-search class="card" (searchTerm) = "onSearchFieldChange($event)"></app-search>
+    <app-search class="card" (searchTerm) = "onSearchFieldChange($event)" [searchText]="feedQueryParams.searchTerm"></app-search>
     <div class="card only-desktop">Feed</div>
-    <app-sort class="card" (sortField) = "onSortFieldChange($event)"></app-sort>
+    <app-sort class="card" (sortField) = "onSortFieldChange($event)" [selectedSort]="feedQueryParams.sortField+':'+feedQueryParams.type+':'+feedQueryParams.order"></app-sort>
   </div>
   <div class="card-container">
     <app-feed-card class="card" *ngFor="let feedCard of feed" [feedCard]="feedCard"></app-feed-card>
@@ -22,7 +22,7 @@
 
   <app-paginator
    class              ="card-container" 
-   [currentPage]      ="1" 
+   [currentPage]      ="feedQueryParams.page" 
    [currentPageSize]  ="6"
    [maxPage]          ="totalResults" 
    (updatedPage)      = "onPageUpdate($event)">

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-sort',
@@ -7,6 +7,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class SortComponent implements OnInit {
 
+  @Input() selectedSort: string = '';
   @Output() sortField = new EventEmitter<string>();
 
   constructor() { }

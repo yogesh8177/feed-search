@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FeedService } from './feed.service';
 import { Feed, FeedResponse } from './models/Feed';
 import { TableData } from './models/TableData';
@@ -22,16 +22,34 @@ export class AppComponent {
   ];
   totalResults: number;
 
+  @HostListener('window:beforeunload', ['$event'])
+  WindowBeforeUnoad($event: any) {
+    console.log('saving filters before reload');
+    localStorage.setItem('queryParams', JSON.stringify(this.feedQueryParams));
+    console.log('state saved');
+  }
+
   constructor(private feedService: FeedService) {
   }
   
   ngOnInit() {
-    this.feedQueryParams.searchTerm = '';
-    this.feedQueryParams.page       = 1;
-    this.feedQueryParams.pageSize   = 6;
-    this.feedQueryParams.sortField  = 'dateLastEdited';
-    this.feedQueryParams.type       = 'Date';
-    this.feedQueryParams.order      = 'asc';
+    let savedState = JSON.parse(localStorage.getItem('queryParams'));
+    if (!savedState) {
+      this.feedQueryParams.searchTerm = '';
+      this.feedQueryParams.page       = 1;
+      this.feedQueryParams.pageSize   = 6;
+      this.feedQueryParams.sortField  = 'dateLastEdited';
+      this.feedQueryParams.type       = 'Date';
+      this.feedQueryParams.order      = 'asc';
+    }
+    else {
+      this.feedQueryParams.searchTerm = savedState.searchTerm || '';
+      this.feedQueryParams.page       = parseInt(savedState.page) || 1;
+      this.feedQueryParams.pageSize   = parseInt(savedState.pageSize) || 6;
+      this.feedQueryParams.sortField  = savedState.sortField || 'dateLastEdited';
+      this.feedQueryParams.type       = savedState.type || 'Date';
+      this.feedQueryParams.order      = savedState.order || 'asc';
+    }
     this.loadFeed(this.feedQueryParams);
   }
   
