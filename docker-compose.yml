@@ -18,6 +18,8 @@ services:
     command: npm run start
     expose: 
       - 4200
+    networks: 
+      - gateway
     
   ui-e2e:
     image: feed-ui
