@@ -14,7 +14,7 @@ services:
   ui:
     build: ./ui
     image: feed-ui
-    command: npm run serve
+    command: npm run start
     ports: 
       - 4200
     
