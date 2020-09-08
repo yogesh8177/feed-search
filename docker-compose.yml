@@ -9,6 +9,8 @@ services:
   ui:
     build: ./ui
     command: ng e2e
+    links: 
+      - web
     depends_on: 
-      - web-server
+      - web
     
