@@ -293,7 +293,89 @@ describe('Search Engine basic functionality tests', () => {
   });
 
   describe('Pagination tests', () => {
+    it(`Should match given titles on page 2 where we sort by title in desc order`, () => {
+      const expectedTitles = [
+        'Regional Program Facilitator'
+      ];
+      let matchedTitles = 0;
+      const params = {
+        page: 2,
+        pageSize: 6,
+        sort: { sortField: 'title', order: 'desc', type: 'string' }
+      };
+      let result   = engine.searchKeywords([], params);
+      assert.equal(result.documents.length, params.pageSize);
+      result.documents.forEach(doc => {
+        if (expectedTitles.includes(doc.title))
+          matchedTitles++;
+      });
+      assert.equal(matchedTitles, expectedTitles.length);
+    });
 
+    it('Should match given titles on page 2 where we sort by title in asc order', () => {
+      const expectedTitles = ['Chief Operations Specialist'];
+
+      const params = {
+        page: 2,
+        pageSize: 6,
+        sort: { sortField: 'title', order: 'asc', type: 'string' }
+      };
+      let matchedTitles = 0;
+      let result        = engine.searchKeywords([], params);
+      assert.equal(result.documents.length, params.pageSize);
+      result.documents.forEach(doc => {
+        if (expectedTitles.includes(doc.title))
+          matchedTitles++;
+      });
+      assert.equal(matchedTitles, expectedTitles.length);
+    })
+
+    it(`Should match given titles on page 2 where we sort by dateLastEdited in desc order`, () => {
+      const expectedTitles = [
+        'Senior Quality Consultant'
+      ];
+      let matchedTitles = 0;
+      const params = {
+        page: 2,
+        pageSize: 6,
+        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+      };
+      let result   = engine.searchKeywords([], params);
+      assert.equal(result.documents.length, params.pageSize);
+      result.documents.forEach(doc => {
+        if (expectedTitles.includes(doc.title))
+          matchedTitles++;
+      });
+      assert.equal(matchedTitles, expectedTitles.length);
+    });
+
+    it('Should match given titles on page 2 where we sort by dateLastEdited in asc order', () => {
+      const expectedTitles = ['Customer Web Specialist'];
+
+      const params = {
+        page: 2,
+        pageSize: 6,
+        sort: { sortField: 'dateLastEdited', order: 'asc', type: 'Date' }
+      };
+      let matchedTitles = 0;
+      let result        = engine.searchKeywords([], params);
+      assert.equal(result.documents.length, params.pageSize);
+      result.documents.forEach(doc => {
+        if (expectedTitles.includes(doc.title))
+          matchedTitles++;
+      });
+      assert.equal(matchedTitles, expectedTitles.length);
+    })
+
+    it('should return 4 documents on 17th page with pageSize 6', () => {
+      const params = {
+        page: 17,
+        pageSize: 6,
+        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+      };
+      let result        = engine.searchKeywords([], params);
+      assert.equal(result.documents.length, 4);
+    });
   });
 
 });
