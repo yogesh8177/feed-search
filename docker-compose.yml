@@ -1,6 +1,7 @@
 version: "3.7"
 networks:
-  gateway: {}
+  gateway:
+    network_mode: bridge
 
 services: 
   web: 
