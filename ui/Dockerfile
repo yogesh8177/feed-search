@@ -18,11 +18,11 @@ RUN ./node_modules/protractor/bin/webdriver-manager update
 # RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
 # RUN google-chrome --version
 
-# # To solve add-apt-repository : command not found
-# RUN apt-get update
+# To solve add-apt-repository : command not found
+RUN apt-get update
 
-# # Install Java
-# RUN apt-get install default-jdk -y
+# Install Java
+RUN apt-get install default-jdk -y
 
 ENV DOCKERIZE_VERSION v0.6.0
 
