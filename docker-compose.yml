@@ -8,7 +8,7 @@ services:
     
   ui:
     build: ./ui
-    command: ng e2e
+    command: ng e2e --protractorConfig=docker.protractor.conf.js
     links: 
       - web
     depends_on: 
