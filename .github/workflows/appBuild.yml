@@ -29,14 +29,14 @@ jobs:
     - run: cd ./database && npm run coverage
     - run: npm ci
     - run: npm run coverage
-    
+
     - name: Build and push Docker images
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: yogesh8177/feed-web
-          tags: latest
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: yogesh8177/feed-web
+        tags: latest
   
   build-ui:
     runs-on: ubuntu-latest
