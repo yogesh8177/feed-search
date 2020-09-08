@@ -5,6 +5,7 @@ describe('Feed App', () => {
   let page: AppPage;
 
   beforeEach(async () => {
+    browser.waitForAngularEnabled(true);
     page = new AppPage();
     page.navigateTo();
 
