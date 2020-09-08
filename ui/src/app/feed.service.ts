@@ -8,7 +8,7 @@ import { FeedQueryParams } from './models/FeedQueryParams';
 })
 export class FeedService {
 
-  feedUrl: string = 'http://localhost:8000/feed';
+  feedUrl: string = 'http://web-server:8000/feed';
 
   constructor(private http: HttpClient) { }
 
