@@ -1,12 +1,12 @@
 version: "3.7"
-  services: 
-    web-server: 
-      image: yogesh8177/feed-web
-      working_dir: ./feed-app
-      command: npm start
+services: 
+  web-server: 
+    image: yogesh8177/feed-web:latest
+    command: npm start
     
-    ui:
-      image: yogesh8177/feed-ui
-      working_dir: ./feed-app/ui
-      command: ng e2e
+  ui:
+    image: yogesh8177/feed-ui:latest
+    command: ng e2e
+    depends_on: 
+      - web-server
     
