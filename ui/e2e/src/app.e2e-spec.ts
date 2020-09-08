@@ -1,16 +1,187 @@
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { browser, logging, Key, protractor } from 'protractor';
 
-describe('workspace-project App', () => {
+describe('Feed App', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getTitleText()).toEqual('ui app is running!');
+  describe('UI elements', () => {
+    it('should display Feed as app title', () => {
+      page.navigateTo();
+      expect(page.getTitleText()).toEqual('Feed');
+    });
+  
+    it('should display Search input with empty initial value', () => {
+      //page.navigateTo();
+      expect(page.getSearchInput()).toEqual('');
+    });
+  
+    it('should display Sort select input', () => {
+      expect(page.getSortInput()).toEqual('select');
+    });
+  
+    it('should display 6 feed cards on page load', async () => {
+      const feedCards = await page.getFeedCards();
+      expect(feedCards.length).toEqual(6);
+    });
+  });
+
+  describe('feed cards', () => {
+    it('first feed card must have title `Chief Brand Orchestrator`', async () => {
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual(`Chief Brand Orchestrator`);
+    });
+  
+    it('last feed card must have title `Investor Quality Executive`', async () => {
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[feedCardTitles.length - 1].getText()).toEqual(`Investor Quality Executive`);
+    });
+  });
+
+  describe('search titles', () => {
+    it('search term `king` should return 4 cards', async () => {
+      const searchInput = page.getSearchWebElement();
+      searchInput.sendKeys('king');
+      searchInput.sendKeys(Key.ENTER);
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(4);
+    });
+
+    it('search term `king` should match the given titles (default filters)', async () => {
+      page.navigateTo();
+      const titlesToMatch = [
+        'The Lion King',
+        'Human Web Agent',
+        'The Lord of the Rings: The Return of the King',
+        'District Solutions Orchestrator'
+      ];
+      const searchInput = page.getSearchWebElement();
+      searchInput.clear();
+      searchInput.sendKeys('king');
+      searchInput.sendKeys(Key.ENTER);
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(4);
+      feedCardTitles.forEach((cardTitle, index) => {
+        const titleToMatch = titlesToMatch[index].length > 32 ? titlesToMatch[index].substr(0, 32) + '..' : titlesToMatch[index];
+        expect(cardTitle.getText()).toEqual(titleToMatch);
+      });
+    });
+
+    it('search term `"the lion king"` should return 2 cards with expected titles', async () => {
+      const expectedTitles = [
+        'The Lion King',
+        'District Solutions Orchestrator'
+      ];
+      let titlesFound = 0;
+      const searchInput = page.getSearchWebElement();
+      searchInput.clear();
+      searchInput.sendKeys(`"the lion king"`);
+      searchInput.sendKeys(Key.ENTER);
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(2);
+      feedCardTitles.forEach((cardTitle, index) => {
+        const titleToMatch = expectedTitles[index].length > 32 ? expectedTitles[index].substr(0, 32) + '..' : expectedTitles[index];
+        expect(cardTitle.getText()).toEqual(titleToMatch);
+      });
+    });
+  });
+
+  describe('Pagination tests', () => {
+    it('should return 0 feed cards when we paginate to 100th page as no data exists', async () => {
+      page.navigateTo();
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+
+      await protractor.promise.delayed(1000);
+      pageInput.clear();
+      pageInput.sendKeys(100);
+      pageInput.sendKeys(Key.ENTER);
+      jumpToButton.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(0);
+    });
+
+    it('should return 4 feed cards when we paginate to 17th page', async () => {
+      await page.navigateTo();
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+
+      await protractor.promise.delayed(1000);
+      pageInput.clear();
+      pageInput.sendKeys(17);
+      pageInput.sendKeys(Key.ENTER);
+      jumpToButton.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(4);
+    });
+
+    it('should return 0 feed cards when we paginate to 2nd page with search term `king`', async () => {
+      page.navigateTo();
+      const searchInput  = page.getSearchWebElement();
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+
+      searchInput.sendKeys('king');
+      searchInput.sendKeys(Key.ENTER);
+      await protractor.promise.delayed(1000);
+      pageInput.clear();
+      pageInput.sendKeys(2);
+      pageInput.sendKeys(Key.ENTER);
+      await jumpToButton.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(0);
+    });
+  });
+
+  describe('Sorting tests', () => {
+    it('sorting by dateLastEdited in desc order should return first title as `Regional Marketing Developer`', async () => {
+      page.navigateTo();
+      await protractor.promise.delayed(100);
+      const sortOption = await page.getSortWebElement('sort-2');
+      sortOption.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual('Regional Marketing Developer');
+    });
+
+    it('sorting by dateLastEdited in asc order should return first title as `Chief Brand Orchestrator`', async () => {
+      page.navigateTo();
+      await protractor.promise.delayed(100);
+      const sortOption = await page.getSortWebElement('sort-1');
+      sortOption.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual('Chief Brand Orchestrator');
+    });
+
+    it('sorting by title in asc order should return first title as `Central Creative Producer`', async () => {
+      page.navigateTo();
+      await protractor.promise.delayed(100);
+      const sortOption = await page.getSortWebElement('sort-3');
+      sortOption.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual('Central Creative Producer');
+    });
+
+    it('sorting by title in desc order should return first title as `The Lord of the Rings: The Retur..`', async () => {
+      page.navigateTo();
+      await protractor.promise.delayed(100);
+      const sortOption = await page.getSortWebElement('sort-4');
+      sortOption.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual('The Lord of the Rings: The Retur..');
+    });
   });
 
   afterEach(async () => {
