@@ -70,7 +70,6 @@ describe('Server', () => {
           .end((err, res) => {
             expect(res).to.have.status(200);
             expect(res.body.total).to.equal(4);
-            //console.log(res.body);
             done();
           });
     });
