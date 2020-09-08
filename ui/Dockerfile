@@ -1,9 +1,9 @@
 FROM node:14
 
-WORKDIR /feed-app
+WORKDIR /feed-ui
 COPY . .
 
-WORKDIR /feed-app/ui
+WORKDIR /feed-ui
 RUN npm install
 RUN npm install -g @angular/cli
 RUN ./node_modules/protractor/bin/webdriver-manager update
