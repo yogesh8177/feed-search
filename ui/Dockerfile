@@ -31,5 +31,5 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
   
 
-RUN npm run lint
+# RUN npm run lint
 RUN npm run build
