@@ -7,7 +7,8 @@ RUN npm install
 RUN npm install -g @angular/cli
 RUN ./node_modules/protractor/bin/webdriver-manager update
 RUN apt-get update
-RUN apt-get --only-upgrade install google-chrome-stable -y
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
 RUN google-chrome --version
 
 
