@@ -1,7 +1,7 @@
 version: "3.7"
 networks:
   gateway:
-    network_mode: bridge
+    driver: bridge
 
 services: 
   web: 
