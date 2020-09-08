@@ -1,16 +1,23 @@
 version: "3.7"
+networks:
+  gateway: {}
+
 services: 
   web: 
     build: .
     command: npm start
     ports:
      - "8000:8000"
+    networks: 
+      - gateway
     
   ui:
     build: ./ui
-    command: ng e2e --protractorConfig=docker.protractor.conf.js
+    command: ng e2e --protractorConfig=e2e/docker.protractor.conf.js
     links: 
       - web
     depends_on: 
       - web
+    networks: 
+      - gateway
     
