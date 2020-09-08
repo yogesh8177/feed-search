@@ -33,3 +33,4 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 # RUN npm run lint
 RUN npm run build
+EXPOSE 4200/tcp
