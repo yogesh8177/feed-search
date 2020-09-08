@@ -15,7 +15,7 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
-      args: [ "--headless", "--disable-gpu" ]
+      args: [ "--headless", "--disable-gpu", "--remote-debugging-port=9222" ]
     }
   },
   directConnect: false,
