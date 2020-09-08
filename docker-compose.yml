@@ -14,14 +14,14 @@ services:
   ui:
     build: ./ui
     image: feed-ui
-    command: ng serve
+    command: npm run serve:production
     ports: 
       - 4200
     
   ui-e2e:
     image: feed-ui
     #command: ng e2e --protractorConfig=e2e/docker.protractor.conf.js
-    command: dockerize -wait tcp://ui:4200 -wait tcp://selenium-chrome-standalone:4444 -timeout 10s -wait-retry-interval 1s bash -c "npm run e2e"
+    command: dockerize -wait http://ui:4200 -wait tcp://selenium-chrome-standalone:4444 -timeout 10s -wait-retry-interval 1s bash -c "npm run e2e"
     depends_on: 
       - web
       - selenium-chrome-standalone
