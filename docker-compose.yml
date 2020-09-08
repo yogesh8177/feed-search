@@ -15,8 +15,8 @@ services:
     build: ./ui
     image: feed-ui
     command: npm run start
-    ports: 
-      - "4200:4200"
+    expose: 
+      - 4200
     
   ui-e2e:
     image: feed-ui
