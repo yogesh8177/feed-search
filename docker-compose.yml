@@ -1,6 +1,6 @@
 version: "3.7"
 services: 
-  web-server: 
+  web: 
     build: .
     command: npm start
     ports:
@@ -8,7 +8,7 @@ services:
     
   ui:
     build: ./ui
-    command: ng e2e --protractorConfig=e2e/docker.protractor.conf.js
+    command: ng e2e
     depends_on: 
       - web-server
     
