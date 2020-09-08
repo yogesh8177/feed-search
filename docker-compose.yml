@@ -15,7 +15,7 @@ services:
   ui:
     build: ./ui
     image: feed-ui
-    command: ng serve -H 0.0.0.0
+    command: ng serve --host 0.0.0.0
     expose: 
       - 4200
     networks: 
