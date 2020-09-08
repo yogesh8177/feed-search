@@ -37,7 +37,7 @@ jobs:
         node-version: [12.x]
   
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
   
       - name: Node ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -49,3 +49,27 @@ jobs:
           cd ./ui
           npm ci
           npm run build
+  
+  e2e-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      -name: run node web server
+      - run: npm ci
+      - run: npm start
+      - run: |
+          cd ui
+          npm install -g @angular/cli
+          npm ci
+          ./node_modules/protractor/bin/webdriver-manager update
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          apt install ./google-chrome-stable_current_amd64.deb -y
+          ng e2e
