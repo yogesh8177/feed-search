@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit {
   }
 
   setSearchTerm(event) {
+    this.searchText = event;
     this.searchTerm.emit(event);
   }
 

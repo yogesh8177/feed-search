@@ -4,13 +4,29 @@ import { browser, logging, Key, protractor } from 'protractor';
 describe('Feed App', () => {
   let page: AppPage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new AppPage();
+    page.navigateTo();
+
+    browser.executeScript('localStorage.clear();');
+    const searchInput  = page.getSearchWebElement();
+    const sortOption   = page.getSortWebElement('sort-1');
+    const pageInput    = page.getPageInputWebElement();
+    const jumpToButton = page.getJumpToPageButton();
+
+    searchInput.clear();
+    await protractor.promise.delayed(100);
+    sortOption.click();
+    await protractor.promise.delayed(100);
+    pageInput.clear();
+    pageInput.sendKeys(1);
+    pageInput.sendKeys(Key.ENTER);
+    jumpToButton.click();
+    await protractor.promise.delayed(300);
   });
 
   describe('UI elements', () => {
     it('should display Feed as app title', () => {
-      page.navigateTo();
       expect(page.getTitleText()).toEqual('Feed');
     });
   
@@ -52,7 +68,7 @@ describe('Feed App', () => {
     });
 
     it('search term `king` should match the given titles (default filters)', async () => {
-      page.navigateTo();
+      //page.navigateTo();
       const titlesToMatch = [
         'The Lion King',
         'Human Web Agent',
@@ -77,7 +93,6 @@ describe('Feed App', () => {
         'The Lion King',
         'District Solutions Orchestrator'
       ];
-      let titlesFound = 0;
       const searchInput = page.getSearchWebElement();
       searchInput.clear();
       searchInput.sendKeys(`"the lion king"`);
@@ -94,7 +109,6 @@ describe('Feed App', () => {
 
   describe('Pagination tests', () => {
     it('should return 0 feed cards when we paginate to 100th page as no data exists', async () => {
-      page.navigateTo();
       const pageInput    = page.getPageInputWebElement();
       const jumpToButton = page.getJumpToPageButton();
 
@@ -109,9 +123,9 @@ describe('Feed App', () => {
     });
 
     it('should return 4 feed cards when we paginate to 17th page', async () => {
-      await page.navigateTo();
       const pageInput    = page.getPageInputWebElement();
       const jumpToButton = page.getJumpToPageButton();
+      const searchInput  = page.getSearchWebElement();
 
       await protractor.promise.delayed(1000);
       pageInput.clear();
@@ -124,7 +138,6 @@ describe('Feed App', () => {
     });
 
     it('should return 0 feed cards when we paginate to 2nd page with search term `king`', async () => {
-      page.navigateTo();
       const searchInput  = page.getSearchWebElement();
       const pageInput    = page.getPageInputWebElement();
       const jumpToButton = page.getJumpToPageButton();
@@ -135,7 +148,7 @@ describe('Feed App', () => {
       pageInput.clear();
       pageInput.sendKeys(2);
       pageInput.sendKeys(Key.ENTER);
-      await jumpToButton.click();
+      jumpToButton.click();
       await protractor.promise.delayed(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(0);
@@ -144,8 +157,6 @@ describe('Feed App', () => {
 
   describe('Sorting tests', () => {
     it('sorting by dateLastEdited in desc order should return first title as `Regional Marketing Developer`', async () => {
-      page.navigateTo();
-      await protractor.promise.delayed(100);
       const sortOption = await page.getSortWebElement('sort-2');
       sortOption.click();
       await protractor.promise.delayed(1000);
@@ -154,8 +165,6 @@ describe('Feed App', () => {
     });
 
     it('sorting by dateLastEdited in asc order should return first title as `Chief Brand Orchestrator`', async () => {
-      page.navigateTo();
-      await protractor.promise.delayed(100);
       const sortOption = await page.getSortWebElement('sort-1');
       sortOption.click();
       await protractor.promise.delayed(1000);
@@ -164,8 +173,6 @@ describe('Feed App', () => {
     });
 
     it('sorting by title in asc order should return first title as `Central Creative Producer`', async () => {
-      page.navigateTo();
-      await protractor.promise.delayed(100);
       const sortOption = await page.getSortWebElement('sort-3');
       sortOption.click();
       await protractor.promise.delayed(1000);
@@ -174,8 +181,6 @@ describe('Feed App', () => {
     });
 
     it('sorting by title in desc order should return first title as `The Lord of the Rings: The Retur..`', async () => {
-      page.navigateTo();
-      await protractor.promise.delayed(100);
       const sortOption = await page.getSortWebElement('sort-4');
       sortOption.click();
       await protractor.promise.delayed(1000);

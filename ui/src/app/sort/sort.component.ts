@@ -16,6 +16,7 @@ export class SortComponent implements OnInit {
   }
 
   setSortField(field: string) {
+    this.selectedSort = field;
     this.sortField.emit(field);
   }
 
