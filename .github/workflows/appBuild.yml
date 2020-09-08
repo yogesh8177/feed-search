@@ -29,6 +29,14 @@ jobs:
     - run: cd ./database && npm run coverage
     - run: npm ci
     - run: npm run coverage
+    
+    - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: yogesh8177/feed-web
+          tags: latest
   
   build-ui:
     runs-on: ubuntu-latest
@@ -49,20 +57,6 @@ jobs:
           cd ./ui
           npm ci
           npm run build
-
-  push-web-image:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-    
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: yogesh8177/feed-web
-          tags: latest
 
   push-ui-image:
     runs-on: ubuntu-latest
