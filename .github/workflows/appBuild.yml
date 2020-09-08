@@ -69,7 +69,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-    
+      
+      - name: Run e2e
+        run: docker-compose up --exit-code-from ui
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
         with:

@@ -1,7 +1,7 @@
 FROM node:14
 
 WORKDIR /feed-ui
-COPY ./ui .
+COPY . .
 
 RUN npm install
 RUN npm install -g @angular/cli

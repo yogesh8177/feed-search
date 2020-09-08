@@ -1,12 +1,14 @@
 version: "3.7"
 services: 
   web-server: 
-    image: yogesh8177/feed-web:latest
+    build: .
     command: npm start
+    ports:
+     - "8000:8000"
     
   ui:
-    image: yogesh8177/feed-ui:latest
-    command: ng e2e
+    build: ./ui
+    command: ng e2e --protractorConfig=e2e/docker.protractor.conf.js
     depends_on: 
       - web-server
     
