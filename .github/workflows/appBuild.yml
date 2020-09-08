@@ -63,8 +63,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: run node web server
-        run: npm ci
-        run: npm start
+        run: |
+          npm install
+          npm start
+      - name: run e2e tests
         run: |
           cd ui
           npm install -g @angular/cli
