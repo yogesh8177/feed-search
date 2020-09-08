@@ -33,6 +33,11 @@ export class AppComponent {
   }
   
   ngOnInit() {
+    this.initializeQueryParams();
+    this.loadFeed(this.feedQueryParams);
+  }
+  
+  initializeQueryParams() {
     let savedState = JSON.parse(localStorage.getItem('queryParams'));
     if (!savedState) {
       this.feedQueryParams.searchTerm = '';
@@ -50,7 +55,6 @@ export class AppComponent {
       this.feedQueryParams.type       = savedState.type || 'Date';
       this.feedQueryParams.order      = savedState.order || 'asc';
     }
-    this.loadFeed(this.feedQueryParams);
   }
   
   loadFeed(params: FeedQueryParams) {
