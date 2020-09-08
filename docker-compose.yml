@@ -6,8 +6,8 @@ services:
   web: 
     build: .
     command: npm start
-    ports:
-     - "8000:8000"
+    expose:
+     - 8000
     networks: 
       - gateway
 
@@ -30,8 +30,8 @@ services:
   
   selenium-chrome-standalone:
     image: selenium/standalone-chrome
-    ports:
-      - "44444:44444"
+    expose:
+      - 44444
     networks: 
       - gateway
     
