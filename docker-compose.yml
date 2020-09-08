@@ -1,0 +1,12 @@
+version: "3.7"
+  services: 
+    web-server: 
+      image: yogesh8177/feed-web
+      working_dir: ./feed-app
+      command: npm start
+    
+    ui:
+      image: yogesh8177/feed-ui
+      working_dir: ./feed-app/ui
+      command: ng e2e
+    
