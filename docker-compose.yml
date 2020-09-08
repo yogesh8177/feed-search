@@ -10,14 +10,28 @@ services:
      - "8000:8000"
     networks: 
       - gateway
-    
+
   ui:
     build: ./ui
-    command: ng e2e --protractorConfig=e2e/docker.protractor.conf.js
-    links: 
-      - web
+    image: feed-ui
+    command: ng serve
+    ports: 
+      - 4200
+    
+  ui-e2e:
+    image: feed-ui
+    #command: ng e2e --protractorConfig=e2e/docker.protractor.conf.js
+    command: dockerize -wait tcp://app-serve:4200 -wait tcp://selenium-chrome-standalone:4444 -timeout 10s -wait-retry-interval 1s bash -c "npm run e2e"
     depends_on: 
       - web
+      - selenium-chrome-standalone
+    networks: 
+      - gateway
+  
+  selenium-chrome-standalone:
+    image: selenium/standalone-chrome
+    ports:
+      - "44444:44444"
     networks: 
       - gateway
     
