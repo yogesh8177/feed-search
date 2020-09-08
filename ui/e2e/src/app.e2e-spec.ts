@@ -60,13 +60,33 @@ describe('Feed App', () => {
         'District Solutions Orchestrator'
       ];
       const searchInput = page.getSearchWebElement();
-      await searchInput.sendKeys('king');
-      await searchInput.sendKeys(Key.ENTER);
+      searchInput.clear();
+      searchInput.sendKeys('king');
+      searchInput.sendKeys(Key.ENTER);
       await protractor.promise.delayed(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(4);
       feedCardTitles.forEach((cardTitle, index) => {
         const titleToMatch = titlesToMatch[index].length > 32 ? titlesToMatch[index].substr(0, 32) + '..' : titlesToMatch[index];
+        expect(cardTitle.getText()).toEqual(titleToMatch);
+      });
+    });
+
+    it('search term `"the lion king"` should return 2 cards with expected titles', async () => {
+      const expectedTitles = [
+        'The Lion King',
+        'District Solutions Orchestrator'
+      ];
+      let titlesFound = 0;
+      const searchInput = page.getSearchWebElement();
+      searchInput.clear();
+      searchInput.sendKeys(`"the lion king"`);
+      searchInput.sendKeys(Key.ENTER);
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(2);
+      feedCardTitles.forEach((cardTitle, index) => {
+        const titleToMatch = expectedTitles[index].length > 32 ? expectedTitles[index].substr(0, 32) + '..' : expectedTitles[index];
         expect(cardTitle.getText()).toEqual(titleToMatch);
       });
     });
@@ -79,10 +99,10 @@ describe('Feed App', () => {
       const jumpToButton = page.getJumpToPageButton();
 
       await protractor.promise.delayed(1000);
-      await pageInput.clear();
-      await pageInput.sendKeys(100);
-      await pageInput.sendKeys(Key.ENTER);
-      await jumpToButton.click();
+      pageInput.clear();
+      pageInput.sendKeys(100);
+      pageInput.sendKeys(Key.ENTER);
+      jumpToButton.click();
       await protractor.promise.delayed(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(0);
@@ -94,10 +114,10 @@ describe('Feed App', () => {
       const jumpToButton = page.getJumpToPageButton();
 
       await protractor.promise.delayed(1000);
-      await pageInput.clear();
-      await pageInput.sendKeys(17);
-      await pageInput.sendKeys(Key.ENTER);
-      await jumpToButton.click();
+      pageInput.clear();
+      pageInput.sendKeys(17);
+      pageInput.sendKeys(Key.ENTER);
+      jumpToButton.click();
       await protractor.promise.delayed(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(4);
@@ -119,6 +139,48 @@ describe('Feed App', () => {
       await protractor.promise.delayed(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(0);
+    });
+  });
+
+  describe('Sorting tests', () => {
+    it('sorting by dateLastEdited in desc order should return first title as `Regional Marketing Developer`', async () => {
+      page.navigateTo();
+      await protractor.promise.delayed(100);
+      const sortOption = await page.getSortWebElement('sort-2');
+      sortOption.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual('Regional Marketing Developer');
+    });
+
+    it('sorting by dateLastEdited in asc order should return first title as `Chief Brand Orchestrator`', async () => {
+      page.navigateTo();
+      await protractor.promise.delayed(100);
+      const sortOption = await page.getSortWebElement('sort-1');
+      sortOption.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual('Chief Brand Orchestrator');
+    });
+
+    it('sorting by title in asc order should return first title as `Central Creative Producer`', async () => {
+      page.navigateTo();
+      await protractor.promise.delayed(100);
+      const sortOption = await page.getSortWebElement('sort-3');
+      sortOption.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual('Central Creative Producer');
+    });
+
+    it('sorting by title in desc order should return first title as `The Lord of the Rings: The Retur..`', async () => {
+      page.navigateTo();
+      await protractor.promise.delayed(100);
+      const sortOption = await page.getSortWebElement('sort-4');
+      sortOption.click();
+      await protractor.promise.delayed(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles[0].getText()).toEqual('The Lord of the Rings: The Retur..');
     });
   });
 

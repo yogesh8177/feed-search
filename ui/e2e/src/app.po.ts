@@ -25,6 +25,10 @@ export class AppPage {
     return element(by.name('search'));
   }
 
+  getSortWebElement(optionId: string): WebElement {
+    return element(by.id(optionId));
+  }
+
   getPageInputWebElement(): WebElement {
     return element(by.id('pageInput'));
   }
