@@ -13,7 +13,7 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    seleniumAddress: 'http://selenium-chrome-standalone:4444',
+    seleniumAddress: 'http://selenium-chrome-standalone:4444/wd/hub',
     browserName: 'chrome',
     chromeOptions: {
       args: [ 
