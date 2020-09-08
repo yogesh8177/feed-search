@@ -1,7 +1,6 @@
 const assert        = require('assert');
 const SearchEngine  = require('../searchEngine');
 const mockData      = require('../../data/mock_data.json');
-const { expect } = require('chai');
 const totalMockData = mockData.length;
 
 /**
