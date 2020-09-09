@@ -13,9 +13,7 @@ services:
       - gateway
 
   ui:
-    build: 
-      context: .
-      dockerfile: ./ui/Dockerfile
+    build: ./ui
     image: feed-ui
     command: ng serve --host 0.0.0.0 --disable-host-check
     expose: 
