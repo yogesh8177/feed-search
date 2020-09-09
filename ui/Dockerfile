@@ -1,7 +1,7 @@
 FROM node:14
 
 WORKDIR /feed-ui
-COPY . .
+COPY ./ui .
 
 # Install node modules
 RUN npm install
