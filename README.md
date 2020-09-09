@@ -23,7 +23,7 @@ We have our in memory database which we will use to store mock data. Following a
     1. `cd database`
     1. `npm run test`
 
-# Nodejs Webserver
+# Nodejs Webserver [![Actions Status](https://github.com/{yogesh8177}/{feed-search}/workflows/{Feed%20App}/badge.svg)](https://github.com/{yogesh8177}/{feed-search}/actions)
 
 We have our webserver that will host the in memory database mentioned earlier. It will auto initialize the `mock data` and necessary `data structures` given below necessary to start querying our data.
 
@@ -83,3 +83,10 @@ Assuming you have ran all the steps mentioned in Angular ui section, follow the 
 1. `ng e2e -c local-chrome-direct-e2e`
 
 > Note: Make sure you have java and chrome installed, else the tests won't work!
+
+# CI/CD (Github actions)
+
+We have two builds for building webs server and ui as follows:
+
+1. `build-web-server (12.x)` builds web server for node 12.x and `build + push` docker image to docker hub.
+1. `build-ui (12x)` builds ui using node 12.x and `build + push` docker image to docker hub.
