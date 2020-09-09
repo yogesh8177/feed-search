@@ -119,6 +119,10 @@
           "configurations": {
             "production": {
               "devServerTarget": "ui:serve:production"
+            },
+            "docker-e2e": {
+              "protractorConfig": "e2e/docker.protractor.conf.js",
+              "baseUrl": "http://ui:4200"
             }
           }
         }
