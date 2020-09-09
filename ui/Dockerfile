@@ -1,13 +1,15 @@
 FROM node:14
 
 WORKDIR /feed-ui
-COPY ./ui .
+COPY . .
 
 # Install node modules
-RUN npm install
+RUN cd ui && npm install
 
 # Install angular cli
 RUN npm install -g @angular/cli
+
+WORKDIR /feed-ui/ui
 
 # Update protractor webdriver
 RUN ./node_modules/protractor/bin/webdriver-manager update
