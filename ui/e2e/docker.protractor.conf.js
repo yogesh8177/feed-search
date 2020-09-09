@@ -19,9 +19,9 @@ exports.config = {
       args: [ 
         "--headless", 
         "--disable-gpu", 
-        "--remote-debugging-port=9222",
+        //"--remote-debugging-port=9222",
         "--no-sandbox",
-        "--disable-dev-shm-usage"
+        //"--disable-dev-shm-usage"
       ]
     }
   },
