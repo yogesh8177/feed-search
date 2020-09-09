@@ -60,4 +60,10 @@ You can now view the app at: `http://localhost:4200`
 
 >Note: Make sure you are already running the web server so as to fetch the data.
 
-# e2e
+# e2e tests
+
+## Local run
+
+1. `cd ui`
+1. `./node_modules/protractor/bin/webdriver-manager update`
+1. `ng e2e -c local-e2e`
