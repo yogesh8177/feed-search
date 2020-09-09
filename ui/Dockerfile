@@ -9,6 +9,8 @@ RUN cd ui && npm install
 # Install angular cli
 RUN npm install -g @angular/cli
 
+WORKDIR /feed-ui/ui
+
 # Update protractor webdriver
 RUN ./node_modules/protractor/bin/webdriver-manager update
 
