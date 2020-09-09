@@ -1,5 +1,9 @@
 # Feed-search
-This is a `POC` for searching and sorting feed data along with pagination
+This is a `POC` for searching and sorting feed data along with pagination. This project is set with github actions for `build-test-deploy` actions. There are three core components in this setup:
+
+1. In memory database
+1. Web server
+3. Angular UI
 
 # Architecture/Component diagram
 ![Architecture diagram](docs/diagrams/Feed-component-diagram.svg)
@@ -25,7 +29,7 @@ We have our in memory database which we will use to store mock data. Following a
 
 # Nodejs Webserver [![Actions Status](https://github.com/yogesh8177/feed-search/workflows/Feed%20App/badge.svg)](https://github.com/yogesh8177/feed-search/actions)
 
-We have our webserver that will host the in memory database mentioned earlier. It will auto initialize the `mock data` and necessary `data structures` given below necessary to start querying our data.
+We have our webserver that will host the in-memory database mentioned earlier. It will auto initialize the `mock data` and necessary `data structures` as given below which are necessary to start querying our data.
 
 ```json
 Initialized in memory db [
@@ -39,7 +43,7 @@ Initialized in memory db [
 ```
 
 1. `git clone ...`
-1. Project is located at: `$PROJECT_ROOT/server.js`
+1. Server is located at: `$PROJECT_ROOT/server.js`
 1. Run server: `npm start`
 1. Run test: `npm test`
 
@@ -86,10 +90,12 @@ Assuming you have ran all the steps mentioned in Angular ui section, follow the 
 
 # Docker e2e
 
-1. Make sure you download and install `docker` and `docker-compose` on you system.
+1. Make sure you download and install `docker` and `docker-compose` on your system.
 1. Our `docker-compose.yml` is present at `$PROJECT_ROOT/docker-compose.yml` directory;
 1. Run: `docker-compose up -d` OR `sudo docker-compose up -d`
 1. Run: `docker-compose logs -f ui-e2e` to follow and view e2e logs in action
+
+Below is a sample of dockerized e2e test logs:
 
 ![docker e2e](docs/ScreenShots/docker-e2e.png)
 
