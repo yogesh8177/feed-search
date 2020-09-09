@@ -9,7 +9,7 @@ This is a `POC` for searching and sorting feed data along with pagination
 
 Above figure represents our `Feed` class which we will be implementing.
 
-# Database engine (Search engine)
+# Database engine (Search engine) [![Actions Status](https://github.com/yogesh8177/feed-search/workflows/Feed%20App/badge.svg)](https://github.com/yogesh8177/feed-search/actions)
 
 We have our in memory database which we will use to store mock data. Following are the features for this database engine:
 1. It creates inverted index by tokenizing fields.
@@ -23,7 +23,7 @@ We have our in memory database which we will use to store mock data. Following a
     1. `cd database`
     1. `npm run test`
 
-# Nodejs Webserver
+# Nodejs Webserver [![Actions Status](https://github.com/yogesh8177/feed-search/workflows/Feed%20App/badge.svg)](https://github.com/yogesh8177/feed-search/actions)
 
 We have our webserver that will host the in memory database mentioned earlier. It will auto initialize the `mock data` and necessary `data structures` given below necessary to start querying our data.
 
@@ -45,7 +45,7 @@ Initialized in memory db [
 
 >Note: Server will be listening at `http://localhost:8000/feed?page=1&pageSize=6&sortField=dateLastEdited&type=Date&order=asc&searchTerm=`
 
-# Angular UI
+# Angular UI [![Actions Status](https://github.com/yogesh8177/feed-search/workflows/Feed%20App/badge.svg)](https://github.com/yogesh8177/feed-search/actions)
 
 Our UI code is situated at `$PROJECT_ROOT/ui` folder.
 Follow the steps below to run the UI:
@@ -83,3 +83,10 @@ Assuming you have ran all the steps mentioned in Angular ui section, follow the 
 1. `ng e2e -c local-chrome-direct-e2e`
 
 > Note: Make sure you have java and chrome installed, else the tests won't work!
+
+# CI/CD (Github actions)
+
+We have two builds for building webs server and ui as follows:
+
+1. `build-web-server (12.x)` builds web server for node 12.x and `build + push` docker image to docker hub.
+1. `build-ui (12x)` builds ui using node 12.x and `build + push` docker image to docker hub.
