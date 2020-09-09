@@ -21,8 +21,8 @@ exports.config = {
         "--disable-gpu", 
         "--remote-debugging-port=9222",
         "--no-sandbox",
-        "--disable-dev-shm-usage",
-        "--whitelisted-ips=ui"
+        // "--disable-dev-shm-usage",
+        // "--whitelisted-ips=u"
       ]
     }
   },
