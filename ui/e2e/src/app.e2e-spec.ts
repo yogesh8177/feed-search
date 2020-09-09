@@ -15,14 +15,14 @@ describe('Feed App', () => {
     const jumpToButton = page.getJumpToPageButton();
 
     searchInput.clear();
-    await protractor.promise.delayed(100);
+    await browser.sleep(100);
     sortOption.click();
-    await protractor.promise.delayed(100);
+    await browser.sleep(100);
     pageInput.clear();
     pageInput.sendKeys(1);
     pageInput.sendKeys(Key.ENTER);
     jumpToButton.click();
-    await protractor.promise.delayed(300);
+    await browser.sleep(300);
   });
 
   describe('UI elements', () => {
@@ -62,7 +62,7 @@ describe('Feed App', () => {
       const searchInput = page.getSearchWebElement();
       searchInput.sendKeys('king');
       searchInput.sendKeys(Key.ENTER);
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(4);
     });
@@ -79,7 +79,7 @@ describe('Feed App', () => {
       searchInput.clear();
       searchInput.sendKeys('king');
       searchInput.sendKeys(Key.ENTER);
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(4);
       feedCardTitles.forEach((cardTitle, index) => {
@@ -97,7 +97,7 @@ describe('Feed App', () => {
       searchInput.clear();
       searchInput.sendKeys(`"the lion king"`);
       searchInput.sendKeys(Key.ENTER);
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(2);
       feedCardTitles.forEach((cardTitle, index) => {
@@ -112,12 +112,12 @@ describe('Feed App', () => {
       const pageInput    = page.getPageInputWebElement();
       const jumpToButton = page.getJumpToPageButton();
 
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       pageInput.clear();
       pageInput.sendKeys(100);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(0);
     });
@@ -127,12 +127,12 @@ describe('Feed App', () => {
       const jumpToButton = page.getJumpToPageButton();
       const searchInput  = page.getSearchWebElement();
 
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       pageInput.clear();
       pageInput.sendKeys(17);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(4);
     });
@@ -144,12 +144,12 @@ describe('Feed App', () => {
 
       searchInput.sendKeys('king');
       searchInput.sendKeys(Key.ENTER);
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       pageInput.clear();
       pageInput.sendKeys(2);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(0);
     });
@@ -159,7 +159,7 @@ describe('Feed App', () => {
     it('sorting by dateLastEdited in desc order should return first title as `Regional Marketing Developer`', async () => {
       const sortOption = await page.getSortWebElement('sort-2');
       sortOption.click();
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles[0].getText()).toEqual('Regional Marketing Developer');
     });
@@ -167,7 +167,7 @@ describe('Feed App', () => {
     it('sorting by dateLastEdited in asc order should return first title as `Chief Brand Orchestrator`', async () => {
       const sortOption = await page.getSortWebElement('sort-1');
       sortOption.click();
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles[0].getText()).toEqual('Chief Brand Orchestrator');
     });
@@ -175,7 +175,7 @@ describe('Feed App', () => {
     it('sorting by title in asc order should return first title as `Central Creative Producer`', async () => {
       const sortOption = await page.getSortWebElement('sort-3');
       sortOption.click();
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles[0].getText()).toEqual('Central Creative Producer');
     });
@@ -183,7 +183,7 @@ describe('Feed App', () => {
     it('sorting by title in desc order should return first title as `The Lord of the Rings: The Retur..`', async () => {
       const sortOption = await page.getSortWebElement('sort-4');
       sortOption.click();
-      await protractor.promise.delayed(1000);
+      await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles[0].getText()).toEqual('The Lord of the Rings: The Retur..');
     });
