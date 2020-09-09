@@ -123,6 +123,10 @@
               "protractorConfig": "e2e/protractor.conf.js",
               "devServerTarget": "ui:serve"
             },
+            "local-chrome-direct-e2e": {
+              "protractorConfig": "e2e/chrome.direct.protractor.conf.js",
+              "devServerTarget": "ui:serve"
+            },
             "docker-e2e": {
               "protractorConfig": "e2e/docker.protractor.conf.js",
               "baseUrl": "http://ui:4200"
