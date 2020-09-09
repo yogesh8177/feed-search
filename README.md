@@ -9,7 +9,7 @@ This is a `POC` for searching and sorting feed data along with pagination
 
 Above figure represents our `Feed` class which we will be implementing.
 
-# Database engine (Search engine)
+# Database engine (Search engine) [![Actions Status](https://github.com/yogesh8177/feed-search/workflows/Feed%20App/badge.svg)](https://github.com/{yogesh8177}/{feed-search}/actions)
 
 We have our in memory database which we will use to store mock data. Following are the features for this database engine:
 1. It creates inverted index by tokenizing fields.
