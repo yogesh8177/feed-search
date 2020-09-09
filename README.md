@@ -50,6 +50,7 @@ Initialized in memory db [
 Our UI code is situated at `$PROJECT_ROOT/ui` folder.
 Follow the steps below to run the UI:
 
+1. Set your hosts file with `127.0.0.1    web`
 1. `cd ui`
 1. `npm install -g @angular/cli`
 1. `npm install`
@@ -58,3 +59,13 @@ Follow the steps below to run the UI:
 You can now view the app at: `http://localhost:4200`
 
 >Note: Make sure you are already running the web server so as to fetch the data.
+
+# e2e tests
+
+## Local run
+
+1. `cd ui`
+1. `./node_modules/protractor/bin/webdriver-manager update`
+1. `ng e2e -c local-e2e`
+
+> Note: Make sure you have java installed, else the tests won't work!
