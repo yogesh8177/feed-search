@@ -60,6 +60,7 @@ jobs:
           npm run build
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
+        run: cd ./ui
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
