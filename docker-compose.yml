@@ -24,13 +24,15 @@ services:
   ui-e2e:
     image: feed-ui
     #command: ng e2e --protractorConfig=e2e/docker.protractor.conf.js
-    command: dockerize -wait tcp://ui:4200 -wait tcp://selenium-chrome-standalone:4444 -timeout 30s -wait-retry-interval 1s bash -c "ng e2e -c docker-e2e"
+    command: dockerize -wait http://ui:4200 -wait tcp://selenium-chrome-standalone:4444 -timeout 30s -wait-retry-interval 1s bash -c "ng e2e -c docker-e2e"
     depends_on: 
       - ui
       - web
       - selenium-chrome-standalone
     networks: 
       - gateway
+    # volumes: 
+    #   - ./ui:/feed-ui
   
   selenium-chrome-standalone:
     image: selenium/standalone-chrome
