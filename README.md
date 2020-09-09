@@ -67,3 +67,5 @@ You can now view the app at: `http://localhost:4200`
 1. `cd ui`
 1. `./node_modules/protractor/bin/webdriver-manager update`
 1. `ng e2e -c local-e2e`
+
+> Note: Make sure you have java installed, else the tests won't work!
