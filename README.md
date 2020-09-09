@@ -84,6 +84,15 @@ Assuming you have ran all the steps mentioned in Angular ui section, follow the 
 
 > Note: Make sure you have java and chrome installed, else the tests won't work!
 
+# Docker e2e
+
+1. Make sure you download and install `docker` and `docker-compose` on you system.
+1. Our `docker-compose.yml` is present at `$PROJECT_ROOT/docker-compose.yml` directory;
+1. Run: `docker-compose up -d` OR `sudo docker-compose up -d`
+1. Run: `docker-compose logs -f ui-e2e` to follow and view e2e logs in action
+
+![docker e2e](docs/ScreenShots/docker-e2e.png)
+
 # CI/CD (Github actions)
 
 We have two builds for building webs server and ui as follows:
@@ -94,3 +103,4 @@ We have two builds for building webs server and ui as follows:
 1. `build-ui (12x)` builds ui using node 12.x and `build + e2e + push` docker image to docker hub.
 
 ![Action build-ui](docs/ScreenShots/build-ui.png)
+
