@@ -62,10 +62,24 @@ You can now view the app at: `http://localhost:4200`
 
 # e2e tests
 
-## Local run
+## Local run (headless)
 
+Assuming you have ran all the steps mentioned in Angular ui section, follow the given steps.
+
+1. `npm start` # start web server
 1. `cd ui`
 1. `./node_modules/protractor/bin/webdriver-manager update`
 1. `ng e2e -c local-e2e`
 
-> Note: Make sure you have java installed, else the tests won't work!
+> Note: Make sure you have java and chrome installed, else the tests won't work!
+
+## Local run (Chrome direct)
+
+Assuming you have ran all the steps mentioned in Angular ui section, follow the given steps.
+
+1. `npm start` # start web server
+1. `cd ui`
+1. `./node_modules/protractor/bin/webdriver-manager update`
+1. `ng e2e -c local-chrome-direct-e2e`
+
+> Note: Make sure you have java and chrome installed, else the tests won't work!
