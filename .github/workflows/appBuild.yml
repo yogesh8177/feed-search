@@ -68,6 +68,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: yogesh8177/feed-ui
           tags: latest
+          context: ./ui
           dockerfile: ./ui/Dockerfile
 
       
