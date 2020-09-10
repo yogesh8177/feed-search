@@ -25,6 +25,7 @@ We have our in memory database which we will use to store mock data. Following a
 1. Our engine is located at `$PROJECT_ROOT/database` folder.
 1. You can run tests for as follows:
     1. `cd database`
+    1. `npm install`
     1. `npm run test`
 
 # Nodejs Webserver [![Actions Status](https://github.com/yogesh8177/feed-search/workflows/Feed%20App/badge.svg)](https://github.com/yogesh8177/feed-search/actions)
@@ -41,11 +42,11 @@ Initialized in memory db [
   "titleIndex"
 ]
 ```
-
-1. `git clone ...`
+Below are steps to run our web server:
 1. Server is located at: `$PROJECT_ROOT/server.js`
-1. Run server: `npm start`
-1. Run test: `npm test`
+1. `npm install`
+1. `npm test`
+1. `npm start`
 
 >Note: Server will be listening at `http://localhost:8000/feed?page=1&pageSize=6&sortField=dateLastEdited&type=Date&order=asc&searchTerm=`
 
