@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: ./ui/Dockerfile
     image: feed-ui
-    command: ng serve --host 0.0.0.0 --disable-host-check
+    command: ng serve --configuration=docker --host 0.0.0.0 --disable-host-check
     expose: 
       - 4200
     networks: 
