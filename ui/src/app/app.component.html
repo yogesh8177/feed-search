@@ -5,9 +5,9 @@
 
 <div class="content" role="main">
   <div class="card-container">
-    <app-search class="card" (searchTerm) = "onSearchFieldChange($event)" [searchText]="feedQueryParams.searchTerm"></app-search>
+    <app-search class="card .highlight-card" (searchTerm) = "onSearchFieldChange($event)" [searchText]="feedQueryParams.searchTerm"></app-search>
     <div class="card only-desktop">Feed</div>
-    <app-sort class="card" (sortField) = "onSortFieldChange($event)" [selectedSort]="feedQueryParams.sortField+':'+feedQueryParams.type+':'+feedQueryParams.order"></app-sort>
+    <app-sort class="card .highlight-card" (sortField) = "onSortFieldChange($event)" [selectedSort]="feedQueryParams.sortField+':'+feedQueryParams.type+':'+feedQueryParams.order"></app-sort>
   </div>
   <div class="card-container">
     <app-feed-card class="card" *ngFor="let feedCard of feed" [feedCard]="feedCard"></app-feed-card>
