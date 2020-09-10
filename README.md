@@ -44,6 +44,7 @@ Initialized in memory db [
 ```
 Below are steps to run our web server:
 1. Server is located at: `$PROJECT_ROOT/server.js`
+1. `cd ./` # In previous step, we were inside database folder
 1. `npm install`
 1. `npm test`
 1. `npm start`
