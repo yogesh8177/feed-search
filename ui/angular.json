@@ -79,6 +79,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ui:build:production"
+            },
+            "docker": {
+              "browserTarget": "ui:build"
             }
           }
         },
