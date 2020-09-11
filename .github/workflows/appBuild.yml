@@ -78,10 +78,9 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy app build to S3 bucket
-        run: |
-        cd ./ui
-        npm run build:prod
-        aws s3 sync ./dist/ui/ s3://feed-search.ytechspark.com --delete
+        run: cd ./ui
+        run: npm run build:prod
+        run: aws s3 sync ./dist/ui/ s3://feed-search.ytechspark.com --delete
 
       
 
