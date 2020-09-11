@@ -47,8 +47,8 @@ jobs:
   
     steps:
 
+      - uses: actions/setup-node@v
       - name: Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
   
@@ -71,8 +71,8 @@ jobs:
         node-version: [12.x]
     needs: ['build-ui']
     steps:
-      - name: Node ${{ matrix.node-version }}
       - uses: actions/checkout@v2
+      - name: Node ${{ matrix.node-version }}
         with:
           node-version: ${{ matrix.node-version }}
         
