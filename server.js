@@ -2,8 +2,8 @@ const http          = require("http");
 const querystring   = require('querystring');
 const SearchEngine  = require('./database/searchEngine');
 const mockData      = require('./data/mock_data.json');
-const host          = '0.0.0.0';
-const port          = 8000;
+const host          = process.env.HOST || '0.0.0.0';
+const port          = process.env.PORT || 8000;
 
 // Instantiating our in memory database
 const engine = new SearchEngine();
