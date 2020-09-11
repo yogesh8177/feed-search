@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Feed, FeedResponse } from './models/Feed';
 import { FeedQueryParams } from './models/FeedQueryParams';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedService {
 
-  feedUrl: string = 'http://web:8000/feed';
+  feedUrl: string = environment.feedApiUrl;
 
   constructor(private http: HttpClient) { }
 

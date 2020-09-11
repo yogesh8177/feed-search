@@ -54,7 +54,6 @@ Initialized in memory db [
 Our UI code is situated at `$PROJECT_ROOT/ui` folder.
 Follow the steps below to run the UI:
 
-1. Set your hosts file with `127.0.0.1    web`
 1. `cd ui`
 1. `npm install -g @angular/cli`
 1. `npm install`
