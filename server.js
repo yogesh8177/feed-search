@@ -36,6 +36,7 @@ const feedController = (req, res) => {
             type
         }
     };
+    searchTerm = searchTerm.trim();
     if (!searchTerm) {
         searchTerm = [];
     }
