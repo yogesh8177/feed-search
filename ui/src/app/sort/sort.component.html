@@ -1,5 +1,5 @@
 <label><strong>Sort by</strong></label>&nbsp;
-<select name="sort" (change)="setSortField($event.target.value)" [value]='selectedSort'>
+<select name="sort" id="sortSelect" (change)="setSortField($event.target.value)" [value]='selectedSort'>
     <optgroup label="Last Edited">
         <option id="sort-1" value="dateLastEdited:Date:asc">Edited (asc)</option>
         <option id="sort-2" value="dateLastEdited:Date:desc">Edited (desc)</option>

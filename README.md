@@ -109,9 +109,8 @@ Below is a sample of dockerized e2e test logs:
 We have two builds for building webs server and ui as follows:
 
 1. `build-web-server (12.x)` builds web server for node 12.x and `build + push` docker image to docker hub.
-
 ![Action build-web-server](docs/ScreenShots/build-web-server.png)
 1. `build-ui (12x)` builds ui using node 12.x and `build + e2e + push` docker image to docker hub.
-
 ![Action build-ui](docs/ScreenShots/build-ui.png)
-
+1. Deploy angular prod build to `S3` bucket.
+![Action s3-deploy](docs/ScreenShots/s3-deploy.png)
