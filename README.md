@@ -115,3 +115,5 @@ We have two builds for building webs server and ui as follows:
 
 ![Action build-ui](docs/ScreenShots/build-ui.png)
 
+1. Deploy angular prod build to `S3` bucket.
+![Action s3-deploy](docs/ScreenShots/s3-deploy.png)
