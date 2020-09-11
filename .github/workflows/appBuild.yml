@@ -77,10 +77,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Build Angular App
+        run: cd ./ui && npm install && npm run build:prod
+        env:
+          CI: ""
       - name: Deploy app build to S3 bucket
-        run: cd ./ui
-        run: npm run build:prod
-        run: aws s3 sync ./dist/ui/ s3://feed-search.ytechspark.com --delete
+        run: aws s3 sync ./ui/dist/ui/ s3://feed-search.ytechspark.com --delete
 
       
 
