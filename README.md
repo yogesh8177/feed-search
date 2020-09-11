@@ -5,6 +5,10 @@ This is a `POC` for searching and sorting feed data along with pagination. This 
 1. Web server
 3. Angular UI
 
+# Live demo
+
+[Feed search App](http://feed-search.ytechspark.com/)
+
 # Architecture/Component diagram
 ![Architecture diagram](docs/diagrams/Feed-component-diagram.svg)
 
