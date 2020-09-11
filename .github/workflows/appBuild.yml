@@ -80,7 +80,7 @@ jobs:
       - name: Deploy app build to S3 bucket
         run: |
         cd ./ui
-        npm run build --configuration=production
+        npm run build:prod
         aws s3 sync ./dist/ui/ s3://feed-search.ytechspark.com --delete
 
       
