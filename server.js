@@ -25,7 +25,7 @@ const feedController = (req, res) => {
             sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
         };
      */
-    let {searchTerm = '', page = 1, pageSize = 10, sortField = null, order = null, type = null} = queryParams;
+    let {searchTerm = '', page = 1, pageSize = 10, sortField = 'dateLastEdited', order = 'desc', type = 'Date'} = queryParams;
     //console.log({page, pageSize, sortField, order, type});
     const params = {
         page: parseInt(page),
