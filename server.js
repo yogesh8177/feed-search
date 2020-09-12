@@ -10,7 +10,7 @@ const engine = new SearchEngine();
 engine.loadDataIntoDb(mockData);
 engine.createFieldIndexOn('dateLastEdited', 'Date');
 engine.createFieldIndexOn('title', 'string');
-engine.createInvertedTextIndex();
+engine.createInvertedTextIndex(['title', 'description']);
 
 const engineKeys = Object.keys(engine);
 console.log(`Initialized in memory db`, engineKeys);
