@@ -61,37 +61,32 @@ class SearchEngine {
     /**
      * Create inverted index for words and phrases to their respective documents.
      */
-    createInvertedTextIndex() {
-        Object.keys(this.documentsMap).forEach(key => {
-            const document        = this.documentsMap[key];
-            document.id           = key;
-            let titleTokens       = document.title.toLowerCase().replace(/[.:!]/g, '').split(' ');
-            let descriptionTokens = document.description.toLowerCase().replace(/[.:!]/g, '').split(' ');
-            titleTokens.forEach(token => {
-                if (this.invertedIndex.hasOwnProperty(token)) {
-                    this.invertedIndex[token].add(document.id);
-                }
-                else {
-                    this.invertedIndex[token] = new Set([document.id]);
-                }
+    createInvertedTextIndex(fieldsArray) {
+        if (!Array.isArray(fieldsArray)) {
+            throw new Error(`Please pass array to createInvertedTextIndex function`);
+        }
+        fieldsArray.forEach(field => {
+            Object.keys(this.documentsMap).forEach(key => {
+                const document        = this.documentsMap[key];
+                document.id           = key;
+                let fieldTokens       = document[field].toLowerCase().replace(/[.:!]/g, '').split(' ');
+                fieldTokens.forEach(token => {
+                    if (this.invertedIndex.hasOwnProperty(token)) {
+                        this.invertedIndex[token].add(document.id);
+                    }
+                    else {
+                        this.invertedIndex[token] = new Set([document.id]);
+                    }
+                });
+    
+                this.addPhrasesToInvertedIndex(fieldTokens, document.id);
             });
-
-            descriptionTokens.forEach(token => {
-                if (this.invertedIndex.hasOwnProperty(token)) {
-                    this.invertedIndex[token].add(document.id);
-                }
-                else {
-                    this.invertedIndex[token] = new Set([document.id]);
-                }
-            });
-            this.addPhrasesToInvertedIndex(titleTokens, descriptionTokens, document.id);
         });
     }
 
-    addPhrasesToInvertedIndex(titleTokens, descriptionTokens, documentId) {
+    addPhrasesToInvertedIndex(fieldTokens, documentId) {
         // let us now add phrases to inverted index
-        let totalTitleTokens        = titleTokens.length;
-        let totalDescriptionTokens  = descriptionTokens.length;
+        let totalFieldTokens = fieldTokens.length;
 
         // min length of a phrase is 2
         const minPhraseSize = 2;
@@ -100,8 +95,8 @@ class SearchEngine {
 
         let currentPhraseSize = maxPhraseSize;
         while(currentPhraseSize >= minPhraseSize) {
-            for(let i = 0; i <= (totalTitleTokens - currentPhraseSize); i++) {
-                let phrase = titleTokens.slice(i, i + currentPhraseSize).join(' ');
+            for(let i = 0; i <= (totalFieldTokens - currentPhraseSize); i++) {
+                let phrase = fieldTokens.slice(i, i + currentPhraseSize).join(' ');
                 if (this.invertedIndex.hasOwnProperty(phrase)) {
                     this.invertedIndex[phrase].add(documentId);
                 }
@@ -112,18 +107,6 @@ class SearchEngine {
             currentPhraseSize--;
         }
         currentPhraseSize = maxPhraseSize;
-        while(currentPhraseSize >= minPhraseSize) {
-            for(let i = 0; i <= (totalDescriptionTokens - currentPhraseSize); i++) {
-                let phrase = descriptionTokens.slice(i, i + currentPhraseSize).join(' ');
-                if (this.invertedIndex.hasOwnProperty(phrase)) {
-                    this.invertedIndex[phrase].add(documentId);
-                }
-                else {
-                    this.invertedIndex[phrase] = new Set([documentId]);
-                }
-            }
-            currentPhraseSize--;
-        }
     }
 
     /**

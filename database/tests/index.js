@@ -1,6 +1,7 @@
 const assert        = require('assert');
 const SearchEngine  = require('../searchEngine');
 const mockData      = require('../../data/mock_data.json');
+const { before } = require('mocha');
 const totalMockData = mockData.length;
 
 describe('Search Engine basic functionality tests', () => {
@@ -14,14 +15,14 @@ describe('Search Engine basic functionality tests', () => {
         return Promise.reject(`Should have failed as we didn't pass payload`);
       }
       catch (e) {
-        assert.equal(e.message, 'Supplied data is not an Array or Object');
+        assert.strictEqual(e.message, 'Supplied data is not an Array or Object');
       }
     });
 
     it('Should load all totalMockData items present in mock data', () => {
       engine.loadDataIntoDb(mockData);
       let documentMapKeyLength = Object.keys(engine.documentsMap).length;
-      assert.equal(documentMapKeyLength, mockData.length);
+      assert.strictEqual(documentMapKeyLength, mockData.length);
     });
 
     it('Documents should have auto incrementing id starting with 1 till total documents length', () => {
@@ -29,7 +30,7 @@ describe('Search Engine basic functionality tests', () => {
       Object.keys(engine.documentsMap).forEach(key => {
         const doc = engine.documentsMap[key];
         doc.id    = key;
-        assert.equal(doc.id, documentId);
+        assert.strictEqual(parseInt(doc.id), documentId);
         documentId++; // increment doc id
       });
     });
@@ -38,17 +39,17 @@ describe('Search Engine basic functionality tests', () => {
       let documentId = 1; // initial doc id
       Object.keys(engine.documentsMap).forEach(key => {
         const doc = engine.documentsMap[key];
-        assert.equal(doc.hasOwnProperty('title'), true);
-        assert.equal(doc.hasOwnProperty('image'), true);
-        assert.equal(doc.hasOwnProperty('description'), true);
-        assert.equal(doc.hasOwnProperty('dateLastEdited'), true);
+        assert.strictEqual(doc.hasOwnProperty('title'), true);
+        assert.strictEqual(doc.hasOwnProperty('image'), true);
+        assert.strictEqual(doc.hasOwnProperty('description'), true);
+        assert.strictEqual(doc.hasOwnProperty('dateLastEdited'), true);
         documentId++; // increment doc id
       });
     });
 
     it('Auto increment document id inside engine must equal to total document length', () => {
       let documentMapKeyLength = Object.keys(engine.documentsMap).length;
-      assert.equal(documentMapKeyLength, engine.documentId);
+      assert.strictEqual(documentMapKeyLength, engine.documentId);
     });
 
   });
@@ -66,7 +67,7 @@ describe('Search Engine basic functionality tests', () => {
         }
         //console.log(`index[${i}] > index[${i-1}] = ${engine.dateLastEditedIndex[i].dateLastEdited} > ${engine.dateLastEditedIndex[i-1].dateLastEdited}`);
       }
-      assert.equal(isSorted, true);
+      assert.strictEqual(isSorted, true);
     });
 
     it('titleIndex must be sorted in ascending order', () => {
@@ -81,41 +82,41 @@ describe('Search Engine basic functionality tests', () => {
         }
         //console.log(`index[${i}] > index[${i-1}] = ${engine.titleIndex[i].title} > ${engine.titleIndex[i-1].title}`);
       }
-      assert.equal(isSorted, true);
+      assert.strictEqual(isSorted, true);
     });
   });
 
   describe('Searching in our db', () => {
     it('Search should return 2 documents for search term `"the lion king"` ', () => {
-      engine.createInvertedTextIndex();
+      engine.createInvertedTextIndex(['title', 'description']);
       const params = {
         page: 1,
         pageSize: 10,
         sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
       };
       let result = engine.searchKeywords(['the lion king'], params);
-      assert.equal(result.hasOwnProperty('total'), true);
-      assert.equal(result.hasOwnProperty('documents'), true);
-      assert.equal(Array.isArray(result.documents), true);
-      assert.equal(result.total, 2);
+      assert.strictEqual(result.hasOwnProperty('total'), true);
+      assert.strictEqual(result.hasOwnProperty('documents'), true);
+      assert.strictEqual(Array.isArray(result.documents), true);
+      assert.strictEqual(result.total, 2);
     });
 
     it('Search should return 4 documents for search term `king` ', () => {
-      engine.createInvertedTextIndex();
+      engine.createInvertedTextIndex(['title', 'description']);
       const params = {
         page: 1,
         pageSize: 10,
         sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
       };
       let result = engine.searchKeywords(['king'], params);
-      assert.equal(result.hasOwnProperty('total'), true);
-      assert.equal(result.hasOwnProperty('documents'), true);
-      assert.equal(Array.isArray(result.documents), true);
-      assert.equal(result.total, 4);
+      assert.strictEqual(result.hasOwnProperty('total'), true);
+      assert.strictEqual(result.hasOwnProperty('documents'), true);
+      assert.strictEqual(Array.isArray(result.documents), true);
+      assert.strictEqual(result.total, 4);
     });
 
     it('Search should match 2 documents titles for search term `the king` ', () => {
-      engine.createInvertedTextIndex();
+      engine.createInvertedTextIndex(['title', 'description']);
       const params = {
         page: 1,
         pageSize: 10,
@@ -131,15 +132,15 @@ describe('Search Engine basic functionality tests', () => {
         if (expectedTitles.includes(doc.title)) titlesFound++;
       });
 
-      assert.equal(result.hasOwnProperty('total'), true);
-      assert.equal(result.hasOwnProperty('documents'), true);
-      assert.equal(Array.isArray(result.documents), true);
-      assert.equal(result.total, 4);
-      assert.equal(titlesFound, expectedTitles.length);
+      assert.strictEqual(result.hasOwnProperty('total'), true);
+      assert.strictEqual(result.hasOwnProperty('documents'), true);
+      assert.strictEqual(Array.isArray(result.documents), true);
+      assert.strictEqual(result.total, 4);
+      assert.strictEqual(titlesFound, expectedTitles.length);
     });
 
     it('Search should match 1 documents titles for search term `"the king"` ', () => {
-      engine.createInvertedTextIndex();
+      engine.createInvertedTextIndex(['title', 'description']);
       const params = {
         page: 1,
         pageSize: 10,
@@ -158,10 +159,10 @@ describe('Search Engine basic functionality tests', () => {
         if (unexpectedTitles.includes(doc.title)) titlesFound++;
       });
 
-      assert.equal(result.hasOwnProperty('total'), true);
-      assert.equal(result.hasOwnProperty('documents'), true);
-      assert.equal(Array.isArray(result.documents), true);
-      assert.equal(titlesFound, expectedTitles.length);
+      assert.strictEqual(result.hasOwnProperty('total'), true);
+      assert.strictEqual(result.hasOwnProperty('documents'), true);
+      assert.strictEqual(Array.isArray(result.documents), true);
+      assert.strictEqual(titlesFound, expectedTitles.length);
     });
 
   });
@@ -183,9 +184,9 @@ describe('Search Engine basic functionality tests', () => {
           break;
         }
       }
-      assert.equal(result.total, totalMockData);
-      assert.equal(result.documents.length, params.pageSize);
-      assert.equal(isSorted, true);
+      assert.strictEqual(result.total, totalMockData);
+      assert.strictEqual(result.documents.length, params.pageSize);
+      assert.strictEqual(isSorted, true);
     });
   
     it('Should return results without search keys and sort by title asc', () => {
@@ -205,9 +206,9 @@ describe('Search Engine basic functionality tests', () => {
         }
       }
   
-      assert.equal(result.total, totalMockData);
-      assert.equal(result.documents.length, params.pageSize);
-      assert.equal(isSorted, true);
+      assert.strictEqual(result.total, totalMockData);
+      assert.strictEqual(result.documents.length, params.pageSize);
+      assert.strictEqual(isSorted, true);
     });
 
     it('Should return results without search keys and sort by dateLastEdited desc', () => {
@@ -226,9 +227,9 @@ describe('Search Engine basic functionality tests', () => {
           break;
         }
       }
-      assert.equal(result.total, totalMockData);
-      assert.equal(result.documents.length, params.pageSize);
-      assert.equal(isSorted, true);
+      assert.strictEqual(result.total, totalMockData);
+      assert.strictEqual(result.documents.length, params.pageSize);
+      assert.strictEqual(isSorted, true);
   
     });
   
@@ -250,9 +251,9 @@ describe('Search Engine basic functionality tests', () => {
         }
       }
   
-      assert.equal(result.total, totalMockData);
-      assert.equal(result.documents.length, params.pageSize);
-      assert.equal(isSorted, true);
+      assert.strictEqual(result.total, totalMockData);
+      assert.strictEqual(result.documents.length, params.pageSize);
+      assert.strictEqual(isSorted, true);
     });
   });
 
@@ -268,12 +269,12 @@ describe('Search Engine basic functionality tests', () => {
         sort: { sortField: 'title', order: 'desc', type: 'string' }
       };
       let result   = engine.searchKeywords([], params);
-      assert.equal(result.documents.length, params.pageSize);
+      assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedTitles.includes(doc.title))
           matchedTitles++;
       });
-      assert.equal(matchedTitles, expectedTitles.length);
+      assert.strictEqual(matchedTitles, expectedTitles.length);
     });
 
     it('Should match given titles on page 2 where we sort by title in asc order', () => {
@@ -286,12 +287,12 @@ describe('Search Engine basic functionality tests', () => {
       };
       let matchedTitles = 0;
       let result        = engine.searchKeywords([], params);
-      assert.equal(result.documents.length, params.pageSize);
+      assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedTitles.includes(doc.title))
           matchedTitles++;
       });
-      assert.equal(matchedTitles, expectedTitles.length);
+      assert.strictEqual(matchedTitles, expectedTitles.length);
     })
 
     it(`Should match given titles on page 2 where we sort by dateLastEdited in desc order`, () => {
@@ -305,12 +306,12 @@ describe('Search Engine basic functionality tests', () => {
         sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
       };
       let result   = engine.searchKeywords([], params);
-      assert.equal(result.documents.length, params.pageSize);
+      assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedTitles.includes(doc.title))
           matchedTitles++;
       });
-      assert.equal(matchedTitles, expectedTitles.length);
+      assert.strictEqual(matchedTitles, expectedTitles.length);
     });
 
     it('Should match given titles on page 2 where we sort by dateLastEdited in asc order', () => {
@@ -323,12 +324,12 @@ describe('Search Engine basic functionality tests', () => {
       };
       let matchedTitles = 0;
       let result        = engine.searchKeywords([], params);
-      assert.equal(result.documents.length, params.pageSize);
+      assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedTitles.includes(doc.title))
           matchedTitles++;
       });
-      assert.equal(matchedTitles, expectedTitles.length);
+      assert.strictEqual(matchedTitles, expectedTitles.length);
     })
 
     it('should return 4 documents on 17th page with pageSize 6', () => {
@@ -338,7 +339,7 @@ describe('Search Engine basic functionality tests', () => {
         sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
       };
       let result        = engine.searchKeywords([], params);
-      assert.equal(result.documents.length, 4);
+      assert.strictEqual(result.documents.length, 4);
     });
   });
 
