@@ -3,6 +3,8 @@
   <h1 class="app-title">Feed</h1>
 </div>
 
+<app-loader *ngIf="showLoader"></app-loader>
+
 <div class="content" role="main">
   <div class="card-container">
     <app-search class="card" (searchTerm) = "onSearchFieldChange($event)" [searchText]="feedQueryParams.searchTerm"></app-search>
