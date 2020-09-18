@@ -12,7 +12,7 @@ import { FeedQueryParams } from './models/FeedQueryParams';
 })
 export class AppComponent {
   title = 'ui';
-  feed: Feed[];
+  feed: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   showLoader: boolean = false;
 
@@ -71,7 +71,7 @@ export class AppComponent {
   }
   
   loadFeed(params: FeedQueryParams) {
-    this.feed = [];
+    this.feed.length = 0;
     this.feedService.getFeed(params).subscribe(
       data => {
         let feedResponse: FeedResponse = data;
