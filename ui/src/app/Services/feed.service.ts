@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Feed, FeedResponse } from './models/Feed';
-import { FeedQueryParams } from './models/FeedQueryParams';
-import { environment } from '../environments/environment';
+import { Feed, FeedResponse } from '../models/Feed';
+import { FeedQueryParams } from '../models/FeedQueryParams';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

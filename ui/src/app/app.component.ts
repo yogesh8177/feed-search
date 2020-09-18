@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
-import { FeedService } from './feed.service';
+import { FeedService } from './Services/feed.service';
+import { LoaderService } from './Services/loader.service';
 import { Feed, FeedResponse } from './models/Feed';
 import { TableData } from './models/TableData';
 import { FeedQueryParams } from './models/FeedQueryParams';
@@ -11,8 +12,10 @@ import { FeedQueryParams } from './models/FeedQueryParams';
 })
 export class AppComponent {
   title = 'ui';
-  feed: Feed[];
+  feed: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
+  showLoader: boolean = false;
+
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
     {title: 'image', type: TableData.IMAGE}, 
@@ -29,12 +32,22 @@ export class AppComponent {
     console.log('state saved');
   }
 
-  constructor(private feedService: FeedService) {
+  constructor(
+    private feedService: FeedService,
+    private loaderServie: LoaderService) {
   }
   
   ngOnInit() {
+    this.initializeLoader();
     this.initializeQueryParams();
     this.loadFeed(this.feedQueryParams);
+  }
+
+  initializeLoader() {
+    this.loaderServie.isLoading.subscribe(
+      isLoading => this.showLoader = isLoading,
+      error => console.error(error)
+    );
   }
   
   initializeQueryParams() {
@@ -58,7 +71,7 @@ export class AppComponent {
   }
   
   loadFeed(params: FeedQueryParams) {
-    this.feed = [];
+    this.feed.length = 0;
     this.feedService.getFeed(params).subscribe(
       data => {
         let feedResponse: FeedResponse = data;
