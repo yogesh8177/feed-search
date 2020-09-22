@@ -7,53 +7,65 @@ const port          = process.env.PORT || 8000;
 
 // Instantiating our in memory database
 const engine = new SearchEngine();
-engine.loadDataIntoDb(mockData);
-engine.createFieldIndexOn('dateLastEdited', 'Date');
-engine.createFieldIndexOn('title', 'string');
-engine.createInvertedTextIndex(['title', 'description']);
+try {
+    engine.loadDataIntoDb(mockData);
+    engine.createFieldIndexOn('dateLastEdited', 'Date');
+    engine.createFieldIndexOn('title', 'string');
+    engine.createInvertedTextIndex(['title', 'description']);
+}
+catch(error) {
+    console.error(`Error while initializing in memory database`);
+    console.error(error);
+}
 
 const engineKeys = Object.keys(engine);
 console.log(`Initialized in memory db`, engineKeys);
 
 const feedController = (req, res) => {
-    const queryParams = querystring.parse(req.url.split('?')[1]);
-    /**
-     * Expected queryParam format
-     *  {
-            page: 1,
-            pageSize: 10,
-            sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+    try {
+        const queryParams = querystring.parse(req.url.split('?')[1]);
+        /**
+         * Expected queryParam format
+         *  {
+                page: 1,
+                pageSize: 10,
+                sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+            };
+         */
+        let {searchTerm = '', page = 1, pageSize = 10, sortField = 'dateLastEdited', order = 'desc', type = 'Date'} = queryParams;
+        //console.log({page, pageSize, sortField, order, type});
+        const params = {
+            page: parseInt(page),
+            pageSize: parseInt(pageSize),
+            sort: {
+                sortField,
+                order,
+                type
+            }
         };
-     */
-    let {searchTerm = '', page = 1, pageSize = 10, sortField = 'dateLastEdited', order = 'desc', type = 'Date'} = queryParams;
-    //console.log({page, pageSize, sortField, order, type});
-    const params = {
-        page: parseInt(page),
-        pageSize: parseInt(pageSize),
-        sort: {
-            sortField,
-            order,
-            type
+        searchTerm = searchTerm.trim();
+        if (!searchTerm) {
+            searchTerm = [];
         }
-    };
-    searchTerm = searchTerm.trim();
-    if (!searchTerm) {
-        searchTerm = [];
+        else if (searchTerm.startsWith(`"`) && searchTerm.endsWith(`"`)) {
+            searchTerm = [searchTerm.replace(/["]/g, '')];
+        }
+        else {
+            searchTerm = searchTerm.split(' ');
+        }
+        const payload = {
+            searchTerm,
+            params
+        };
+        console.log({searchTerm, params});
+        const result = engine.searchKeywords(searchTerm, params);
+        res.writeHead(200);
+        res.end(JSON.stringify(result));
     }
-    else if (searchTerm.startsWith(`"`) && searchTerm.endsWith(`"`)) {
-        searchTerm = [searchTerm.replace(/["]/g, '')];
+    catch(error) {
+        console.error(`Error inside feedController`);
+        console.error(error);
     }
-    else {
-        searchTerm = searchTerm.split(' ');
-    }
-    const payload = {
-        searchTerm,
-        params
-    };
-    console.log({searchTerm, params});
-    const result = engine.searchKeywords(searchTerm, params);
-    res.writeHead(200);
-    res.end(JSON.stringify(result));
 }
 
 const requestListener = (req, res) => {
