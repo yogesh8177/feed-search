@@ -65,6 +65,8 @@ const feedController = (req, res) => {
     catch(error) {
         console.error(`Error inside feedController`);
         console.error(error);
+        res.writeHead(500);
+        res.end(JSON.stringify({error: 'Internal server error'}));
     }
 }
 
