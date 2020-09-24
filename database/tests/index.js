@@ -1,7 +1,8 @@
 const assert        = require('assert');
 const SearchEngine  = require('../searchEngine');
 const mockData      = require('../../data/mock_data.json');
-const { before } = require('mocha');
+const { strict } = require('assert');
+
 const totalMockData = mockData.length;
 
 describe('Search Engine basic functionality tests', () => {
@@ -67,6 +68,10 @@ describe('Search Engine basic functionality tests', () => {
         }
         //console.log(`index[${i}] > index[${i-1}] = ${engine.dateLastEditedIndex[i].dateLastEdited} > ${engine.dateLastEditedIndex[i-1].dateLastEdited}`);
       }
+      for(let i = 0; i < indexLength; i++) {
+        assert.strictEqual(engine.dateLastEditedIndex[i].hasOwnProperty('dateLastEdited'), true);
+        assert.strictEqual(engine.dateLastEditedIndex[i].hasOwnProperty('id'), true);
+      }
       assert.strictEqual(isSorted, true);
     });
 
@@ -81,6 +86,10 @@ describe('Search Engine basic functionality tests', () => {
           break;
         }
         //console.log(`index[${i}] > index[${i-1}] = ${engine.titleIndex[i].title} > ${engine.titleIndex[i-1].title}`);
+      }
+      for(let i = 0; i < indexLength; i++) {
+        assert.strictEqual(engine.titleIndex[i].hasOwnProperty('title'), true);
+        assert.strictEqual(engine.titleIndex[i].hasOwnProperty('id'), true);
       }
       assert.strictEqual(isSorted, true);
     });
