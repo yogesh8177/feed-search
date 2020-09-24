@@ -71,7 +71,7 @@ describe('Search Engine basic functionality tests', () => {
       checkArrayProperty(engine[`${indexField}Index`], ['id', indexField]);
     });
 
-    it('titleIndex must have id and dateLastEdited properties', () => {
+    it('titleIndex must have id and title properties', () => {
       const indexField = `title`;
       engine.createFieldIndexOn('title', 'string');
       checkArrayProperty(engine[`${indexField}Index`], ['id', indexField]);
