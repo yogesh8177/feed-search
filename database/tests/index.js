@@ -57,11 +57,11 @@ describe('Search Engine basic functionality tests', () => {
   describe('Creating index in our engine', () => {
     it('dateLastEdited must be sorted in ascending order', () => {
       engine.createFieldIndexOn('dateLastEdited', 'Date');
-      const isSorted = true;
+      let isSorted = true;
       // Note, index name will be indexFieldIndex => dateLastEditedIndex in this case.
       const indexLength = engine.dateLastEditedIndex.length;
       for (let i = indexLength - 1; i >= 1; i--) {
-        if (engine.dateLastEditedIndex[i] < engine.dateLastEditedIndex[i - 1]) {
+        if (engine.dateLastEditedIndex[i].dateLastEdited < engine.dateLastEditedIndex[i - 1].dateLastEdited) {
           isSorted = false;
           break;
         }
@@ -72,11 +72,11 @@ describe('Search Engine basic functionality tests', () => {
 
     it('titleIndex must be sorted in ascending order', () => {
       engine.createFieldIndexOn('title', 'string');
-      const isSorted = true;
+      let isSorted = true;
       // Note, index name will be indexFieldIndex => titleIndex in this case.
       const indexLength = engine.titleIndex.length;
       for (let i = indexLength - 1; i >= 1; i--) {
-        if (engine.titleIndex[i] < engine.titleIndex[i - 1]) {
+        if (engine.titleIndex[i].title < engine.titleIndex[i - 1].title) {
           isSorted = false;
           break;
         }
