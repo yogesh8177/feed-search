@@ -8,6 +8,8 @@ class SearchEngine {
         this.invertedIndex = {};
         // max result size
         this.maxPageSize = 10;
+        // min nGram size
+        this.minNgram = 2;
     }
 
     /**
@@ -80,7 +82,28 @@ class SearchEngine {
                 });
     
                 this.addPhrasesToInvertedIndex(fieldTokens, document.id);
+                this.addNgramsToInvertedIndex(fieldTokens, document.id);
             });
+        });
+    }
+
+    addNgramsToInvertedIndex(fieldTokens, documentId) {
+        let currentNgramSize = this.minNgram;
+        fieldTokens.forEach(token => {
+            const tokenLength = token.length;
+            while(currentNgramSize <= token.length) {
+                for(let i = 0; i <= (tokenLength - currentNgramSize); i++) {
+                    const nGram = token.slice(i, i + currentNgramSize);
+                    if (this.invertedIndex.hasOwnProperty(nGram)) {
+                        this.invertedIndex[nGram].add(documentId);
+                    }
+                    else {
+                        this.invertedIndex[nGram] = new Set([documentId]);
+                    }
+                }
+                currentNgramSize++;
+            }
+            currentNgramSize = this.minNgram;
         });
     }
 
