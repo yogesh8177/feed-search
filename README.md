@@ -25,6 +25,7 @@ We have our in memory database which we will use to store mock data. Following a
     1. We remove `[.:]` chars to clean our tokens.
     1. We also index phrases, however we only consider a phrase consisting of utmost 4 words
     1. This engine expects that the text contains single space between words, so make sure to sanitize input.
+    1. Creates `nGram` based inverted index for the indexed fields by default.
 
 1. Our engine is located at `$PROJECT_ROOT/database` folder.
 1. You can run tests for as follows:
