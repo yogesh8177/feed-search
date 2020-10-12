@@ -188,6 +188,20 @@ describe('Search Engine basic functionality tests', () => {
       assert.strictEqual(titlesFound, expectedTitles.length);
     });
 
+    it('Search should return items having `Regional` in their title for search term `region`', () => {
+      engine.createInvertedTextIndex(['title', 'description']);
+      const params = {
+        page: 1,
+        pageSize: 100,
+        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+      };
+
+      let result = engine.searchKeywords(['region'], params);
+      assert.strictEqual(result.total, 8);
+      result.documents.forEach(doc => {
+        assert.strictEqual(doc.title.match(/Regional/g)[0], 'Regional');
+      });
+    });
   });
   
   describe('Sorting in our db', () => {

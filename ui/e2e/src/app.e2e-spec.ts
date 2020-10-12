@@ -105,6 +105,28 @@ describe('Feed App', () => {
         expect(cardTitle.getText()).toEqual(titleToMatch);
       });
     });
+
+    it('search term `region` should return 6 cards with expected titles', async () => {
+      const expectedTitles = [
+        'Regional Functionality Analyst',
+        'Regional Program Facilitator',
+        'Regional Paradigm Developer',
+        'Regional Brand Planner',
+        'Regional Configuration Designer',
+        'Regional Creative Manager'
+      ];
+      const searchInput = page.getSearchWebElement();
+      searchInput.clear();
+      searchInput.sendKeys(`region`);
+      searchInput.sendKeys(Key.ENTER);
+      await browser.sleep(1000);
+      const feedCardTitles = await page.getFeedCards();
+      expect(feedCardTitles.length).toEqual(6);
+      feedCardTitles.forEach((cardTitle, index) => {
+        const titleToMatch = expectedTitles[index].length > 32 ? expectedTitles[index].substr(0, 32) + '..' : expectedTitles[index];
+        expect(cardTitle.getText()).toEqual(titleToMatch);
+      });
+    });
   });
 
   describe('Pagination tests', () => {
