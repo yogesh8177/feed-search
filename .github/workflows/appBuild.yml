@@ -29,7 +29,7 @@ jobs:
         cd ./database && npm ci
         cd ./database && npm run build --if-present
         cd ./database && npm run coverage
-        npm ci && npm run coverage
+    - run: npm ci && npm run coverage
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v1
