@@ -47,6 +47,7 @@ const uploadToS3 = async (s3, payload) => {
             Key: payload.Key,
             Body: payload.Body,
         }).promise();
+        return response;
     }
     catch(error) {
         console.error({

@@ -27,21 +27,6 @@ const response = {
     body: JSON.stringify('Success'),
 };
 
-
-
-(async () => {
-    let news            = await util.fetchNews(newsapi);
-    console.log({news});
-    let transformedNews = util.transformNewsFormat(news.articles);
-    let s3Response      = await util.uploadToS3(s3, {
-        Bucket: S3_BUCKET,
-        Key: 'news/data.json',
-        Body: JSON.stringify(transformedNews),
-        ContentType: "application/json"
-    });
-    console.log({transformedNews, s3Response});
-})();
-
 exports.handler = async (event) => {
     try{
         console.log({event: JSON.stringify(event)});
