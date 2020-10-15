@@ -103,7 +103,7 @@ const feedController = (req, res) => {
     }
 }
 
-const refreshHandler = async (req, res) => {
+const refreshController = async (req, res) => {
     try {
         const NS_PER_SEC = 1e9;
         const MS_PER_NS = 1e-6
@@ -138,7 +138,7 @@ const requestListener = async (req, res) => {
         break;
 
         case '/refresh':
-            await refreshHandler(req, res);
+            await refreshController(req, res);
         break;
 
         case '/test':
