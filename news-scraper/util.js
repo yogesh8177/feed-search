@@ -2,7 +2,7 @@
 const dotenv  = require('dotenv').config();
 
 const fetchEnvVariable = (variableName) => {
-    const env = process.env.ENV;
+    const env = process.env.NODE_ENV;
     return (env === 'test') ? dotenv.parsed[variableName] : process.env[variableName];
 }
 

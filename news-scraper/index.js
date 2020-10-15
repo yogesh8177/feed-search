@@ -7,17 +7,19 @@ const IAM_ACCESS_KEY_ID = util.fetchEnvVariable('IAM_ACCESS_KEY_ID');
 const IAM_SECRET_KEY    = util.fetchEnvVariable('IAM_SECRET_KEY');
 const S3_BUCKET         = util.fetchEnvVariable('S3_BUCKET');
 
-const s3 = new AWS.S3({
-    credentials: {
-      accessKeyId: IAM_ACCESS_KEY_ID,
-      secretAccessKey: IAM_SECRET_KEY,
-    }
+AWS.config.update({
+    region: 'us-east-1',
+    accessKeyId: IAM_ACCESS_KEY_ID,
+    secretAccessKey: IAM_SECRET_KEY,
 });
+
+const s3 = new AWS.S3();
 
 console.log({
     NEWS_API_KEY,
     IAM_SECRET_KEY,
-    IAM_ACCESS_KEY_ID
+    IAM_ACCESS_KEY_ID,
+    S3_BUCKET
 });
 
 const newsapi = new NewsAPI(NEWS_API_KEY);
@@ -26,6 +28,32 @@ const response = {
     statusCode: 200,
     body: JSON.stringify('Success'),
 };
+
+(async() => {
+    try{
+
+        let news            = await util.fetchNews(newsapi);
+        let transformedNews = util.transformNewsFormat(news.articles);
+        let s3Response      = await util.uploadToS3(s3, {
+            Bucket: S3_BUCKET,
+            Key: 'news/data.json',
+            Body: JSON.stringify({message: 'hi'}),
+            ContentType: "application/json"
+        });
+        console.log({s3Response});
+
+        return response;
+    }
+    catch(error) {
+        console.error({
+            message: 'Error in news scraper lambda',
+            error
+        });
+        response.statusCode = 500;
+        response.body = 'Internal server error';
+        return response;
+    }
+})();
 
 exports.handler = async (event) => {
     try{

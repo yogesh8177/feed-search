@@ -1,25 +1,43 @@
 const http          = require("http");
+const dotenv        = require('dotenv').config();
 const querystring   = require('querystring');
 const SearchEngine  = require('./database/searchEngine');
 const mockData      = require('./data/mock_data.json');
 const host          = process.env.HOST || '0.0.0.0';
 const port          = process.env.PORT || 8000;
+const AWS           = require('aws-sdk');
+
+const IAM_ACCESS_KEY_ID = fetchEnvVariable('IAM_ACCESS_KEY_ID');
+const IAM_SECRET_KEY    = fetchEnvVariable('IAM_SECRET_KEY');
+const S3_BUCKET         = fetchEnvVariable('S3_BUCKET');
+const env               = fetchEnvVariable('NODE_ENV');
+
+AWS.config.update({
+    region: 'us-east-1',
+    accessKeyId: IAM_ACCESS_KEY_ID,
+    secretAccessKey: IAM_SECRET_KEY,
+});
+
+const s3 = new AWS.S3();
 
 // Instantiating our in memory database
 const engine = new SearchEngine();
-try {
-    engine.loadDataIntoDb(mockData);
-    engine.createFieldIndexOn('dateLastEdited', 'Date');
-    engine.createFieldIndexOn('title', 'string');
-    engine.createInvertedTextIndex(['title', 'description']);
-}
-catch(error) {
-    console.error(`Error while initializing in memory database`);
-    console.error(error);
-}
-
-const engineKeys = Object.keys(engine);
-console.log(`Initialized in memory db`, engineKeys);
+(async() => {
+    try {
+        const dataToLoad = env === 'test' ? mockData : await fetchDataToLoad(env, s3);
+        engine.loadDataIntoDb(dataToLoad);
+        engine.createFieldIndexOn('dateLastEdited', 'Date');
+        engine.createFieldIndexOn('title', 'string');
+        engine.createInvertedTextIndex(['title', 'description']);
+    }
+    catch(error) {
+        console.error(`Error while initializing in memory database`);
+        console.error(error);
+    }
+    
+    const engineKeys = Object.keys(engine);
+    console.log(`Initialized in memory db`, engineKeys);
+})();
 
 const feedController = (req, res) => {
     try {
@@ -88,6 +106,43 @@ const requestListener = (req, res) => {
         break;
     }
 };
+
+function fetchEnvVariable(variableName) {
+    const env = process.env.NODE_ENV;
+    return (env === 'test') ? dotenv.parsed[variableName] : process.env[variableName];
+}
+
+async function fetchFromS3(s3, payload) {
+    try{
+        let response = await s3.getObject({
+            Bucket: payload.Bucket,
+            Key: payload.Key
+        }).promise();
+        return response;
+    }
+    catch(error) {
+        console.error({
+            message: 'Error while fetching from s3',
+            error
+        });
+        return error;
+    }
+};
+
+async function fetchDataToLoad(env, s3) {
+    try{
+        if (env === 'test') return mockData;
+        let s3Data = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: 'news/data.json'});
+        return s3Data;
+    }
+    catch(error) {
+        console.error({
+            message: 'Error while fetching to load into search engine',
+            error
+        });
+        return error;
+    }
+}
 
 const server = http.createServer(requestListener);
 server.listen(port, host, () => {
