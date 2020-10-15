@@ -1,0 +1,21 @@
+{
+  "name": "newsscraper",
+  "version": "1.0.0",
+  "description": "fetch and store news to s3",
+  "main": "index.js",
+  "scripts": {
+    "start": "ENV=test node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "news",
+    "aggregator"
+  ],
+  "author": "yogesh",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.771.0",
+    "dotenv": "^8.2.0",
+    "newsapi": "^2.4.1"
+  }
+}
