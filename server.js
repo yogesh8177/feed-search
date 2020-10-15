@@ -27,7 +27,7 @@ if (env === 'production') {
 const engine = new SearchEngine();
 (async() => {
     try {
-        const dataToLoad = env === 'test' ? mockData : await fetchDataToLoad(env, s3);
+        const dataToLoad = ['test', 'docker', 'github'].includes(env) ? mockData : await fetchDataToLoad(env, s3);
         engine.loadDataIntoDb(dataToLoad);
         engine.createFieldIndexOn('dateLastEdited', 'Date');
         engine.createFieldIndexOn('title', 'string');
