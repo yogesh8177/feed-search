@@ -7,7 +7,6 @@ services:
   web: 
     build: .
     command: npm run start:test
-    env_file: .env
     expose:
      - 8000
     networks: 
