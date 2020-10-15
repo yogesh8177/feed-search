@@ -24,8 +24,6 @@ class SearchEngine {
         if (Array.isArray(data)) {
             data.forEach(item => {
                 let doc = Object.assign({}, item);
-                delete doc['name'];
-                doc.title = item.name;
                 doc.dateLastEdited = new Date(doc.dateLastEdited);
                 this.documentsMap[++this.documentId] = doc;
             });

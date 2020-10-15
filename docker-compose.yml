@@ -6,7 +6,7 @@ networks:
 services: 
   web: 
     build: .
-    command: npm start
+    command: npm run start:docker
     expose:
      - 8000
     networks: 

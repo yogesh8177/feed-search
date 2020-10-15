@@ -56,6 +56,11 @@ Below are steps to run our web server:
 
 >Note: Server will be listening at `http://localhost:8000/feed?page=1&pageSize=6&sortField=dateLastEdited&type=Date&order=asc&searchTerm=`
 
+Following are some useful endpoints for debugging and refreshing site content
+
+1. `http://localhost:8000/test` this endpoint will be useful for health checks.
+1. `http://localhost:8000/test` this endpoint will reload search engine data from the data source.
+
 # Angular UI [![Actions Status](https://github.com/yogesh8177/feed-search/workflows/Feed%20App/badge.svg)](https://github.com/yogesh8177/feed-search/actions)
 
 Our UI code is situated at `$PROJECT_ROOT/ui` folder.
