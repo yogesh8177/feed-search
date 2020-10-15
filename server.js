@@ -118,7 +118,11 @@ async function fetchFromS3(s3, payload) {
             Bucket: payload.Bucket,
             Key: payload.Key
         }).promise();
-        return response;
+        console.log({
+            message: 'data loaded from s3',
+            response
+        });
+        return JSON.parse(response.Body.toString('utf-8'));
     }
     catch(error) {
         console.error({

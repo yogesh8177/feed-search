@@ -29,31 +29,31 @@ const response = {
     body: JSON.stringify('Success'),
 };
 
-(async() => {
-    try{
+// (async() => {
+//     try{
 
-        let news            = await util.fetchNews(newsapi);
-        let transformedNews = util.transformNewsFormat(news.articles);
-        let s3Response      = await util.uploadToS3(s3, {
-            Bucket: S3_BUCKET,
-            Key: 'news/data.json',
-            Body: JSON.stringify({message: 'hi'}),
-            ContentType: "application/json"
-        });
-        console.log({s3Response});
+//         let news            = await util.fetchNews(newsapi);
+//         let transformedNews = util.transformNewsFormat(news.articles);
+//         let s3Response      = await util.uploadToS3(s3, {
+//             Bucket: S3_BUCKET,
+//             Key: 'news/data.json',
+//             Body: JSON.stringify(transformedNews),
+//             ContentType: "application/json"
+//         });
+//         console.log({s3Response});
 
-        return response;
-    }
-    catch(error) {
-        console.error({
-            message: 'Error in news scraper lambda',
-            error
-        });
-        response.statusCode = 500;
-        response.body = 'Internal server error';
-        return response;
-    }
-})();
+//         return response;
+//     }
+//     catch(error) {
+//         console.error({
+//             message: 'Error in news scraper lambda',
+//             error
+//         });
+//         response.statusCode = 500;
+//         response.body = 'Internal server error';
+//         return response;
+//     }
+// })();
 
 exports.handler = async (event) => {
     try{
