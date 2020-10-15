@@ -31,7 +31,7 @@ jobs:
         npm run coverage
     - run: npm ci && npm run coverage
       env:
-        NODE_ENV: test
+        NODE_ENV: github
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v1
