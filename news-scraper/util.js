@@ -1,8 +1,9 @@
 
-const dotenv  = require('dotenv').config();
-
 const fetchEnvVariable = (variableName) => {
     const env = process.env.NODE_ENV;
+    if (env.startsWith('lambda')) return process.env[variableName];
+    
+    const dotenv  = require('dotenv').config();
     return (env === 'test') ? dotenv.parsed[variableName] : process.env[variableName];
 }
 
