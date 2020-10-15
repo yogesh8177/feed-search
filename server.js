@@ -7,6 +7,7 @@ const host          = process.env.HOST || '0.0.0.0';
 const port          = process.env.PORT || 8000;
 const AWS           = require('aws-sdk');
 let s3;
+let engine;
 
 const env           = fetchEnvVariable('NODE_ENV');
 let S3_BUCKET;
@@ -24,9 +25,15 @@ if (env === 'production') {
 }
 
 // Instantiating our in memory database
-const engine = new SearchEngine();
-(async() => {
+const initializeSearchEngine = async () => {
     try {
+        if (engine && Object.keys(engine).length) {
+            Object.keys(engine).forEach(key => {
+                delete engine[key];
+            });
+        }
+        engine = null;
+        engine = new SearchEngine();
         const dataToLoad = ['test', 'docker', 'github'].includes(env) ? mockData : await fetchDataToLoad(env, s3);
         engine.loadDataIntoDb(dataToLoad);
         engine.createFieldIndexOn('dateLastEdited', 'Date');
@@ -40,6 +47,15 @@ const engine = new SearchEngine();
     
     const engineKeys = Object.keys(engine);
     console.log(`Initialized in memory db`, engineKeys);
+}
+
+(async () => {
+    try {
+        await initializeSearchEngine();
+    }
+    catch(error) {
+        console.error(error);
+    }
 })();
 
 const feedController = (req, res) => {
@@ -87,7 +103,30 @@ const feedController = (req, res) => {
     }
 }
 
-const requestListener = (req, res) => {
+const refreshHandler = async (req, res) => {
+    try {
+        const NS_PER_SEC = 1e9;
+        const MS_PER_NS = 1e-6
+        const time = process.hrtime();
+        await initializeSearchEngine();
+        const diff = process.hrtime(time);
+        res.writeHead(200);
+        res.end(JSON.stringify({
+            message: 'refreshed', 
+            benchmark: `Refreshing took ${ (diff[0] * NS_PER_SEC + diff[1])  * MS_PER_NS } milliseconds`
+        })); 
+    }
+    catch(error) {
+        console.error({
+            message: 'Error while refreshing data',
+            error
+        });
+        res.writeHead(200);
+        res.end(JSON.stringify({message: 'error while refreshing', error: error.message})); 
+    }
+}
+
+const requestListener = async (req, res) => {
     const url = req.url.split('?');
 
     res.setHeader('Content-Type', 'application/json');
@@ -96,6 +135,10 @@ const requestListener = (req, res) => {
     switch(url[0]) {
         case '/feed':
             return feedController(req, res);
+        break;
+
+        case '/refresh':
+            await refreshHandler(req, res);
         break;
 
         case '/test':
