@@ -6,19 +6,22 @@ const mockData      = require('./data/mock_data.json');
 const host          = process.env.HOST || '0.0.0.0';
 const port          = process.env.PORT || 8000;
 const AWS           = require('aws-sdk');
+let s3;
 
-const IAM_ACCESS_KEY_ID = fetchEnvVariable('IAM_ACCESS_KEY_ID');
-const IAM_SECRET_KEY    = fetchEnvVariable('IAM_SECRET_KEY');
-const S3_BUCKET         = fetchEnvVariable('S3_BUCKET');
-const env               = fetchEnvVariable('NODE_ENV');
+const env           = fetchEnvVariable('NODE_ENV');
+let S3_BUCKET;
 
-AWS.config.update({
-    region: 'us-east-1',
-    accessKeyId: IAM_ACCESS_KEY_ID,
-    secretAccessKey: IAM_SECRET_KEY,
-});
+if (env === 'production') {
+    S3_BUCKET = fetchEnvVariable('S3_BUCKET');
 
-const s3 = new AWS.S3();
+    AWS.config.update({
+        region: 'us-east-1',
+        accessKeyId: fetchEnvVariable('IAM_ACCESS_KEY_ID'),
+        secretAccessKey: fetchEnvVariable('IAM_SECRET_KEY'),
+    });
+    
+    s3 = new AWS.S3();
+}
 
 // Instantiating our in memory database
 const engine = new SearchEngine();
