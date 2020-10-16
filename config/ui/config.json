@@ -1,5 +1,5 @@
 {
-    "appTitle": "News feed",
+    "appTitle": "Feed",
     "sortOptions": [
         {
             "label": "Last Edited",
@@ -31,5 +31,13 @@
                 }
             ]
         }
-    ]
+    ],
+    "queryParams": {
+        "searchTerm": "",
+        "page": 1,
+        "pageSize": 6,
+        "sortField": "dateLastEdited",
+        "type": "Date",
+        "order": "desc"
+    }
 }
