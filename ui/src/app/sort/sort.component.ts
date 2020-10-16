@@ -15,7 +15,7 @@ export class SortComponent implements OnInit {
   optionGroups: any[] = [
     {
       label: 'Last Edited',
-      values: [
+      options: [
         {
           id: 1,
           value: 'dateLastEdited:Date:asc',
@@ -30,7 +30,7 @@ export class SortComponent implements OnInit {
     },
     {
       label: 'Title',
-      values: [
+      options: [
         {
           id: 3,
           value: 'title:string:asc',
@@ -46,11 +46,13 @@ export class SortComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    console.log({initialSortField: this.selectedSort});
   }
 
   setSortField(field: string) {
     this.selectedSort = field;
     this.sortField.emit(field);
+    console.log({sortField: this.selectedSort});
   }
 
 }
