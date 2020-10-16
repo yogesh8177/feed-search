@@ -1,7 +1,9 @@
 import { Component, HostListener } from '@angular/core';
 import { FeedService } from './Services/feed.service';
+import { ConfigService } from './Services/config/config.service';
 import { LoaderService } from './Services/loader.service';
 import { Feed, FeedResponse } from './models/Feed';
+import { Config } from './models/Config';
 import { TableData } from './models/TableData';
 import { FeedQueryParams } from './models/FeedQueryParams';
 
@@ -11,7 +13,8 @@ import { FeedQueryParams } from './models/FeedQueryParams';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ui';
+  title = 'Feed';
+  config: Config;
   feed: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   showLoader: boolean = false;
@@ -34,12 +37,15 @@ export class AppComponent {
 
   constructor(
     private feedService: FeedService,
-    private loaderServie: LoaderService) {
+    private loaderServie: LoaderService,
+    private configService: ConfigService
+    ) {
   }
   
   ngOnInit() {
     this.initializeLoader();
     this.initializeQueryParams();
+    this.loadConfig();
     this.loadFeed(this.feedQueryParams);
   }
 
@@ -58,7 +64,7 @@ export class AppComponent {
       this.feedQueryParams.pageSize   = 6;
       this.feedQueryParams.sortField  = 'dateLastEdited';
       this.feedQueryParams.type       = 'Date';
-      this.feedQueryParams.order      = 'asc';
+      this.feedQueryParams.order      = 'desc';
     }
     else {
       this.feedQueryParams.searchTerm = savedState.searchTerm || '';
@@ -66,8 +72,18 @@ export class AppComponent {
       this.feedQueryParams.pageSize   = parseInt(savedState.pageSize) || 6;
       this.feedQueryParams.sortField  = savedState.sortField || 'dateLastEdited';
       this.feedQueryParams.type       = savedState.type || 'Date';
-      this.feedQueryParams.order      = savedState.order || 'asc';
+      this.feedQueryParams.order      = savedState.order || 'desc';
     }
+  }
+
+  loadConfig() {
+    this.configService.fetchConfig().subscribe(
+      data => {
+        this.config = data;
+        this.title  = this.config.appTitle; 
+      },
+      error => console.error(error)
+    );
   }
   
   loadFeed(params: FeedQueryParams) {

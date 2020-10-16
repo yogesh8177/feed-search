@@ -4,6 +4,7 @@
 
 export const environment = {
   feedApiUrl: 'http://localhost:8000/feed',
+  feedConfigApiUrl: 'http://localhost:8000/config',
   production: false
 };
 

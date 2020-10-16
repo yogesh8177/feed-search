@@ -1,11 +1,6 @@
 <label><strong>Sort by</strong></label>&nbsp;
-<select name="sort" id="sortSelect" (change)="setSortField($event.target.value)" [value]='selectedSort'>
-    <optgroup label="Last Edited">
-        <option id="sort-1" value="dateLastEdited:Date:asc">Edited (asc)</option>
-        <option id="sort-2" value="dateLastEdited:Date:desc">Edited (desc)</option>
-    </optgroup>
-    <optgroup label="Title">
-        <option id="sort-3" value="title:string:asc">Title (asc)</option>
-        <option id="sort-4" value="title:string:desc">Title (desc)</option>
+<select name="sort" id="sortSelect" (change)="setSortField($event.target.value)">
+    <optgroup *ngFor="let item of optionGroups | keyvalue" label="{{item.value.label}}">
+        <option *ngFor="let option of item.value.options" id="sort-{{option.id}}" [selected]="selectedSort === option.value" value="{{option.value}}">{{option.title}}</option>
     </optgroup>
 </select>
