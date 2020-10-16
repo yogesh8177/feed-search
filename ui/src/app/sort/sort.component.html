@@ -1,5 +1,5 @@
 <label><strong>Sort by</strong></label>&nbsp;
-<select name="sort" id="sortSelect" (change)="setSortField($event.target.value)" [value]='selectedSort'>
+<select name="sort" id="sortSelect" (change)="setSortField($event.target.value)">
     <optgroup *ngFor="let item of optionGroups | keyvalue" label="{{item.value.label}}">
         <option *ngFor="let optionValue of item.value.options" id="sort-{{optionValue.id}}" [selected]="selectedSort === optionValue.value" value="{{optionValue.value}}">{{optionValue.title}}</option>
     </optgroup>
