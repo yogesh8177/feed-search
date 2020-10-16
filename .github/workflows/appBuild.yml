@@ -68,7 +68,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: yogesh8177/feed-ui
           tags: latest
-          dockerfile: ./ui/Dockerfile
+          dockerfile: ./ui/Dockerfile.prod
   
   s3_deploy:
     runs-on: ubuntu-latest
