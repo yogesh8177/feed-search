@@ -77,10 +77,21 @@ export class AppComponent {
         let feedResponse: FeedResponse = data;
         this.totalResults = data.total;
         this.feed = feedResponse.documents;
+        this.sanitizeFeedResponse();
         console.log(`feed loaded`, this.feed);
       },
       error => console.error(error)
     );
+  }
+
+  sanitizeFeedResponse() {
+    this.feed.forEach(item => {
+      Object.keys(item).forEach(key => {
+        if (item[key] === null || item[key] === undefined) {
+          item[key] = 'No content';
+        }
+      });
+    });
   }
 
   onSortFieldChange(event: string) {
