@@ -4,21 +4,13 @@ WORKDIR /feed-ui
 COPY . .
 
 # Install node modules
-RUN cd ui && npm install
+RUN cd ui && npm install && npm install -g @angular/cli
 
-# Install angular cli
-RUN npm install -g @angular/cli
 
 WORKDIR /feed-ui/ui
 
 # Update protractor webdriver
 RUN ./node_modules/protractor/bin/webdriver-manager update
-
-# # Install chrome for e2e tests
-# RUN apt-get update
-# RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-# RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
-# RUN google-chrome --version
 
 # To solve add-apt-repository : command not found
 RUN apt-get update
