@@ -6,6 +6,7 @@ const mockData      = require('./data/mock_data.json');
 const host          = process.env.HOST || '0.0.0.0';
 const port          = process.env.PORT || 8000;
 const AWS           = require('aws-sdk');
+const fs            = require('fs');
 let s3;
 let engine;
 
@@ -126,6 +127,30 @@ const refreshController = async (req, res) => {
     }
 }
 
+const configController = async (req, res) => {
+    try{
+        let config;
+        if (['test', 'docker'].includes(env)) {
+            config = JSON.parse(fs.readFileSync('./config/ui/config.json'));
+            console.log('fetched config via fs');
+        }
+        else {
+            config = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: 'config/config.json'});
+            console.log('fetched config via s3');
+        }
+        res.writeHead(200);
+        res.end(JSON.stringify(config)); 
+    }
+    catch(error) {
+        console.error({
+            message: 'Error while fetching config',
+            error
+        });
+        res.writeHead(500);
+        res.end('Internal server error'); 
+    }
+}
+
 const requestListener = async (req, res) => {
     const url = req.url.split('?');
 
@@ -135,6 +160,10 @@ const requestListener = async (req, res) => {
     switch(url[0]) {
         case '/feed':
             return feedController(req, res);
+        break;
+
+        case '/config':
+            return configController(req, res);
         break;
 
         case '/refresh':

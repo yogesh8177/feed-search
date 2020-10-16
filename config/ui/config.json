@@ -1,0 +1,34 @@
+{
+    "sortOptions": [
+        {
+            "label": "Last Edited",
+            "options": [
+                {
+                "id": 1,
+                "value": "dateLastEdited:Date:asc",
+                "title": "Edited (asc)"
+                },
+                {
+                "id": 2,
+                "value": "dateLastEdited:Date:desc",
+                "title": "Edited (desc)"
+                }
+            ]
+        },
+        {
+            "label": "Title",
+            "options": [
+                {
+                "id": 3,
+                "value": "title:string:asc",
+                "title": "Title (asc)"
+                },
+                {
+                "id": 4,
+                "value": "title:string:desc",
+                "title": "Title (desc)"
+                }
+            ]
+        }
+    ]
+}
