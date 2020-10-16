@@ -4,7 +4,8 @@ WORKDIR /feed-ui
 COPY . .
 
 # Install node modules
-RUN cd ui && npm install
+RUN cd ui && npm install && npm install -g @angular/cli
+
 
 WORKDIR /feed-ui/ui
 
