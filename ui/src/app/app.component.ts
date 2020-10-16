@@ -13,7 +13,7 @@ import { FeedQueryParams } from './models/FeedQueryParams';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ui';
+  title = 'Feed';
   config: Config;
   feed: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
@@ -80,6 +80,7 @@ export class AppComponent {
     this.configService.fetchConfig().subscribe(
       data => {
         this.config = data;
+        this.title  = this.config.appTitle; 
       },
       error => console.error(error)
     );

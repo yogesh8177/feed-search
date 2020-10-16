@@ -1,4 +1,5 @@
 {
+    "appTitle": "News feed",
     "sortOptions": [
         {
             "label": "Last Edited",
