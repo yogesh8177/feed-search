@@ -146,7 +146,7 @@ const requestListener = async (req, res) => {
             res.end(JSON.stringify({message: 'healthy'})); 
         break;
 
-        case  'loaderio-5a06a5b545ec5f56a42510093c4621e1':
+        case '/loaderio-5a06a5b545ec5f56a42510093c4621e1':
             res.writeHead(200);
             res.end(JSON.stringify({message: 'success'})); 
         break;
