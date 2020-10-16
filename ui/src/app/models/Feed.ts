@@ -3,6 +3,7 @@ export class Feed {
     title: string;
     image: string;
     description: string;
+    url: string;
     dateLastEdited: Date;
 }
 
