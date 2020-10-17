@@ -31,7 +31,6 @@ export class AppPage {
     return element(by.tagName('app-feed-card'));
   }
 
-
   getSearchWebElement(): WebElement {
     return element(by.name('search'));
   }
