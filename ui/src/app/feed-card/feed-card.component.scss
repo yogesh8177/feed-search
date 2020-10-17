@@ -20,6 +20,37 @@
     color: black;
 }
 
+.stat-item {
+    width: fit-content;
+}
+
+.stat-value-red {
+    padding: 2px;
+    border-radius: 2px;
+    background-color: brown;
+}
+
+.stat-value-green {
+    padding: 2px;
+    border-radius: 2px;
+    background-color: greenyellow;
+    color: #000;
+}
+
+.stat-value-orange {
+    padding: 2px;
+    border-radius: 2px;
+    background-color: orange;
+    color: #000;
+}
+
+.stat-value-grey {
+    padding: 2px;
+    border-radius: 2px;
+    background-color: grey;
+    color: #fff;
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 320px) {
     .feed-image {
