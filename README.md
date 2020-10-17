@@ -56,6 +56,26 @@ Below are steps to run our web server:
 
 >Note: Server will be listening at `http://localhost:8000/feed?page=1&pageSize=6&sortField=dateLastEdited&type=Date&order=asc&searchTerm=`
 
+Following are the necessary `env` variables that must be set for web service to run:
+
+```
+# AWS IAM keys
+IAM_ACCESS_KEY_ID=<key id>
+IAM_SECRET_KEY=<secret key>
+
+# S3 config
+S3_BUCKET=<bucket>
+S3_DB_SOURCE_KEY=<source key>
+
+# Database engine config
+FIELD_INDEXES=dateLastEdited:Date,title:string
+INVERTED_INDEXES=title,description
+DEFAULT_SORT_ORDER=desc
+
+# Node env
+NODE_ENV=test
+```
+
 Following are some useful endpoints for debugging and refreshing site content
 
 1. `http://localhost:8000/test` this endpoint will be useful for health checks.
