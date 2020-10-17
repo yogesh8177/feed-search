@@ -31,8 +31,8 @@ describe('Feed App', () => {
   });
 
   describe('UI elements', () => {
-    it('should display Feed as app title', () => {
-      expect(page.getTitleText()).toEqual('Feed');
+    it('should display Superheroes as app title', () => {
+      expect(page.getTitleText()).toEqual('Superheroes');
     });
   
     it('should display Search input with empty initial value', () => {
@@ -44,92 +44,87 @@ describe('Feed App', () => {
       expect(page.getSortInput()).toEqual('select');
     });
   
-    it('should display 6 feed cards on page load', async () => {
+    it('should display 10 feed cards on page load', async () => {
       const feedCards = await page.getFeedCardTitles();
-      expect(feedCards.length).toEqual(6);
+      expect(feedCards.length).toEqual(10);
     });
   });
 
   describe('feed cards', () => {
-    it('first feed card must have title `Chief Brand Orchestrator`', async () => {
+    it('first feed card must have title `Abe Sapien`', async () => {
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles[0].getText()).toEqual(`Chief Brand Orchestrator`);
+      expect(feedCardTitles[0].getText()).toEqual(`Abe Sapien`);
     });
   
-    it('last feed card must have title `Investor Quality Executive`', async () => {
+    it('last feed card on page 1 must have title `Agent Bob`', async () => {
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles[feedCardTitles.length - 1].getText()).toEqual(`Investor Quality Executive`);
+      expect(feedCardTitles[feedCardTitles.length - 1].getText()).toEqual(`Agent Bob`);
     });
   });
 
   describe('search titles', () => {
-    it('search term `king` should return 4 cards', async () => {
+    it('search term `batman` should return 3 cards', async () => {
       const searchInput = page.getSearchWebElement();
-      searchInput.sendKeys('king');
+      searchInput.sendKeys('batman');
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles.length).toEqual(4);
+      expect(feedCardTitles.length).toEqual(3);
     });
 
-    it('search term `king` should match the given titles (default filters)', async () => {
+    it('search term `super` should match the given names (default filters)', async () => {
       //page.navigateTo();
-      const titlesToMatch = [
-        'The Lion King',
-        'Human Web Agent',
-        'The Lord of the Rings: The Return of the King',
-        'District Solutions Orchestrator'
+      const namesToMatch = [
+        'Cyborg Superman',
+        'Superboy',
+        'Supergirl',
+        'Superboy-Prime',
+        'Superman'
       ];
       const searchInput = page.getSearchWebElement();
       searchInput.clear();
-      searchInput.sendKeys('king');
+      searchInput.sendKeys('super');
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles.length).toEqual(4);
+      expect(feedCardTitles.length).toEqual(5);
       feedCardTitles.forEach((cardTitle, index) => {
-        const titleToMatch = titlesToMatch[index].length > 32 ? titlesToMatch[index].substr(0, 32) + '..' : titlesToMatch[index];
-        expect(cardTitle.getText()).toEqual(titleToMatch);
+        const nameToMatch = namesToMatch[index].length > 32 ? namesToMatch[index].substr(0, 32) + '..' : namesToMatch[index];
+        expect(cardTitle.getText()).toEqual(nameToMatch);
       });
     });
 
-    it('search term `"the lion king"` should return 2 cards with expected titles', async () => {
-      const expectedTitles = [
-        'The Lion King',
-        'District Solutions Orchestrator'
+    it('search term `"Agent 13"` should return 1 cards with expected name', async () => {
+      const expectedNames = [
+        'Agent 13'
       ];
       const searchInput = page.getSearchWebElement();
       searchInput.clear();
-      searchInput.sendKeys(`"the lion king"`);
+      searchInput.sendKeys(`"Agent 13"`);
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles.length).toEqual(2);
+      expect(feedCardTitles.length).toEqual(1);
       feedCardTitles.forEach((cardTitle, index) => {
-        const titleToMatch = expectedTitles[index].length > 32 ? expectedTitles[index].substr(0, 32) + '..' : expectedTitles[index];
-        expect(cardTitle.getText()).toEqual(titleToMatch);
+        const nameToMatch = expectedNames[index].length > 32 ? expectedNames[index].substr(0, 32) + '..' : expectedNames[index];
+        expect(cardTitle.getText()).toEqual(nameToMatch);
       });
     });
 
-    it('search term `region` should return 6 cards with expected titles', async () => {
-      const expectedTitles = [
-        'Regional Functionality Analyst',
-        'Regional Program Facilitator',
-        'Regional Paradigm Developer',
-        'Regional Brand Planner',
-        'Regional Configuration Designer',
-        'Regional Creative Manager'
+    it('search term `abomina` should return 1 card with expected name', async () => {
+      const expectedNames = [
+        'Abomination'
       ];
       const searchInput = page.getSearchWebElement();
       searchInput.clear();
-      searchInput.sendKeys(`region`);
+      searchInput.sendKeys(`abomina`);
       searchInput.sendKeys(Key.ENTER);
-      await browser.sleep(1000);
+      await browser.sleep(1300);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles.length).toEqual(6);
+      expect(feedCardTitles.length).toEqual(1);
       feedCardTitles.forEach((cardTitle, index) => {
-        const titleToMatch = expectedTitles[index].length > 32 ? expectedTitles[index].substr(0, 32) + '..' : expectedTitles[index];
-        expect(cardTitle.getText()).toEqual(titleToMatch);
+        const nameToMatch = expectedNames[index].length > 32 ? expectedNames[index].substr(0, 32) + '..' : expectedNames[index];
+        expect(cardTitle.getText()).toEqual(nameToMatch);
       });
     });
   });
@@ -149,70 +144,86 @@ describe('Feed App', () => {
       expect(feedCard.isPresent()).toBe(false);
     });
 
-    it('should return 4 feed cards when we paginate to 17th page', async () => {
+    it('should return 1 feed cards when we paginate to 74th page', async () => {
       const pageInput    = page.getPageInputWebElement();
       const jumpToButton = page.getJumpToPageButton();
       const searchInput  = page.getSearchWebElement();
 
       await browser.sleep(1000);
       pageInput.clear();
-      pageInput.sendKeys(17);
+      pageInput.sendKeys(74);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await browser.sleep(1000);
+      await browser.sleep(1300);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles.length).toEqual(4);
+      expect(feedCardTitles.length).toEqual(1);
     });
 
-    it('should return 0 feed cards when we paginate to 2nd page with search term `king`', async () => {
+    it('should return 0 feed cards when we paginate to 2nd page with search term `super`', async () => {
       const searchInput  = page.getSearchWebElement();
       const pageInput    = page.getPageInputWebElement();
       const jumpToButton = page.getJumpToPageButton();
 
-      searchInput.sendKeys('king');
+      searchInput.sendKeys('super');
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
       pageInput.clear();
       pageInput.sendKeys(2);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await browser.sleep(1000);
+      await browser.sleep(1500);
       const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles.length).toEqual(0);
     });
   });
 
   describe('Sorting tests', () => {
-    it('sorting by dateLastEdited in desc order should return first title as `Regional Marketing Developer`', async () => {
-      const sortOption = await page.getSortWebElement('sort-2');
+    it('sorting by id in desc order on page 3 should return first title as `Winter Soldier`', async () => {
+      const sortOption   = await page.getSortWebElement('sort-2');
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+      
+      pageInput.clear();
+      pageInput.sendKeys(3);
+      pageInput.sendKeys(Key.ENTER);
+      jumpToButton.click();
+      await browser.sleep(1000);
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles[0].getText()).toEqual('Regional Marketing Developer');
+      expect(feedCardTitles[0].getText()).toEqual('Winter Soldier');
     });
 
-    it('sorting by dateLastEdited in asc order should return first title as `Chief Brand Orchestrator`', async () => {
+    it('sorting by id in asc order should return first title as `Abe Sapien`', async () => {
       const sortOption = await page.getSortWebElement('sort-1');
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles[0].getText()).toEqual('Chief Brand Orchestrator');
+      expect(feedCardTitles[0].getText()).toEqual('Abe Sapien');
     });
 
-    it('sorting by title in asc order should return first title as `Central Creative Producer`', async () => {
+    it('sorting by name in asc order should return first name as `A-Bomb`', async () => {
       const sortOption = await page.getSortWebElement('sort-3');
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles[0].getText()).toEqual('Central Creative Producer');
+      expect(feedCardTitles[0].getText()).toEqual('A-Bomb');
     });
 
-    it('sorting by title in desc order should return first title as `The Lord of the Rings: The Retur..`', async () => {
+    it('sorting by name in desc order on page 3 should return first title as `White Canary`', async () => {
       const sortOption = await page.getSortWebElement('sort-4');
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+      
+      pageInput.clear();
+      pageInput.sendKeys(3);
+      pageInput.sendKeys(Key.ENTER);
+      jumpToButton.click();
+      await browser.sleep(1000);
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCardTitles();
-      expect(feedCardTitles[0].getText()).toEqual('The Lord of the Rings: The Retur..');
+      expect(feedCardTitles[0].getText()).toEqual('White Canary');
     });
   });
 
