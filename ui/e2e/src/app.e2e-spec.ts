@@ -173,7 +173,7 @@ describe('Feed App', () => {
 
   describe('Sorting tests', () => {
     it('sorting by id in desc order should return first title as `Yellowjacket II`', async () => {
-      const sortOption = await page.getSortWebElement('sort-4');
+      const sortOption = await page.getSortWebElement('sort-2');
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
@@ -181,7 +181,7 @@ describe('Feed App', () => {
     });
 
     it('sorting by id in asc order should return first title as `Abe Sapien`', async () => {
-      const sortOption = await page.getSortWebElement('sort-3');
+      const sortOption = await page.getSortWebElement('sort-1');
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
@@ -189,7 +189,7 @@ describe('Feed App', () => {
     });
 
     it('sorting by name in asc order should return first name as `A-Bomb`', async () => {
-      const sortOption = await page.getSortWebElement('sort-1');
+      const sortOption = await page.getSortWebElement('sort-3');
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
@@ -197,7 +197,7 @@ describe('Feed App', () => {
     });
 
     it('sorting by name in desc order should return first title as `Zoom`', async () => {
-      const sortOption = await page.getSortWebElement('sort-2');
+      const sortOption = await page.getSortWebElement('sort-4');
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();

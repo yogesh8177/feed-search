@@ -2,21 +2,6 @@
     "appTitle": "Superheroes",
     "sortOptions": [
         {
-            "label": "Name",
-            "options": [
-                {
-                    "id": 1,
-                    "value": "name:string:asc",
-                    "title": "Name (asc)"
-                },
-                {
-                    "id": 2,
-                    "value": "name:string:desc",
-                    "title": "Name (desc)"
-                }
-            ]
-        },
-        {
             "label": "ID",
             "options": [
                 {
@@ -25,9 +10,24 @@
                     "title": "ID (asc)"
                 },
                 {
-                    "id": 1,
+                    "id": 2,
                     "value": "id:number:desc",
                     "title": "ID (desc)"
+                }
+            ]
+        },
+        {
+            "label": "Name",
+            "options": [
+                {
+                    "id": 3,
+                    "value": "name:string:asc",
+                    "title": "Name (asc)"
+                },
+                {
+                    "id": 4,
+                    "value": "name:string:desc",
+                    "title": "Name (desc)"
                 }
             ]
         }
