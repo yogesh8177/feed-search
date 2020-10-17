@@ -186,7 +186,7 @@ describe('Feed App', () => {
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
-      expect(feedCardTitles[0].getText()).toEqual('Yellowjacket II');
+      expect(feedCardTitles[0].getText()).toEqual('Winter Soldier');
     });
 
     it('sorting by id in asc order should return first title as `Abe Sapien`', async () => {
