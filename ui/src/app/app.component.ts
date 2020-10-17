@@ -22,8 +22,8 @@ export class AppComponent {
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
     {title: 'image', type: TableData.IMAGE}, 
-    {title: 'title', type: TableData.STRING}, 
-    {title: 'description', type: TableData.STRING},
+    {title: 'name', type: TableData.STRING}, 
+    {title: 'powerstats', type: TableData.STRING},
     {title: 'dateLastEdited', type: TableData.DATE}
   ];
   totalResults: number;
@@ -61,18 +61,19 @@ export class AppComponent {
     if (!savedState) {
       this.feedQueryParams.searchTerm = '';
       this.feedQueryParams.page       = 1;
-      this.feedQueryParams.pageSize   = 6;
-      this.feedQueryParams.sortField  = 'dateLastEdited';
-      this.feedQueryParams.type       = 'Date';
-      this.feedQueryParams.order      = 'desc';
+      this.feedQueryParams.pageSize   = 10;
+      this.feedQueryParams.sortField  = 'id';
+      this.feedQueryParams.type       = 'number';
+      this.feedQueryParams.order      = 'asc';
     }
     else {
+      console.log('loaded from localstorage', savedState);
       this.feedQueryParams.searchTerm = savedState.searchTerm || '';
       this.feedQueryParams.page       = parseInt(savedState.page) || 1;
-      this.feedQueryParams.pageSize   = parseInt(savedState.pageSize) || 6;
-      this.feedQueryParams.sortField  = savedState.sortField || 'dateLastEdited';
-      this.feedQueryParams.type       = savedState.type || 'Date';
-      this.feedQueryParams.order      = savedState.order || 'desc';
+      this.feedQueryParams.pageSize   = parseInt(savedState.pageSize) || 10;
+      this.feedQueryParams.sortField  = savedState.sortField || 'id';
+      this.feedQueryParams.type       = savedState.type || 'number';
+      this.feedQueryParams.order      = savedState.order || 'asc';
     }
   }
 

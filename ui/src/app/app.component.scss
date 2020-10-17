@@ -82,14 +82,15 @@
   .card {
     border-radius: 5px;
     border: 1px solid #eee;
-    background-color: #fafafa;
-    width: 375px;
+    background-color: #000;
+    color: blanchedalmond;;
+    width: 200px;
     margin: 0px 8px 16px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     transition: all 0.2s ease-in-out;
-    line-height: 24px;
+    line-height: 18px;
     animation: slideInFromLeft 0.2s ease-out 0.1s 1;
   }
 
@@ -273,7 +274,7 @@
     }
     .card {
       padding: 0;
-      width: 95%;
+      width: 150px;
     }
   }
   @media screen and (max-width: 767px) {
@@ -294,7 +295,7 @@
     }
     .card {
       padding: 0;
-      width: 95%;
+      width: 150px;
     }
   }
 
@@ -311,7 +312,7 @@
     }
     .card {
       padding: 0;
-      width: 95%;
+      width: 200px;
     }
   }
 

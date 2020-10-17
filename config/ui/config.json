@@ -1,33 +1,33 @@
 {
-    "appTitle": "Feed",
+    "appTitle": "Superheroes",
     "sortOptions": [
         {
-            "label": "Last Edited",
+            "label": "Name",
             "options": [
                 {
-                "id": 1,
-                "value": "dateLastEdited:Date:asc",
-                "title": "Edited (asc)"
+                    "id": 1,
+                    "value": "name:string:asc",
+                    "title": "Name (asc)"
                 },
                 {
-                "id": 2,
-                "value": "dateLastEdited:Date:desc",
-                "title": "Edited (desc)"
+                    "id": 2,
+                    "value": "name:string:desc",
+                    "title": "Name (desc)"
                 }
             ]
         },
         {
-            "label": "Title",
+            "label": "ID",
             "options": [
                 {
-                "id": 3,
-                "value": "title:string:asc",
-                "title": "Title (asc)"
+                    "id": 1,
+                    "value": "id:number:asc",
+                    "title": "ID (asc)"
                 },
                 {
-                "id": 4,
-                "value": "title:string:desc",
-                "title": "Title (desc)"
+                    "id": 1,
+                    "value": "id:number:desc",
+                    "title": "ID (desc)"
                 }
             ]
         }
@@ -36,8 +36,8 @@
         "searchTerm": "",
         "page": 1,
         "pageSize": 6,
-        "sortField": "dateLastEdited",
-        "type": "Date",
-        "order": "desc"
+        "sortField": "id",
+        "type": "number",
+        "order": "asc"
     }
 }

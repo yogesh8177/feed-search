@@ -15,13 +15,6 @@
     <app-feed-card class="card" *ngFor="let feedCard of feed" [feedCard]="feedCard"></app-feed-card>
   </div>
 
-  <app-table 
-    [data]      = "feed" 
-    [headers]   = "tableHeaders" 
-    [showCount] = "true"
-  >
-  </app-table>
-
   <app-paginator
    class              ="card-container" 
    [currentPage]      ="feedQueryParams.page" 

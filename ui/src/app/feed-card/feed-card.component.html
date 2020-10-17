@@ -1,11 +1,13 @@
 <div class="card">
     <div class="feed-image">
-        <img src="{{feedCard.image}}" />
+        <img src="{{feedCard.image.url}}" />
     </div>
     <div class="feed-content">
-        <a href="{{feedCard.url || '#'}}" target="_blank">
-            <h3>{{(feedCard.title.length > 32) ? (feedCard.title | slice:0:32) + '..' : feedCard.title}}</h3>
-        </a>
-        <p>{{feedCard.description | slice:0:120}}...</p>
+        <h3>{{(feedCard.name.length > 32) ? (feedCard.name | slice:0:32) + '..' : feedCard.name}}</h3>
+        <ul>
+            <li *ngFor="let powerStat of feedCard.powerstats | keyvalue">
+                {{powerStat.key}} {{powerStat.value}}
+            </li>
+        </ul>
     </div>
 </div>
