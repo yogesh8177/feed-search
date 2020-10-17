@@ -1,6 +1,8 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
   <h1 class="app-title">{{title}}</h1>
+  <h3></h3>
+  <h3 class="page-status">Page: {{feedQueryParams.page}} Total: {{totalResults}}</h3>
 </div>
 
 <app-loader></app-loader>
@@ -11,16 +13,18 @@
     <div class="card only-desktop">Feed</div>
     <app-sort class="card" [optionGroups]="config?.sortOptions" (sortField) = "onSortFieldChange($event)" [selectedSort]="feedQueryParams.sortField+':'+feedQueryParams.type+':'+feedQueryParams.order"></app-sort>
   </div>
+
+  <app-paginator
+   class              = "card-container" 
+   [currentPage]      = "feedQueryParams.page" 
+   [currentPageSize]  = "feedQueryParams.pageSize"
+   [maxPage]          = "totalResults" 
+   (updatedPage)      = "onPageUpdate($event)">
+  </app-paginator>
+
   <div class="card-container">
     <app-feed-card class="card" *ngFor="let feedCard of feed" [feedCard]="feedCard"></app-feed-card>
   </div>
-
-  <app-table 
-    [data]      = "feed" 
-    [headers]   = "tableHeaders" 
-    [showCount] = "true"
-  >
-  </app-table>
 
   <app-paginator
    class              = "card-container" 
