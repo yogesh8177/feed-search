@@ -36,9 +36,9 @@ jobs:
     - run: npm ci && npm run coverage
       env:
         NODE_ENV: github
-        FIELD_INDEXES: dateLastEdited:Date,title:string
-        INVERTED_INDEXES: title,description
-        DEFAULT_SORT_ORDER: desc
+        FIELD_INDEXES: id:number,name:string
+        INVERTED_INDEXES: name
+        DEFAULT_SORT_ORDER: asc
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v1
@@ -46,7 +46,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: yogesh8177/feed-web
-        tags: superheroes:latest
+        tags: superheroes-latest
   
   build-ui:
     runs-on: ubuntu-latest
@@ -70,7 +70,7 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: yogesh8177/feed-ui
-          tags: superheroes:latest
+          tags: superheroes-latest
           dockerfile: ./ui/Dockerfile.prod
   
   s3_deploy:
