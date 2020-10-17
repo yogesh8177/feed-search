@@ -124,6 +124,5 @@ module.exports = {
     request,
     logError,
     logSuccess,
-    deleteOldRunLogs,
-    MAX_RETY_COUNT
+    deleteOldRunLogs
 };

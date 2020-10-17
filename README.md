@@ -66,6 +66,7 @@ IAM_SECRET_KEY=<secret key>
 # S3 config
 S3_BUCKET=<bucket>
 S3_DB_SOURCE_KEY=<source key>
+S3_CONFIG_KEY=<config key>
 
 # Database engine config
 FIELD_INDEXES=dateLastEdited:Date,title:string
