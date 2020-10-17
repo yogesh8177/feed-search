@@ -173,8 +173,16 @@ describe('Feed App', () => {
   });
 
   describe('Sorting tests', () => {
-    it('sorting by id in desc order should return first title as `Yellowjacket II`', async () => {
-      const sortOption = await page.getSortWebElement('sort-2');
+    it('sorting by id in desc order on page 3 should return first title as `Winter Soldier`', async () => {
+      const sortOption   = await page.getSortWebElement('sort-2');
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+      
+      pageInput.clear();
+      pageInput.sendKeys(3);
+      pageInput.sendKeys(Key.ENTER);
+      jumpToButton.click();
+      await browser.sleep(1000);
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
@@ -197,12 +205,20 @@ describe('Feed App', () => {
       expect(feedCardTitles[0].getText()).toEqual('A-Bomb');
     });
 
-    it('sorting by name in desc order should return first title as `Zoom`', async () => {
+    it('sorting by name in desc order on page 3 should return first title as `White Canary`', async () => {
       const sortOption = await page.getSortWebElement('sort-4');
+      const pageInput    = page.getPageInputWebElement();
+      const jumpToButton = page.getJumpToPageButton();
+      
+      pageInput.clear();
+      pageInput.sendKeys(3);
+      pageInput.sendKeys(Key.ENTER);
+      jumpToButton.click();
+      await browser.sleep(1000);
       sortOption.click();
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
-      expect(feedCardTitles[0].getText()).toEqual('Zoom');
+      expect(feedCardTitles[0].getText()).toEqual('White Canary');
     });
   });
 
