@@ -175,9 +175,9 @@ const requestListener = async (req, res) => {
             res.end(JSON.stringify({message: 'healthy'})); 
         break;
 
-        case '/loaderio-5a06a5b545ec5f56a42510093c4621e1':
+        case '/loaderio-5a06a5b545ec5f56a42510093c4621e1.txt':
             res.writeHead(200);
-            res.end(JSON.stringify({message: 'success'})); 
+            res.end('loaderio-5a06a5b545ec5f56a42510093c4621e1'); 
         break;
 
         default:
@@ -216,7 +216,7 @@ async function fetchFromS3(s3, payload) {
 async function fetchDataToLoad(env, s3) {
     try{
         if (env === 'test') return mockData;
-        let s3Data = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: 'news/data.json'});
+        let s3Data = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: fetchEnvVariable('S3_DB_SOURCE_KEY')});
         return s3Data;
     }
     catch(error) {
