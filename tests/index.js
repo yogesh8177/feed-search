@@ -21,7 +21,7 @@ describe('Server', () => {
     const params = {
       page: 1,
       pageSize: 10,
-      sortField: 'title',
+      sortField: 'name',
       order: 'asc',
       type: 'string'
     };
@@ -62,7 +62,7 @@ describe('Server', () => {
     const params = {
       page: 1,
       pageSize: 10,
-      sortField: 'title',
+      sortField: 'name',
       order: 'asc',
       type: 'string'
     };
@@ -79,12 +79,12 @@ describe('Server', () => {
       });
   });
 
-  it("Search for the key `king`, should return 4 documents", done => {
+  it("Search for the key `batman`, should return 3 documents", done => {
     const params = {
-      searchTerm: 'king',
+      searchTerm: 'batman',
       page: 1,
       pageSize: 10,
-      sortField: 'title',
+      sortField: 'name',
       order: 'asc',
       type: 'string'
     };
@@ -93,17 +93,17 @@ describe('Server', () => {
       .get(`/feed?${querystring.stringify(params)}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body.total).to.equal(4);
+        expect(res.body.total).to.equal(3);
         done();
       });
   });
 
-  it("Search return empty documents collection for invalid page i.e 100", done => {
+  it("Search return empty documents collection for invalid page i.e 1000", done => {
     const params = {
-      searchTerm: 'king',
+      searchTerm: 'batman',
       page: 100,
       pageSize: 10,
-      sortField: 'title',
+      sortField: 'name',
       order: 'asc',
       type: 'string'
     };
@@ -112,7 +112,7 @@ describe('Server', () => {
       .get(`/feed?${querystring.stringify(params)}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body.total).to.equal(4); // there are total 4 docs matching the search term `king`
+        expect(res.body.total).to.equal(3); // there are total 3 docs matching the search term `batman`
         expect(res.body.documents).to.have.length(0);
         done();
       });
