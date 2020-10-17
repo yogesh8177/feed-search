@@ -1,5 +1,5 @@
-const AWS = require('aws-sdk');
-const util = require('./util');
+const AWS     = require('aws-sdk');
+const util    = require('./util');
 const NewsAPI = require('newsapi');
 
 const envVariablesToFetch = [
