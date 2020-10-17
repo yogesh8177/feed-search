@@ -46,9 +46,9 @@ describe('Feed App', () => {
   });
 
   describe('feed cards', () => {
-    it('first feed card must have title `Air-Walker`', async () => {
+    it('first feed card must have title `Abe Sapien`', async () => {
       const feedCardTitles = await page.getFeedCards();
-      expect(feedCardTitles[0].getText()).toEqual(`Air-Walker`);
+      expect(feedCardTitles[0].getText()).toEqual(`Abe Sapien`);
     });
   
     it('last feed card must have title `Yellowjacket II`', async () => {
@@ -111,7 +111,7 @@ describe('Feed App', () => {
       ];
       const searchInput = page.getSearchWebElement();
       searchInput.clear();
-      searchInput.sendKeys(`region`);
+      searchInput.sendKeys(`abomina`);
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
       const feedCardTitles = await page.getFeedCards();
