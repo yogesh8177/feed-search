@@ -36,6 +36,9 @@ jobs:
     - run: npm ci && npm run coverage
       env:
         NODE_ENV: github
+        FIELD_INDEXES: dateLastEdited:Date,title:string
+        INVERTED_INDEXES: title,description
+        DEFAULT_SORT_ORDER: desc
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v1

@@ -11,6 +11,9 @@ let s3;
 let engine;
 
 const env           = fetchEnvVariable('NODE_ENV');
+const fieldIndexes  = fetchEnvVariable('FIELD_INDEXES').split(',');
+const invertedIndexes = fetchEnvVariable('INVERTED_INDEXES').split(',');
+
 let S3_BUCKET;
 
 if (env === 'production') {
@@ -36,10 +39,17 @@ const initializeSearchEngine = async () => {
         engine = null;
         engine = new SearchEngine();
         const dataToLoad = ['test', 'docker', 'github'].includes(env) ? mockData : await fetchDataToLoad(env, s3);
-        engine.loadDataIntoDb(dataToLoad);
-        engine.createFieldIndexOn('dateLastEdited', 'Date');
-        engine.createFieldIndexOn('title', 'string');
-        engine.createInvertedTextIndex(['title', 'description']);
+        if (Array.isArray(dataToLoad))
+            engine.loadDataIntoDb(dataToLoad);
+        else
+            engine.loadDataIntoDb(dataToLoad.documents);
+        
+        fieldIndexes.forEach(item => {
+            let field = item.split(':');
+            engine.createFieldIndexOn(field[0], field[1]);
+        });
+        engine.createInvertedTextIndex(invertedIndexes);
+        console.log(`idIndex`, engine.idIndex);
     }
     catch(error) {
         console.error(`Error while initializing in memory database`);
@@ -61,6 +71,10 @@ const initializeSearchEngine = async () => {
 
 const feedController = (req, res) => {
     try {
+        const defaultSortField     = fieldIndexes[0].split(':')[0];
+        const defaultSortFieldType = fieldIndexes[0].split(':')[1];
+        const defaultSortOrder     = fetchEnvVariable('DEFAULT_SORT_ORDER');
+
         const queryParams = querystring.parse(req.url.split('?')[1]);
         /**
          * Expected queryParam format
@@ -70,7 +84,7 @@ const feedController = (req, res) => {
                 sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
             };
          */
-        let {searchTerm = '', page = 1, pageSize = 10, sortField = 'dateLastEdited', order = 'desc', type = 'Date'} = queryParams;
+        let {searchTerm = '', page = 1, pageSize = 10, sortField = defaultSortField, order = defaultSortOrder, type = defaultSortFieldType} = queryParams;
         //console.log({page, pageSize, sortField, order, type});
         const params = {
             page: parseInt(page),
@@ -175,9 +189,9 @@ const requestListener = async (req, res) => {
             res.end(JSON.stringify({message: 'healthy'})); 
         break;
 
-        case '/loaderio-5a06a5b545ec5f56a42510093c4621e1':
+        case '/loaderio-5a06a5b545ec5f56a42510093c4621e1.txt':
             res.writeHead(200);
-            res.end(JSON.stringify({message: 'success'})); 
+            res.end('loaderio-5a06a5b545ec5f56a42510093c4621e1'); 
         break;
 
         default:
@@ -216,7 +230,7 @@ async function fetchFromS3(s3, payload) {
 async function fetchDataToLoad(env, s3) {
     try{
         if (env === 'test') return mockData;
-        let s3Data = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: 'news/data.json'});
+        let s3Data = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: fetchEnvVariable('S3_DB_SOURCE_KEY')});
         return s3Data;
     }
     catch(error) {

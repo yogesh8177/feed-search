@@ -7,6 +7,11 @@ services:
   web: 
     build: .
     command: npm run start:docker
+    environment: 
+      - NODE_ENV=github
+      - FIELD_INDEXES=dateLastEdited:Date,title:string
+      - INVERTED_INDEXES=title,description
+      - DEFAULT_SORT_ORDER=desc
     expose:
      - 8000
     networks: 
