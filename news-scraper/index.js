@@ -1,5 +1,5 @@
-const AWS = require('aws-sdk');
-const util = require('./util');
+const AWS     = require('aws-sdk');
+const util    = require('./util');
 const NewsAPI = require('newsapi');
 
 const envVariablesToFetch = [
@@ -38,46 +38,6 @@ const response = {
     body: JSON.stringify('Success'),
 };
 
-if (ENVs['NODE_ENV'] === 'test') {
-    util.deleteOldRunLogs();
-    (async () => {
-        try {
-
-            let news = await util.fetchNews(newsapi);
-            let transformedNews = util.transformNewsFormat(news.articles);
-            let s3Response = await util.uploadToS3(s3, {
-                Bucket: ENVs['S3_BUCKET'],
-                Key: 'news/data.json',
-                Body: JSON.stringify(transformedNews),
-                ContentType: "application/json"
-            });
-            console.log({ s3Response });
-
-            let heroesData = await fetchSuperHeroData();
-
-            let herosS3Response = await util.uploadToS3(s3, {
-                Bucket: ENVs['S3_BUCKET'],
-                Key: 'superheroes/data.json',
-                Body: JSON.stringify(heroesData),
-                ContentType: "application/json"
-            });
-
-            util.logSuccess('written to s3', {herosS3Response});
-
-            return response;
-        }
-        catch (error) {
-            console.error({
-                message: 'Error in news scraper lambda',
-                error
-            });
-            response.statusCode = 500;
-            response.body = 'Internal server error';
-            return response;
-        }
-    })();
-}
-
 let heroesResponse = {
     total: 0,
     documents: []
@@ -94,7 +54,7 @@ const fetchSuperHeroData = async (errors, retryCount) => {
             port: 443,
             method: 'GET'
         };
-        
+
         let currentErrorIds = [];
         let iterableArray = [];
         if (Array.isArray(errors) && errors.length) {
@@ -106,7 +66,7 @@ const fetchSuperHeroData = async (errors, retryCount) => {
                 iterableArray.push(i);
             }
         }
-        
+
         let heroes = await Promise.all(
             iterableArray.map(async i => {
                 try {
@@ -124,7 +84,7 @@ const fetchSuperHeroData = async (errors, retryCount) => {
                 }
             })
         );
-        
+
         util.logSuccess(`fetched heroes`, heroes);
 
         if (currentErrorIds.length) {
@@ -132,7 +92,7 @@ const fetchSuperHeroData = async (errors, retryCount) => {
             await fetchSuperHeroData(currentErrorIds, retryCount ? ++retryCount : 1);
             util.logSuccess(`retrying complete for ids on attempt: ${retryCount}`, currentErrorIds);
         }
-        util.logSuccess('exiting', {totalHeroesFetched: heroesResponse.documents.length});
+        util.logSuccess('exiting', { totalHeroesFetched: heroesResponse.documents.length });
         heroesResponse.total = heroesResponse.documents.length;
 
         return heroesResponse;
@@ -143,31 +103,46 @@ const fetchSuperHeroData = async (errors, retryCount) => {
     }
 }
 
-exports.handler = async (event) => {
+let executeLogic = async () => {
     try {
-        console.log({ event: JSON.stringify(event) });
-
         let news = await util.fetchNews(newsapi);
         let transformedNews = util.transformNewsFormat(news.articles);
         let s3Response = await util.uploadToS3(s3, {
             Bucket: ENVs['S3_BUCKET'],
-            Key: 'news/data.json',
+            Key: 'news/feed/data.json',
             Body: JSON.stringify(transformedNews),
             ContentType: "application/json"
         });
         util.logSuccess('written to s3', { s3Response });
-
+    
         let heroesData = await fetchSuperHeroData();
-
+    
         let herosS3Response = await util.uploadToS3(s3, {
             Bucket: ENVs['S3_BUCKET'],
-            Key: 'superheroes/data.json',
+            Key: 'superheroes/feed/data.json',
             Body: JSON.stringify(heroesData),
             ContentType: "application/json"
         });
-
+    
         util.logSuccess('written to s3', { herosS3Response });
+    }
+    catch(error) {
+        util.logError(`Error while executing lambda`, error);
+        return Promise.reject(error);
+    }
+}
 
+if (ENVs['NODE_ENV'] === 'test') {
+    util.deleteOldRunLogs();
+    (async () => {
+        await executeLogic();
+    })();
+}
+
+exports.handler = async (event) => {
+    try {
+        console.log({ event: JSON.stringify(event) });
+        await executeLogic();
         return response;
     }
     catch (error) {

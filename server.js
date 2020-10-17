@@ -143,12 +143,12 @@ const refreshController = async (req, res) => {
 const configController = async (req, res) => {
     try{
         let config;
-        if (['test', 'docker'].includes(env)) {
+        if (['test', 'docker', 'github'].includes(env)) {
             config = JSON.parse(fs.readFileSync('./config/ui/config.json'));
             console.log('fetched config via fs');
         }
         else {
-            config = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: 'config/config.json'});
+            config = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: fetchEnvVariable('S3_CONFIG_KEY')});
             console.log('fetched config via s3');
         }
         res.writeHead(200);
