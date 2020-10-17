@@ -143,7 +143,7 @@ const refreshController = async (req, res) => {
 const configController = async (req, res) => {
     try{
         let config;
-        if (['test', 'docker'].includes(env)) {
+        if (['test', 'docker', 'github'].includes(env)) {
             config = JSON.parse(fs.readFileSync('./config/ui/config.json'));
             console.log('fetched config via fs');
         }
