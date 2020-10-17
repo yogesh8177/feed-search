@@ -14,6 +14,7 @@
   h5,
   h6 {
     margin: 8px 0;
+    padding: 3px;
   }
 
   p {
@@ -32,9 +33,12 @@
     height: 60px;
     display: flex;
     align-items: center;
-    background-color: #1976d2;
+    flex-flow: column wrap; 
+    align-content: space-between; 
+    background-color: #24292e;
     color: white;
     font-weight: 600;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
 
   .toolbar img {
@@ -48,6 +52,13 @@
 
   .toolbar #twitter-logo:hover {
     opacity: 0.8;
+  }
+
+  .page-status {
+    margin-right: 8px;
+    background-color: orangered;
+    color: white;
+    border-radius: 10px;
   }
 
   .content {
@@ -81,16 +92,16 @@
 
   .card {
     border-radius: 5px;
-    border: 1px solid #eee;
-    background-color: #fafafa;
-    width: 375px;
+    background-color: #24292e;
+    color: blanchedalmond;;
+    width: 200px;
     margin: 0px 8px 16px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
-    line-height: 24px;
-    animation: slideInFromLeft 0.2s ease-out 0.1s 1;
+    transition: all 0.2s ease-in;
+    line-height: 18px;
+    animation: slideInFromLeft 0.4s ease-out 0.1s 1;
   }
 
   .app-title {
@@ -281,6 +292,7 @@
     left: -230px;
     z-index: -10;
     width: 1920px;
+    background-color: orangered;
   }
 
 
@@ -294,7 +306,7 @@
     }
     .card {
       padding: 0;
-      width: 95%;
+      width: 330px;
     }
   }
   @media screen and (max-width: 767px) {
@@ -315,7 +327,7 @@
     }
     .card {
       padding: 0;
-      width: 95%;
+      width: 330px;
     }
   }
 
@@ -332,7 +344,7 @@
     }
     .card {
       padding: 0;
-      width: 95%;
+      width: 330px;
     }
   }
 
@@ -341,10 +353,18 @@
   @keyframes slideInFromLeft {
     0% {
       transform: translateX(-100%);
-      //transform: scale(1.5);
+      opacity: 0.1;
     }
+
+    25% {
+      opacity: 0.2;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
     100% {
       transform: translateX(0);
-      //transform: scale(1);
     }
   }

@@ -3,7 +3,7 @@ const SearchEngine  = require('../searchEngine');
 const mockData      = require('../../data/mock_data.json');
 const { strict } = require('assert');
 
-const totalMockData = mockData.length;
+const totalMockData = mockData.documents.length;
 
 // utility methods
 function checkArrayProperty(arrayObjects, propertiesToCheck) {
@@ -30,9 +30,9 @@ describe('Search Engine basic functionality tests', () => {
     });
 
     it('Should load all totalMockData items present in mock data', () => {
-      engine.loadDataIntoDb(mockData);
+      engine.loadDataIntoDb(mockData.documents);
       let documentMapKeyLength = Object.keys(engine.documentsMap).length;
-      assert.strictEqual(documentMapKeyLength, mockData.length);
+      assert.strictEqual(documentMapKeyLength, mockData.documents.length);
     });
 
     it('Documents should have auto incrementing id starting with 1 till total documents length', () => {
@@ -45,14 +45,14 @@ describe('Search Engine basic functionality tests', () => {
       });
     });
 
-    it('Every document must have id, title, image, description and dateLastEdited', () => {
+    it('Every document must have id, name, powerstats, connections etc.. properties', () => {
       let documentId = 1; // initial doc id
       Object.keys(engine.documentsMap).forEach(key => {
         const doc = engine.documentsMap[key];
-        assert.strictEqual(doc.hasOwnProperty('title'), true);
-        assert.strictEqual(doc.hasOwnProperty('image'), true);
-        assert.strictEqual(doc.hasOwnProperty('description'), true);
-        assert.strictEqual(doc.hasOwnProperty('dateLastEdited'), true);
+        assert.strictEqual(doc.hasOwnProperty('id'), true);
+        assert.strictEqual(doc.hasOwnProperty('name'), true);
+        assert.strictEqual(doc.hasOwnProperty('powerstats'), true);
+        assert.strictEqual(doc.hasOwnProperty('connections'), true);
         documentId++; // increment doc id
       });
     });
@@ -65,131 +65,129 @@ describe('Search Engine basic functionality tests', () => {
   });
 
   describe('Creating index in our engine', () => {
-    it('dateLastEditedIndex must have id and dateLastEdited properties', () => {
-      const indexField = `dateLastEdited`;
-      engine.createFieldIndexOn(indexField, 'Date');
+    it('idIndex must have id and id properties', () => {
+      const indexField = `id`;
+      engine.createFieldIndexOn(indexField, 'number');
       checkArrayProperty(engine[`${indexField}Index`], ['id', indexField]);
     });
 
-    it('titleIndex must have id and title properties', () => {
-      const indexField = `title`;
-      engine.createFieldIndexOn('title', 'string');
+    it('nameIndex must have id and name properties', () => {
+      const indexField = `name`;
+      engine.createFieldIndexOn('name', 'string');
       checkArrayProperty(engine[`${indexField}Index`], ['id', indexField]);
     });
 
-    it('dateLastEdited must be sorted in ascending order', () => {
-      engine.createFieldIndexOn('dateLastEdited', 'Date');
+    xit('id index must be sorted in ascending order', () => {
+      engine.createFieldIndexOn('id', 'number');
       let isSorted = true;
-      // Note, index name will be indexFieldIndex => dateLastEditedIndex in this case.
-      const indexLength = engine.dateLastEditedIndex.length;
+      // Note, index name will be indexFieldIndex => nameIndex in this case.
+      const indexLength = engine.nameIndex.length;
       for (let i = indexLength - 1; i >= 1; i--) {
-        if (engine.dateLastEditedIndex[i].dateLastEdited < engine.dateLastEditedIndex[i - 1].dateLastEdited) {
+        if (engine.nameIndex[i].id < engine.nameIndex[i - 1].name) {
           isSorted = false;
           break;
         }
-        //console.log(`index[${i}] > index[${i-1}] = ${engine.dateLastEditedIndex[i].dateLastEdited} > ${engine.dateLastEditedIndex[i-1].dateLastEdited}`);
+        //console.log(`index[${i}] > index[${i-1}] = ${engine.nameIndex[i].name} > ${engine.nameIndex[i-1].name}`);
       }
       assert.strictEqual(isSorted, true);
     });
 
-    it('titleIndex must be sorted in ascending order', () => {
-      engine.createFieldIndexOn('title', 'string');
+    it('nameIndex must be sorted in ascending order', () => {
+      engine.createFieldIndexOn('name', 'string');
       let isSorted = true;
-      // Note, index name will be indexFieldIndex => titleIndex in this case.
-      const indexLength = engine.titleIndex.length;
+      // Note, index name will be indexFieldIndex => nameIndex in this case.
+      const indexLength = engine.nameIndex.length;
       for (let i = indexLength - 1; i >= 1; i--) {
-        if (engine.titleIndex[i].title < engine.titleIndex[i - 1].title) {
+        if (engine.nameIndex[i].name < engine.nameIndex[i - 1].name) {
           isSorted = false;
           break;
         }
-        //console.log(`index[${i}] > index[${i-1}] = ${engine.titleIndex[i].title} > ${engine.titleIndex[i-1].title}`);
+        //console.log(`index[${i}] > index[${i-1}] = ${engine.nameIndex[i].name} > ${engine.nameIndex[i-1].name}`);
       }
-      checkArrayProperty(engine.titleIndex, ['id', 'title']);
+      checkArrayProperty(engine.nameIndex, ['id', 'name']);
       assert.strictEqual(isSorted, true);
     });
   });
 
   describe('Searching in our db', () => {
-    it('Search should return 2 documents for search term `"the lion king"` ', () => {
-      engine.createInvertedTextIndex(['title', 'description']);
+    it('Search should return 2 documents for search term `batman` ', () => {
+      engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
         pageSize: 10,
-        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+        sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
-      let result = engine.searchKeywords(['the lion king'], params);
+      let result = engine.searchKeywords(['batman'], params);
       assert.strictEqual(result.hasOwnProperty('total'), true);
       assert.strictEqual(result.hasOwnProperty('documents'), true);
       assert.strictEqual(Array.isArray(result.documents), true);
-      assert.strictEqual(result.total, 2);
+      assert.strictEqual(result.total, 3);
     });
 
-    it('Search should return 4 documents for search term `king` ', () => {
-      engine.createInvertedTextIndex(['title', 'description']);
+    it('Search should return 5 documents for search term `super` ', () => {
+      engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
         pageSize: 10,
-        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+        sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
-      let result = engine.searchKeywords(['king'], params);
+      let result = engine.searchKeywords(['super'], params);
       assert.strictEqual(result.hasOwnProperty('total'), true);
       assert.strictEqual(result.hasOwnProperty('documents'), true);
       assert.strictEqual(Array.isArray(result.documents), true);
-      assert.strictEqual(result.total, 4);
+      assert.strictEqual(result.total, 5);
     });
 
-    it('Search should match 2 documents titles for search term `the king` ', () => {
-      engine.createInvertedTextIndex(['title', 'description']);
+    it('Search should match 1 document for search term `Abe Sapien` ', () => {
+      engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
         pageSize: 10,
-        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+        sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
-      const expectedTitles = [
-        'The Lord of the Rings: The Return of the King',
-        'The Lion King'
+      const expectedNames = [
+        'Abe Sapien'
       ];
-      let result = engine.searchKeywords(['the','king'], params);
+      let result = engine.searchKeywords(['Abe','Sapien'], params);
       let titlesFound = 0;
       result.documents.forEach(doc => {
-        if (expectedTitles.includes(doc.title)) titlesFound++;
+        if (expectedNames.includes(doc.name)) titlesFound++;
       });
 
       assert.strictEqual(result.hasOwnProperty('total'), true);
       assert.strictEqual(result.hasOwnProperty('documents'), true);
       assert.strictEqual(Array.isArray(result.documents), true);
-      assert.strictEqual(result.total, 4);
-      assert.strictEqual(titlesFound, expectedTitles.length);
+      assert.strictEqual(result.total, 1);
+      assert.strictEqual(titlesFound, expectedNames.length);
     });
 
-    it('Search should match 1 documents titles for search term `"the king"` ', () => {
-      engine.createInvertedTextIndex(['title', 'description']);
+    it('Search should match 3 documents for search term `Agent 13` ', () => {
+      engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
         pageSize: 10,
-        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+        sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
-      const expectedTitles = [
-        'The Lord of the Rings: The Return of the King',
-        'Human Web Agent'
+      const expectedNames = [
+        'Agent 13',
+        'Agent Bob',
+        'Agent Zero'
       ];
-      const unexpectedTitles = ['The Lion King'];
 
-      let result = engine.searchKeywords(['the king'], params);
+      let result = engine.searchKeywords(['Agent', '13'], params);
       let titlesFound = 0;
       result.documents.forEach(doc => {
-        if (expectedTitles.includes(doc.title)) titlesFound++;
-        if (unexpectedTitles.includes(doc.title)) titlesFound++;
+        if (expectedNames.includes(doc.name)) titlesFound++;
       });
 
       assert.strictEqual(result.hasOwnProperty('total'), true);
       assert.strictEqual(result.hasOwnProperty('documents'), true);
       assert.strictEqual(Array.isArray(result.documents), true);
-      assert.strictEqual(titlesFound, expectedTitles.length);
+      assert.strictEqual(titlesFound, expectedNames.length);
     });
 
-    it('Search should return items having `Regional` in their title for search term `region`', () => {
-      engine.createInvertedTextIndex(['title', 'description']);
+    it('Search should return items having `Abomination` in their name for search term `abomina`', () => {
+      engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
         pageSize: 100,
@@ -197,28 +195,28 @@ describe('Search Engine basic functionality tests', () => {
         nGrams: true // must pass this to support nGrams search
       };
 
-      let result = engine.searchKeywords(['region'], params);
-      assert.strictEqual(result.total, 8);
+      let result = engine.searchKeywords(['abomina'], params);
+      assert.strictEqual(result.total, 1);
       result.documents.forEach(doc => {
-        assert.strictEqual(doc.title.match(/Regional/g)[0], 'Regional');
+        assert.strictEqual(doc.name, 'Abomination');
       });
     });
   });
   
   describe('Sorting in our db', () => {
-    it('Should return results without search keys and sort by dateLastEdited asc', () => {
+    xit('Should return results without search keys and sort by id asc', () => {
       const params = {
         page: 1,
         pageSize: 8,
-        sort: { sortField: 'dateLastEdited', order: 'asc', type: 'Date' }
+        sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
       let result   = engine.searchKeywords([], params);
       let isSorted = true;
-  
+
       for (let i = params.pageSize - 1; i >= 1; i--) {
+        //console.log(`${result.documents[i][params.sort.sortField]} < ${result.documents[i - 1][params.sort.sortField]}`)
         if (result.documents[i][params.sort.sortField] < result.documents[i - i][params.sort.sortField]) {
           isSorted = false;
-          //console.log(`${result.documents[i][params.sort.sortField]} < ${result.documents[i - 1][params.sort.sortField]}`)
           break;
         }
       }
@@ -227,11 +225,11 @@ describe('Search Engine basic functionality tests', () => {
       assert.strictEqual(isSorted, true);
     });
   
-    it('Should return results without search keys and sort by title asc', () => {
+    it('Should return results without search keys and sort by name asc', () => {
       const params = {
         page: 1,
-        pageSize: 8,
-        sort: { sortField: 'title', order: 'asc', type: 'string' }
+        pageSize: 10,
+        sort: { sortField: 'name', order: 'asc', type: 'string' }
       };
       let result   = engine.searchKeywords([], params);
       let isSorted = true;
@@ -249,11 +247,11 @@ describe('Search Engine basic functionality tests', () => {
       assert.strictEqual(isSorted, true);
     });
 
-    it('Should return results without search keys and sort by dateLastEdited desc', () => {
+    it('Should return results without search keys and sort by id desc', () => {
       const params = {
         page: 1,
         pageSize: 8,
-        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+        sort: { sortField: 'id', order: 'desc', type: 'number' }
       };
       let result   = engine.searchKeywords([], params);
       let isSorted = true;
@@ -271,11 +269,11 @@ describe('Search Engine basic functionality tests', () => {
   
     });
   
-    it('Should return results without search keys and sort by title desc', () => {
+    it('Should return results without search keys and sort by name desc', () => {
       const params = {
         page: 1,
         pageSize: 8,
-        sort: { sortField: 'title', order: 'desc', type: 'string' }
+        sort: { sortField: 'name', order: 'desc', type: 'string' }
       };
       let result   = engine.searchKeywords([], params);
       let isSorted = true;
@@ -296,88 +294,90 @@ describe('Search Engine basic functionality tests', () => {
   });
 
   describe('Pagination tests', () => {
-    it(`Should match given titles on page 2 where we sort by title in desc order`, () => {
-      const expectedTitles = [
-        'Regional Program Facilitator'
+    it(`Should match given names on page 2 where we sort by name in desc order`, () => {
+      const expectedNames = [
+        'Wondra',
+        'Wonder Woman'
       ];
-      let matchedTitles = 0;
+      let matchedNames = 0;
       const params = {
         page: 2,
-        pageSize: 6,
-        sort: { sortField: 'title', order: 'desc', type: 'string' }
+        pageSize: 10,
+        sort: { sortField: 'name', order: 'desc', type: 'string' }
       };
       let result   = engine.searchKeywords([], params);
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
-        if (expectedTitles.includes(doc.title))
-          matchedTitles++;
+        if (expectedNames.includes(doc.name))
+          matchedNames++;
       });
-      assert.strictEqual(matchedTitles, expectedTitles.length);
+      assert.strictEqual(matchedNames, expectedNames.length);
     });
 
-    it('Should match given titles on page 2 where we sort by title in asc order', () => {
-      const expectedTitles = ['Chief Operations Specialist'];
+    it('Should match given names on page 2 where we sort by name in asc order', () => {
+      const expectedNames = ['Air-Walker', 'Agent Zero'];
 
       const params = {
         page: 2,
-        pageSize: 6,
-        sort: { sortField: 'title', order: 'asc', type: 'string' }
+        pageSize: 10,
+        sort: { sortField: 'name', order: 'asc', type: 'string' }
       };
-      let matchedTitles = 0;
+      let matchedNames = 0;
       let result        = engine.searchKeywords([], params);
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
-        if (expectedTitles.includes(doc.title))
-          matchedTitles++;
+        if (expectedNames.includes(doc.name))
+          matchedNames++;
       });
-      assert.strictEqual(matchedTitles, expectedTitles.length);
+      assert.strictEqual(matchedNames, expectedNames.length);
     })
 
-    it(`Should match given titles on page 2 where we sort by dateLastEdited in desc order`, () => {
-      const expectedTitles = [
-        'Senior Quality Consultant'
+    it(`Should match given names on page 2 where we sort by id in desc order`, () => {
+      const expectedNames = [
+        'X-23',
+        'Wiz Kid'
       ];
-      let matchedTitles = 0;
+      let matchedNames = 0;
       const params = {
         page: 2,
-        pageSize: 6,
-        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+        pageSize: 10,
+        sort: { sortField: 'id', order: 'desc', type: 'number' }
       };
       let result   = engine.searchKeywords([], params);
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
-        if (expectedTitles.includes(doc.title))
-          matchedTitles++;
+        if (expectedNames.includes(doc.name))
+          matchedNames++;
       });
-      assert.strictEqual(matchedTitles, expectedTitles.length);
+      assert.strictEqual(matchedNames, expectedNames.length);
     });
 
-    it('Should match given titles on page 2 where we sort by dateLastEdited in asc order', () => {
-      const expectedTitles = ['Customer Web Specialist'];
+    it('Should match given names on page 2 where we sort by id in asc order', () => {
+      const expectedNames = ['Air-Walker', 'Agent Zero'];
 
       const params = {
         page: 2,
-        pageSize: 6,
-        sort: { sortField: 'dateLastEdited', order: 'asc', type: 'Date' }
+        pageSize: 10,
+        sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
-      let matchedTitles = 0;
+      let matchedNames = 0;
       let result        = engine.searchKeywords([], params);
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
-        if (expectedTitles.includes(doc.title))
-          matchedTitles++;
+        if (expectedNames.includes(doc.name))
+          matchedNames++;
       });
-      assert.strictEqual(matchedTitles, expectedTitles.length);
+      assert.strictEqual(matchedNames, expectedNames.length);
     })
 
-    it('should return 4 documents on 17th page with pageSize 6', () => {
+    it('should return 1 documents on 74th page with pageSize 10', () => {
       const params = {
-        page: 17,
-        pageSize: 6,
-        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+        page: 74,
+        pageSize: 10,
+        sort: { sortField: 'id', order: 'desc', type: 'number' }
       };
       let result        = engine.searchKeywords([], params);
-      assert.strictEqual(result.documents.length, 4);
+      assert.strictEqual(result.documents.length, 1);
     });
   });
 
