@@ -49,7 +49,6 @@ const initializeSearchEngine = async () => {
             engine.createFieldIndexOn(field[0], field[1]);
         });
         engine.createInvertedTextIndex(invertedIndexes);
-        console.log(`idIndex`, engine.idIndex);
     }
     catch(error) {
         console.error(`Error while initializing in memory database`);
