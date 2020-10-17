@@ -51,9 +51,9 @@ describe('Feed App', () => {
       expect(feedCardTitles[0].getText()).toEqual(`Abe Sapien`);
     });
   
-    it('last feed card must have title `Yellowjacket II`', async () => {
+    it('last feed card on page 1 must have title `Agent Bob`', async () => {
       const feedCardTitles = await page.getFeedCards();
-      expect(feedCardTitles[feedCardTitles.length - 1].getText()).toEqual(`Yellowjacket II`);
+      expect(feedCardTitles[feedCardTitles.length - 1].getText()).toEqual(`Agent Bob`);
     });
   });
 
@@ -73,7 +73,8 @@ describe('Feed App', () => {
         'Cyborg Superman',
         'Superboy',
         'Supergirl',
-        'Superboy-Prime'
+        'Superboy-Prime',
+        'Superman'
       ];
       const searchInput = page.getSearchWebElement();
       searchInput.clear();
@@ -145,7 +146,7 @@ describe('Feed App', () => {
 
       await browser.sleep(1000);
       pageInput.clear();
-      pageInput.sendKeys(17);
+      pageInput.sendKeys(74);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
       await browser.sleep(1000);
@@ -153,12 +154,12 @@ describe('Feed App', () => {
       expect(feedCardTitles.length).toEqual(1);
     });
 
-    it('should return 0 feed cards when we paginate to 2nd page with search term `king`', async () => {
+    it('should return 0 feed cards when we paginate to 2nd page with search term `super`', async () => {
       const searchInput  = page.getSearchWebElement();
       const pageInput    = page.getPageInputWebElement();
       const jumpToButton = page.getJumpToPageButton();
 
-      searchInput.sendKeys('king');
+      searchInput.sendKeys('super');
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
       pageInput.clear();
