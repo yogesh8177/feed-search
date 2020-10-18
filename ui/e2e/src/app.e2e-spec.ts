@@ -40,19 +40,19 @@ describe('Feed App', () => {
     });
   
     it('should display 10 feed cards on page load', async () => {
-      const feedCards = await page.getFeedCards();
+      const feedCards = await page.getFeedCardTitles();
       expect(feedCards.length).toEqual(10);
     });
   });
 
   describe('feed cards', () => {
     it('first feed card must have title `Abe Sapien`', async () => {
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles[0].getText()).toEqual(`Abe Sapien`);
     });
   
     it('last feed card on page 1 must have title `Agent Bob`', async () => {
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles[feedCardTitles.length - 1].getText()).toEqual(`Agent Bob`);
     });
   });
@@ -63,7 +63,7 @@ describe('Feed App', () => {
       searchInput.sendKeys('batman');
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles.length).toEqual(3);
     });
 
@@ -81,7 +81,7 @@ describe('Feed App', () => {
       searchInput.sendKeys('super');
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles.length).toEqual(5);
       feedCardTitles.forEach((cardTitle, index) => {
         const nameToMatch = namesToMatch[index].length > 32 ? namesToMatch[index].substr(0, 32) + '..' : namesToMatch[index];
@@ -98,7 +98,7 @@ describe('Feed App', () => {
       searchInput.sendKeys(`"Agent 13"`);
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1000);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles.length).toEqual(1);
       feedCardTitles.forEach((cardTitle, index) => {
         const nameToMatch = expectedNames[index].length > 32 ? expectedNames[index].substr(0, 32) + '..' : expectedNames[index];
@@ -115,7 +115,7 @@ describe('Feed App', () => {
       searchInput.sendKeys(`abomina`);
       searchInput.sendKeys(Key.ENTER);
       await browser.sleep(1300);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles.length).toEqual(1);
       feedCardTitles.forEach((cardTitle, index) => {
         const nameToMatch = expectedNames[index].length > 32 ? expectedNames[index].substr(0, 32) + '..' : expectedNames[index];
@@ -134,9 +134,9 @@ describe('Feed App', () => {
       pageInput.sendKeys(100);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await browser.sleep(1500);
-      const feedCardTitles = await page.getFeedCards();
-      expect(feedCardTitles.length).toEqual(0);
+      await browser.sleep(1000);
+      const feedCards = await page.getFeedCards();
+      expect(feedCards.isDisplayed()).toBe(false);
     });
 
     it('should return 1 feed cards when we paginate to 74th page', async () => {
@@ -150,7 +150,7 @@ describe('Feed App', () => {
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
       await browser.sleep(1300);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles.length).toEqual(1);
     });
 
@@ -167,7 +167,7 @@ describe('Feed App', () => {
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
       await browser.sleep(1000);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles.length).toEqual(0);
     });
   });
@@ -185,7 +185,7 @@ describe('Feed App', () => {
       await browser.sleep(1000);
       sortOption.click();
       await browser.sleep(1000);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles[0].getText()).toEqual('Winter Soldier');
     });
 
@@ -193,7 +193,7 @@ describe('Feed App', () => {
       const sortOption = await page.getSortWebElement('sort-1');
       sortOption.click();
       await browser.sleep(1000);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles[0].getText()).toEqual('Abe Sapien');
     });
 
@@ -201,7 +201,7 @@ describe('Feed App', () => {
       const sortOption = await page.getSortWebElement('sort-3');
       sortOption.click();
       await browser.sleep(1000);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles[0].getText()).toEqual('A-Bomb');
     });
 
@@ -217,7 +217,7 @@ describe('Feed App', () => {
       await browser.sleep(1000);
       sortOption.click();
       await browser.sleep(1000);
-      const feedCardTitles = await page.getFeedCards();
+      const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles[0].getText()).toEqual('White Canary');
     });
   });
