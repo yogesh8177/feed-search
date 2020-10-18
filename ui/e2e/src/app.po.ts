@@ -1,4 +1,4 @@
-import { browser, by, element, WebElement, ElementArrayFinder } from 'protractor';
+import { browser, by, element, WebElement, ElementArrayFinder, ElementFinder } from 'protractor';
 
 export class AppPage {
   navigateTo(): Promise<unknown> {
@@ -17,8 +17,12 @@ export class AppPage {
     return element(by.name('sort')).getTagName() as Promise<string>;
   }
 
-  getFeedCards(): ElementArrayFinder {
+  getFeedCardTitles(): ElementArrayFinder {
     return element.all(by.tagName('app-feed-card')).all(by.tagName('h3'));
+  }
+
+  getFeedCard(): ElementFinder {
+    return element(by.tagName('app-feed-card'));
   }
 
   getSearchWebElement(): WebElement {
