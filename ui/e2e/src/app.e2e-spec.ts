@@ -135,8 +135,8 @@ describe('Feed App', () => {
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
       await browser.sleep(1000);
-      const feedCards = await page.getFeedCards();
-      expect(feedCards.isDisplayed()).toBe(false);
+      const feedCards = await page.getFeedCard();
+      expect(feedCards.isPresent()).toBe(false);
     });
 
     it('should return 1 feed cards when we paginate to 74th page', async () => {
