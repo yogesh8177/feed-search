@@ -344,6 +344,23 @@
     }
   }
 
+  @media screen and (max-width: 920px) {
+    svg#rocket-smoke {
+      display: none;
+      visibility: hidden;
+    }
+    .only-desktop {
+      display: none;
+    }
+    .card-container {
+      justify-content: center;
+    }
+    .card {
+      padding: 0;
+      width: 330px;
+    }
+  }
+
   // Key frame animations
 
   @keyframes slideInFromLeft {
