@@ -1,8 +1,10 @@
-#searchBox {
+#searchBox, #searchBox::placeholder {
     border: 0px;
     padding: 2px;
     outline: none;
     text-align: center;
+    background-color: red;
+    color: #fff;
 }
 
 #searchBox:focus {
