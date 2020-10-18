@@ -23,10 +23,10 @@
   </app-table>
 
   <app-paginator
-   class              ="card-container" 
-   [currentPage]      ="feedQueryParams.page" 
-   [currentPageSize]  ="6"
-   [maxPage]          ="totalResults" 
+   class              = "card-container" 
+   [currentPage]      = "feedQueryParams.page" 
+   [currentPageSize]  = "feedQueryParams.pageSize"
+   [maxPage]          = "totalResults" 
    (updatedPage)      = "onPageUpdate($event)">
   </app-paginator>
 
