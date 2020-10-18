@@ -46,7 +46,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: yogesh8177/feed-web
-        tags: superheroes-web-v${GITHUB_RUN_NUMBER}
+        tags: ${{ GITHUB_RUN_NUMBER }}
   
   build-ui:
     runs-on: ubuntu-latest
@@ -70,7 +70,7 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: yogesh8177/feed-ui
-          tags: superheroes-ui-v${GITHUB_RUN_NUMBER}
+          tags: ${GITHUB_RUN_NUMBER}
           dockerfile: ./ui/Dockerfile.prod
   
   s3_deploy:
