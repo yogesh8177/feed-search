@@ -49,7 +49,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: yogesh8177/feed-web
+        repository: yogesh8177/heroes-web
         tags: ${{ github.run_number }}
         build_args: BUILD_VERSION=${{ github.run_number }}
         dockerfile: ./Dockerfile.prod
