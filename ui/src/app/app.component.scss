@@ -25,6 +25,10 @@
     flex: 1;
   }
 
+  .hidden {
+    visibility: hidden;
+  }
+
   .toolbar {
     position: absolute;
     top: 0;
@@ -59,6 +63,15 @@
     background-color: orangered;
     color: white;
     border-radius: 10px;
+  }
+
+  .filter-container {
+    position: absolute;
+    display: flex;
+    flex-flow: column wrap; 
+    align-content: space-between;
+    align-items: center;
+    height: 40px;
   }
 
   .content {
