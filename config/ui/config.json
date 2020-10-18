@@ -7,12 +7,12 @@
                 {
                     "id": 1,
                     "value": "id:number:asc",
-                    "title": "ID (asc)"
+                    "title": "1-100 (asc)"
                 },
                 {
                     "id": 2,
                     "value": "id:number:desc",
-                    "title": "ID (desc)"
+                    "title": "100-1 (desc)"
                 }
             ]
         },
@@ -22,12 +22,12 @@
                 {
                     "id": 3,
                     "value": "name:string:asc",
-                    "title": "Name (asc)"
+                    "title": "A-Z (asc)"
                 },
                 {
                     "id": 4,
                     "value": "name:string:desc",
-                    "title": "Name (desc)"
+                    "title": "Z-A (desc)"
                 }
             ]
         }
