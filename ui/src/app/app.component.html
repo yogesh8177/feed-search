@@ -14,7 +14,7 @@
     <app-sort class="card" [optionGroups]="config?.sortOptions" (sortField) = "onSortFieldChange($event)" [selectedSort]="feedQueryParams.sortField+':'+feedQueryParams.type+':'+feedQueryParams.order"></app-sort>
   </div>
 
-  <app-paginator *ngIf="totalResults"
+  <app-paginator
    class              = "card-container" 
    [currentPage]      = "feedQueryParams.page" 
    [currentPageSize]  = "feedQueryParams.pageSize"
@@ -26,7 +26,7 @@
     <app-feed-card class="card" *ngFor="let feedCard of feed" [feedCard]="feedCard"></app-feed-card>
   </div>
 
-  <app-paginator *ngIf="totalResults"
+  <app-paginator
    class              = "card-container" 
    [currentPage]      = "feedQueryParams.page" 
    [currentPageSize]  = "feedQueryParams.pageSize"
