@@ -166,7 +166,7 @@ describe('Feed App', () => {
       pageInput.sendKeys(2);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await browser.sleep(1000);
+      await browser.sleep(1500);
       const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles.length).toEqual(0);
     });
