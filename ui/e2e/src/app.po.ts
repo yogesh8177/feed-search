@@ -1,4 +1,4 @@
-import { browser, by, element, WebElement, ElementArrayFinder } from 'protractor';
+import { browser, by, element, WebElement, ElementArrayFinder, ElementFinder } from 'protractor';
 
 export class AppPage {
   navigateTo(): Promise<unknown> {
