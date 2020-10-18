@@ -5,8 +5,12 @@
     <div class="feed-content">
         <h3>{{(feedCard.name.length > 32) ? (feedCard.name | slice:0:32) + '..' : feedCard.name}}</h3>
         <ul>
-            <li *ngFor="let powerStat of feedCard.powerstats | keyvalue">
-                {{powerStat.key}} {{powerStat.value}}
+            <li *ngFor="let powerStat of feedCard.powerstats | keyvalue" class="stat-item">
+                <strong>{{powerStat.key}}</strong> - 
+                <span *ngIf="powerStat.value >= 75" class="stat-value-red">{{powerStat.value}}</span>
+                <span *ngIf="(powerStat.value >= 55 && powerStat.value <= 74)" class="stat-value-green">{{powerStat.value}}</span>
+                <span *ngIf="powerStat.value <= 54" class="stat-value-orange">{{powerStat.value}}</span>
+                <span *ngIf="powerStat.value === 'null' || !powerStat.value" class="stat-value-grey">NA</span>
             </li>
         </ul>
     </div>

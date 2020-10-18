@@ -14,6 +14,7 @@
   h5,
   h6 {
     margin: 8px 0;
+    padding: 3px;
   }
 
   p {
@@ -89,9 +90,9 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in;
     line-height: 18px;
-    animation: slideInFromLeft 0.2s ease-out 0.1s 1;
+    animation: slideInFromLeft 0.4s ease-out 0.1s 1;
   }
 
   .app-title {
@@ -274,7 +275,7 @@
     }
     .card {
       padding: 0;
-      width: 150px;
+      width: 330px;
     }
   }
   @media screen and (max-width: 767px) {
@@ -295,7 +296,7 @@
     }
     .card {
       padding: 0;
-      width: 150px;
+      width: 330px;
     }
   }
 
@@ -312,7 +313,7 @@
     }
     .card {
       padding: 0;
-      width: 200px;
+      width: 330px;
     }
   }
 
@@ -321,10 +322,18 @@
   @keyframes slideInFromLeft {
     0% {
       transform: translateX(-100%);
-      //transform: scale(1.5);
+      opacity: 0.1;
     }
+
+    25% {
+      opacity: 0.2;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
     100% {
       transform: translateX(0);
-      //transform: scale(1);
     }
   }
