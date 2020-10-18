@@ -102,3 +102,11 @@
         background-image: url(https://via.placeholder.com/240/d2d3c9?text=loading);
     }
   }
+
+  @media screen and (max-width: 920px) {
+    .feed-image {
+        width: 330px;
+        min-height: 200px;
+        background-image: url(https://via.placeholder.com/240/d2d3c9?text=loading);
+    }
+  }
