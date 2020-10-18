@@ -13,7 +13,7 @@ import { FeedQueryParams } from './models/FeedQueryParams';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Feed';
+  title = '';
   config: Config;
   feed: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();

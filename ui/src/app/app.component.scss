@@ -33,9 +33,12 @@
     height: 60px;
     display: flex;
     align-items: center;
+    flex-flow: column wrap; 
+    align-content: space-between; 
     background-color: #24292e;
     color: white;
     font-weight: 600;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
 
   .toolbar img {
@@ -49,6 +52,13 @@
 
   .toolbar #twitter-logo:hover {
     opacity: 0.8;
+  }
+
+  .page-status {
+    margin-right: 8px;
+    background-color: orangered;
+    color: white;
+    border-radius: 10px;
   }
 
   .content {
@@ -262,6 +272,7 @@
     left: -230px;
     z-index: -10;
     width: 1920px;
+    background-color: orangered;
   }
 
 
