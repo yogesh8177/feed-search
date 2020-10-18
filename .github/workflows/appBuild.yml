@@ -45,7 +45,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: yogesh8177/feed-web
+        repository: yogesh8177/heroes-web
         tags: ${{ github.run_number }}
   
   build-ui:
@@ -69,7 +69,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: yogesh8177/feed-ui
+          repository: yogesh8177/heroes-ui
           tags: ${{ github.run_number }}
           dockerfile: ./ui/Dockerfile.prod
   
