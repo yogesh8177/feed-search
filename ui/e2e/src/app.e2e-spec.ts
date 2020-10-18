@@ -114,7 +114,7 @@ describe('Feed App', () => {
       searchInput.clear();
       searchInput.sendKeys(`abomina`);
       searchInput.sendKeys(Key.ENTER);
-      await browser.sleep(1000);
+      await browser.sleep(1300);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(1);
       feedCardTitles.forEach((cardTitle, index) => {
@@ -134,7 +134,7 @@ describe('Feed App', () => {
       pageInput.sendKeys(100);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await browser.sleep(1000);
+      await browser.sleep(1300);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(0);
     });
@@ -149,7 +149,7 @@ describe('Feed App', () => {
       pageInput.sendKeys(74);
       pageInput.sendKeys(Key.ENTER);
       jumpToButton.click();
-      await browser.sleep(1000);
+      await browser.sleep(1300);
       const feedCardTitles = await page.getFeedCards();
       expect(feedCardTitles.length).toEqual(1);
     });
