@@ -5,10 +5,10 @@
             <button id="compare-button" (click) = "triggerCompare()">Compare</button>
         </div>
         
-        <div *ngIf="maxCurrentScore !== 0" class="card">Max {{currentComparisionStat ? '(' + currentComparisionStat + ')' : '(Aggregate)'}} - {{maxCurrentScore}}</div>
+        <div *ngIf="maxCurrentScore" class="card">Max {{currentComparisionStat ? '(' + currentComparisionStat + ')' : '(Aggregate)'}} - {{maxCurrentScore}}</div>
         
-        <div class="card">
-            <select *ngIf="individualStatsArray.length"
+        <div class="card" *ngIf="individualStatsArray.length">
+            <select
             id       = "individual-stats-select" 
             [value]  = "selectedStatToCompare" 
             (change) = "setComparisionStat($event.target.value)">
