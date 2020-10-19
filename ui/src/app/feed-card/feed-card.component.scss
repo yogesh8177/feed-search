@@ -72,6 +72,13 @@
     border-radius: 2px;
 }
 
+.active-compare-stat {
+    padding: 2px;
+    background-color: white;
+    color: #000;
+    border-radius: 5px;
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 320px) {
     .feed-image {
