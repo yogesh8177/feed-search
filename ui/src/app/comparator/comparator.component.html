@@ -1,0 +1,40 @@
+<div class="comparision-content">
+    <h2>Compare characters</h2>
+    <div class="card-container">
+        <div class="card" >
+            <button id="compare-button" (click) = "triggerCompare()">Compare</button>
+        </div>
+        
+        <div *ngIf="maxCurrentScore !== 0" class="card">Max {{currentComparisionStat ? '(' + currentComparisionStat + ')' : '(Aggregate)'}} - {{maxCurrentScore}}</div>
+        
+        <div class="card">
+            <select *ngIf="individualStatsArray.length"
+            id       = "individual-stats-select" 
+            [value]  = "selectedStatToCompare" 
+            (change) = "setComparisionStat($event.target.value)">
+                <option value="">Select stat</option>
+                <option *ngFor="let stat of individualStatsArray" [value]="stat">{{stat}}</option>
+            </select>
+        </div>
+        
+    </div>
+    
+    <div *ngIf="totalMaxScorers">
+        <h3>Winners for {{currentComparisionStat ? currentComparisionStat : 'Aggregate'}} - {{totalMaxScorers}}</h3>
+        <div class="card-container">
+            <app-feed-card *ngFor="let card of sortedFeedItems.slice(0, totalMaxScorers)"
+                class="card"
+                [feedCard] = "card"
+                [comparisionStat] = "currentComparisionStat"
+            ></app-feed-card>
+        </div>
+    </div>
+    
+    <div *ngIf="sortedFeedItems.length" class="card-container">
+        <app-feed-card *ngFor="let card of sortedFeedItems"
+            class="card"
+            [feedCard] = "card"
+            [comparisionStat] = "currentComparisionStat"
+        ></app-feed-card>
+    </div>
+</div>
