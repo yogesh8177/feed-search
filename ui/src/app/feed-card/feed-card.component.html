@@ -1,5 +1,6 @@
 <div class="card">
     <div class="feed-image">
+        <span *ngIf="feedCard.cardLabel" class="{{feedCard.cardLabel.className}}">{{feedCard.cardLabel.label}}</span>
         <img src="{{feedCard.image.url}}" />
     </div>
     <div class="feed-content">
