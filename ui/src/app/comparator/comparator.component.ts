@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
-import { Feed } from '../models/Feed';
+import { Feed, CardLabel } from '../models/Feed';
 
 @Component({
   selector: 'feed-comparator',
@@ -9,7 +9,8 @@ import { Feed } from '../models/Feed';
 export class ComparatorComponent implements OnInit, OnChanges {
 
   @Input() feed: Feed[];
-  sortedFeedItems: Feed[] = [];
+  comparedFeedItems: Feed[] = [];
+  winnerFeedItems: Feed[] = [];
   maxCurrentScore: number = 0;
   totalMaxScorers: number = 0;
   individualStatsArray: string[] = [];
@@ -31,7 +32,8 @@ export class ComparatorComponent implements OnInit, OnChanges {
   }
 
   resetCompareComponent() {
-    this.sortedFeedItems.length = 0;
+    this.comparedFeedItems.length = 0;
+    this.winnerFeedItems.length = 0;
     this.maxCurrentScore = 0;
     this.totalMaxScorers = 0;
     this.individualStatsArray.length = 0;
@@ -50,7 +52,17 @@ export class ComparatorComponent implements OnInit, OnChanges {
       }
    */
   triggerCompare() {
-    this.sortedFeedItems = this.compareFeedItems(this.feed, this.selectedStatToCompare);
+    let comparedFeed = this.compareFeedItems(this.feed, this.selectedStatToCompare);
+    this.winnerFeedItems = comparedFeed.splice(0, this.totalMaxScorers).map(item => {
+      item.cardLabel = new CardLabel('Winner!', 'top-rank');
+      return item;
+    });
+    let rankStartIndex = 2;
+    comparedFeed.forEach(item => {
+      item.cardLabel = new CardLabel(`${rankStartIndex}`, 'rankings');
+      rankStartIndex++;
+    });
+    this.comparedFeedItems = comparedFeed;
   }
 
   setComparisionStat(stat: string) {
@@ -59,7 +71,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
   }
 
   compareFeedItems(feedItems: Feed[], comparisionStat: string): Feed[] {
-    let _sortedFeedItems: Feed[] = [];
+    let _comparedFeedItems: Feed[] = [];
     this.maxCurrentScore = 0;
     this.totalMaxScorers = 0;
     this.currentComparisionStat = comparisionStat;
@@ -74,7 +86,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
           totalScore += parseInt(item.powerstats[stat]) || 0;
         });
         calculatedFeed.totalScore = totalScore;
-        _sortedFeedItems.push(calculatedFeed);
+        _comparedFeedItems.push(calculatedFeed);
         this.maxCurrentScore = this.maxCurrentScore < totalScore ? totalScore : this.maxCurrentScore;
       }
       else if (typeof statToCompare === 'number' || 
@@ -83,7 +95,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
         //console.log(`comparing stat: ${statToCompare}`, item.powerstats[statToCompare]);
         totalScore += parseInt(item.powerstats[statToCompare]) || 0;
         calculatedFeed.totalScore = totalScore;
-        _sortedFeedItems.push(calculatedFeed);
+        _comparedFeedItems.push(calculatedFeed);
         this.maxCurrentScore = this.maxCurrentScore < totalScore ? totalScore : this.maxCurrentScore;
       }
       else {
@@ -92,15 +104,15 @@ export class ComparatorComponent implements OnInit, OnChanges {
     });
 
     // Sort the feed items by total score
-    _sortedFeedItems.sort((a, b) => b.totalScore - a.totalScore);
-    _sortedFeedItems.forEach(item => {
+    _comparedFeedItems.sort((a, b) => b.totalScore - a.totalScore);
+    _comparedFeedItems.forEach(item => {
       if (item.totalScore === this.maxCurrentScore)
         this.totalMaxScorers++;
     });
-    this.individualStatsArray = Object.keys(_sortedFeedItems[0].powerstats);
-    console.log('comparision result:', {comparisionResult: _sortedFeedItems, totalWinners: this.totalMaxScorers});
-    _sortedFeedItems.forEach(item => console.log(`${comparisionStat || 'all stats'} => ${item.name} - ${item.totalScore}`));
-    return _sortedFeedItems;
+    this.individualStatsArray = Object.keys(_comparedFeedItems[0].powerstats);
+    console.log('comparision result:', {comparisionResult: _comparedFeedItems, totalWinners: this.totalMaxScorers});
+    _comparedFeedItems.forEach(item => console.log(`${comparisionStat || 'all stats'} => ${item.name} - ${item.totalScore}`));
+    return _comparedFeedItems;
   }
 
 }
