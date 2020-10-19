@@ -7,6 +7,7 @@ export class Feed {
     work: any;
     connections: any;
     image: any;
+    totalScore: number;
 }
 
 export class FeedResponse {

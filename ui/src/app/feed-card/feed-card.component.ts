@@ -8,6 +8,7 @@ import { Feed } from '../models/Feed';
 })
 export class FeedCardComponent implements OnInit {
   @Input() feedCard: Feed;
+  @Input() comparisionStat: string = '';
   
   constructor() { }
 

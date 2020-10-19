@@ -1,0 +1,44 @@
+.comparision-content {
+    background-color: orangered;
+    max-width: 1200px;
+    height: fit-content;
+    color: #fff;
+    width: 1200px;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+#individual-stats-select, #compare-button {
+    text-align: center;
+    outline: none;
+    background-color: red;
+    border: 0;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+    width: inherit;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .comparision-content {
+        width: 95%;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .comparision-content {
+        width: 95%;
+    }
+  }
+
+  @media screen and (max-width: 820px) {
+    .comparision-content {
+        width: 95%;
+    }
+  }
+
+  @media screen and (max-width: 920px) {
+    .comparision-content {
+        width: 95%;
+    }
+  }
