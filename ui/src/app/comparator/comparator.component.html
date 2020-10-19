@@ -1,5 +1,5 @@
 <div class="comparision-content">
-    <h2>Compare characters</h2>
+    <h2 class="center-text">Compare characters</h2>
     <div class="card-container">
         <div class="card" >
             <button id="compare-button" (click) = "triggerCompare()">Compare</button>
@@ -20,9 +20,9 @@
     </div>
     
     <div *ngIf="totalMaxScorers">
-        <h3>Winners for {{currentComparisionStat ? currentComparisionStat : 'Aggregate'}} - {{totalMaxScorers}}</h3>
+        <h3 class="center-text">Winners for {{currentComparisionStat ? currentComparisionStat : 'Aggregate'}} - {{totalMaxScorers}}</h3>
         <div class="card-container">
-            <app-feed-card *ngFor="let card of sortedFeedItems.slice(0, totalMaxScorers)"
+            <app-feed-card *ngFor="let card of winnerFeedItems"
                 class="card"
                 [feedCard] = "card"
                 [comparisionStat] = "currentComparisionStat"
@@ -30,10 +30,10 @@
         </div>
     </div>
     
-    <div *ngIf="sortedFeedItems.length">
-        <h3>Rankings based on {{currentComparisionStat ? currentComparisionStat : 'Aggregate stats'}}</h3>
+    <div *ngIf="comparedFeedItems.length">
+        <h3 class="center-text">Rankings based on {{currentComparisionStat ? currentComparisionStat : 'Aggregate stats'}}</h3>
         <div class="card-container">
-            <app-feed-card *ngFor="let card of sortedFeedItems"
+            <app-feed-card *ngFor="let card of comparedFeedItems"
                 class="card"
                 [feedCard] = "card"
                 [comparisionStat] = "currentComparisionStat"
