@@ -79,6 +79,19 @@
     border-radius: 5px;
 }
 
+.rankings, .top-rank {
+    position: absolute;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+    color: #000;
+    font-weight: bolder;
+}
+
+.top-rank {
+    transform: translate(-10px, 2px) rotate(-45deg);
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 320px) {
     .feed-image {

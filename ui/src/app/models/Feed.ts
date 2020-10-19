@@ -8,9 +8,19 @@ export class Feed {
     connections: any;
     image: any;
     totalScore: number;
+    cardLabel: CardLabel;
 }
 
 export class FeedResponse {
     total: number;
     documents: Feed [];
+}
+
+export class CardLabel {
+    label: string;
+    className: string;
+    constructor(_label: string, _className: string) {
+        this.label = _label;
+        this.className = _className;
+    }
 }
