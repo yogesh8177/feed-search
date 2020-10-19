@@ -10,6 +10,7 @@ import { SortComponent } from './sort/sort.component';
 import { TableComponent } from './table/table.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { LoaderComponent } from './loader/loader.component';
+import { ComparatorComponent } from './comparator/comparator.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { LoaderComponent } from './loader/loader.component';
     SortComponent,
     TableComponent,
     PaginatorComponent,
-    LoaderComponent
+    LoaderComponent,
+    ComparatorComponent
   ],
   imports: [
     BrowserModule,
