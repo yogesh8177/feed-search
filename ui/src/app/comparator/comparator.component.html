@@ -30,11 +30,14 @@
         </div>
     </div>
     
-    <div *ngIf="sortedFeedItems.length" class="card-container">
-        <app-feed-card *ngFor="let card of sortedFeedItems"
-            class="card"
-            [feedCard] = "card"
-            [comparisionStat] = "currentComparisionStat"
-        ></app-feed-card>
+    <div *ngIf="sortedFeedItems.length">
+        <h3>Rankings based on {{currentComparisionStat ? currentComparisionStat : 'Aggregate stats'}}</h3>
+        <div class="card-container">
+            <app-feed-card *ngFor="let card of sortedFeedItems"
+                class="card"
+                [feedCard] = "card"
+                [comparisionStat] = "currentComparisionStat"
+            ></app-feed-card>
+        </div>
     </div>
 </div>
