@@ -1,6 +1,8 @@
 import { AppPage } from './app.po';
 import { browser, logging, Key } from 'protractor';
 
+const pageSize = 10;
+
 describe('Feed App', () => {
   let page: AppPage;
 
@@ -48,6 +50,11 @@ describe('Feed App', () => {
       const feedCards = await page.getFeedCardTitles();
       expect(feedCards.length).toEqual(10);
     });
+
+    it('should display page status as `Page: 1, Total: 731`', () => {
+      const pageStatusText = page.getPageStatusText();
+      expect(pageStatusText).toBe('Page: 1 Total: 731');
+    });
   });
 
   describe('feed cards', () => {
@@ -59,6 +66,65 @@ describe('Feed App', () => {
     it('last feed card on page 1 must have title `Agent Bob`', async () => {
       const feedCardTitles = await page.getFeedCardTitles();
       expect(feedCardTitles[feedCardTitles.length - 1].getText()).toEqual(`Agent Bob`);
+    });
+  });
+
+  describe('Compare cards', () => {
+    it(`select first card, should update page status text as 'Selected (1)'`, () =>{
+      const selectCardsButton = page.getSelectCardButton();
+
+      browser.wait(page.isClickable(selectCardsButton));
+      selectCardsButton.click();
+
+      const selectCheckBoxes = page.getSelectCardCheckBoxes();
+      expect(selectCheckBoxes.count()).toBe(pageSize);
+      selectCheckBoxes.get(0).click();
+
+      const pageStatusText = page.getPageStatusText();
+      expect(pageStatusText).toBe(`Selected (1)`);
+    })
+
+    it('select and un-select a card, should display page status text as `Selected(0)`', () => {
+      const selectCardsButton = page.getSelectCardButton();
+
+      browser.wait(page.isClickable(selectCardsButton));
+      selectCardsButton.click();
+
+      const selectCheckBoxes = page.getSelectCardCheckBoxes();
+      expect(selectCheckBoxes.count()).toBe(pageSize);
+      selectCheckBoxes.get(0).click();
+      selectCheckBoxes.get(0).click();
+
+      const pageStatusText = page.getPageStatusText();
+      expect(pageStatusText).toBe(`Selected (0)`);
+    });
+
+    it('select two cards and compare, should display comparision cards having span with appropriate class names', async () => {
+      const rankingClassAndLabels = [{ className: 'top-rank', label: 'Winner!'}, {className: 'rankings', label: '2'}]; 
+      const selectCardsButton = page.getSelectCardButton();
+      const compareButton = page.getCompareButton();
+
+      browser.wait(page.isClickable(selectCardsButton));
+      browser.wait(page.isClickable(compareButton));
+
+      selectCardsButton.click();
+
+      const selectCheckBoxes = page.getSelectCardCheckBoxes();
+      expect(selectCheckBoxes.count()).toBe(pageSize);
+
+      selectCheckBoxes.get(0).click();
+      selectCheckBoxes.get(1).click();
+
+      browser.sleep(200);
+      compareButton.click();
+
+      const topRankLabel = await page.getElementByClass(rankingClassAndLabels[0].className);
+      const rankingLabel = await page.getElementByClass(rankingClassAndLabels[1].className);
+
+      browser.wait(page.isClickable(topRankLabel));
+
+      expect(topRankLabel.getText()).toBe(rankingClassAndLabels[0].label);
+      expect(rankingLabel.getText()).toBe(rankingClassAndLabels[1].label);
     });
   });
 

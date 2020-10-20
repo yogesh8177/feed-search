@@ -15,6 +15,26 @@ export class AppPage {
     return element(by.className('app-title')).getText() as Promise<string>;
   }
 
+  getPageStatusText(): Promise<string> {
+    return element(by.className('page-status')).getText() as Promise<string>;
+  }
+
+  getSelectCardButton(): WebElement {
+    return element(by.id('select-cards'));
+  }
+
+  getSelectCardCheckBoxes(): ElementArrayFinder {
+    return element.all(by.className('select-item'));
+  }
+
+  getCompareButton(): WebElement {
+    return element(by.id('compare-button'));
+  }
+
+  getElementByClass(className: string): WebElement {
+    return element(by.className(className));
+  }
+
   getSearchInput(): Promise<string> {
     return element(by.name('search')).getText() as Promise<string>;
   }
