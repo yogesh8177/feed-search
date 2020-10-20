@@ -7,6 +7,10 @@ export class AppPage {
     return EC.elementToBeClickable(element);
   }
 
+  isVisible (element) {
+    return EC.visibilityOf(element);
+  }
+
   navigateTo(): Promise<unknown> {
     return browser.get(browser.baseUrl) as Promise<unknown>;
   }
