@@ -1,5 +1,5 @@
 export const environment = {
-  feedApiUrl: 'http://thesuperheroes.in/feed',
-  feedConfigApiUrl: 'http://thesuperheroes.in/config',
+  feedApiUrl: 'http://api.thesuperheroes.in/feed',
+  feedConfigApiUrl: 'http://api.thesuperheroes.in/config',
   production: true
 };
