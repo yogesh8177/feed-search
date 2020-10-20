@@ -1,7 +1,7 @@
 <div class="card">
     <div class="feed-image">
         <span *ngIf="feedCard.cardLabel" class="{{feedCard.cardLabel.className}}">{{feedCard.cardLabel.label}}</span>
-        <span *ngIf="showSelectCard" class="select-item"><input type="checkbox" [value]="feedCard.isSelected" (change) = "setSelectedCard(feedCard)"></span>
+        <span *ngIf="showSelectCard" class="select-item"><input type="checkbox" [checked]="feedCard.isSelected" (change) = "setSelectedCard(feedCard)"></span>
         <img src="{{feedCard.image.url}}" />
     </div>
     <div class="feed-content">
