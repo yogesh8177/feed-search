@@ -48,7 +48,6 @@ export class SortComponent implements OnInit {
   // ];
 
   ngOnInit(): void {
-    console.log({initialSortField: this.selectedSort});
   }
 
   setSortField(field: string) {
