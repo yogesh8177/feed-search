@@ -20,7 +20,6 @@ export class ComparatorComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(`items changed`, Object.keys(changes));
     Object.keys(changes).forEach(key => {
       if (key === 'feed') {
         this.resetCompareComponent();
