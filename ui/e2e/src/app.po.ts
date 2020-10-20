@@ -1,6 +1,12 @@
-import { browser, by, element, WebElement, ElementArrayFinder, ElementFinder } from 'protractor';
+import { browser, by, element, WebElement, ElementArrayFinder, ElementFinder, protractor } from 'protractor';
+let EC = protractor.ExpectedConditions;
 
 export class AppPage {
+
+  isClickable (element) {
+    return EC.elementToBeClickable(element);
+  }
+
   navigateTo(): Promise<unknown> {
     return browser.get(browser.baseUrl) as Promise<unknown>;
   }
