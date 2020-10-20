@@ -1,5 +1,5 @@
 export const environment = {
-  feedApiUrl: 'https://heroes-search.herokuapp.com/feed',
-  feedConfigApiUrl: 'https://heroes-search.herokuapp.com/config',
+  feedApiUrl: 'http://thesuperheroes.in/feed',
+  feedConfigApiUrl: 'http://thesuperheroes.in/config',
   production: true
 };
