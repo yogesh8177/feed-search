@@ -17,6 +17,7 @@ export class AppComponent {
   buildVersion: string;
   config: Config;
   feed: Feed[] = [];
+  selectedFeedCards: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   socialMedia: SocialMedia;
 
@@ -103,6 +104,35 @@ export class AppComponent {
         }
       });
     });
+  }
+
+  toggleShowSelectCards() {
+    this.showSelectCard = !this.showSelectCard;
+    if (!this.showSelectCard) this.clearSelectedItems();
+  }
+
+  clearSelectedItems() {
+    this.selectedFeedCards.length = 0;
+  }
+
+  onCardSelect(card: Feed) {
+    console.log({card});
+    let currentCardExists = this.selectedFeedCards.filter(c => c.id === card.id);
+    // if card already exists and we want to add it to selected list, we do nothing
+    if (currentCardExists.length && card.isSelected === true) return;
+
+    // if card already exists and we want to remove it, lets remove it!
+    if (currentCardExists.length && card.isSelected === false) {
+      console.log(`deleteing card as de-selected`);
+      let deleteIndex = this.selectedFeedCards.map((c, index) => {
+        if (c.id === card.id) return index;
+      });
+
+      if (deleteIndex.length) this.selectedFeedCards.splice(deleteIndex[0], 1);
+    }
+
+    // if selected card does not exist in selected list, let us add it
+    if (!currentCardExists.length && card.isSelected) this.selectedFeedCards.push(card);
   }
 
   onSortFieldChange(event: string) {
