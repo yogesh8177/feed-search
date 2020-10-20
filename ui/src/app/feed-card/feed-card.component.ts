@@ -11,7 +11,6 @@ export class FeedCardComponent implements OnInit {
   @Input() comparisionStat: string = '';
   @Input() showSelectCard: boolean = false;
   @Output() selectedCard = new EventEmitter<Feed>();
-  isCardSelected: boolean = false;
   
   constructor() { }
   
@@ -19,8 +18,7 @@ export class FeedCardComponent implements OnInit {
   }
   
   setSelectedCard(selectedCard: Feed) {
-    this.isCardSelected     = !this.isCardSelected;
-    selectedCard.isSelected = this.isCardSelected;
+    selectedCard.isSelected = !selectedCard.isSelected;
     this.selectedCard.emit(selectedCard);
   }
 
