@@ -24,7 +24,7 @@ export class FeedService {
     queryParams.set('searchTerm', params.searchTerm);
 
     let feedSearchUrl = `${this.feedUrl}?${queryParams.toString()}`;
-    console.log(`Feed search url`, feedSearchUrl);
+    //console.log(`Feed search url`, feedSearchUrl);
     return this.http.get<FeedResponse>(feedSearchUrl);
   }
 }

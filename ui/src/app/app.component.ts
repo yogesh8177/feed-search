@@ -97,13 +97,25 @@ export class AppComponent {
   }
 
   sanitizeFeedResponse() {
+    let selectedIdsMap = {};
+    this.selectedFeedCards.map(c => { 
+      selectedIdsMap[c.id] = c.isSelected;
+    });
+
+    console.log({selectedIdsMap});
     this.feed.forEach(item => {
       Object.keys(item).forEach(key => {
         if (item[key] === null || item[key] === undefined) {
           item[key] = 'No content';
         }
-        item.isSelected = false;
       });
+      if (selectedIdsMap.hasOwnProperty(item.id)) {
+        item.isSelected = selectedIdsMap[item.id];
+      }
+      else {
+        item.isSelected = false;
+        console.log(`no history`)
+      }
     });
   }
 
@@ -118,9 +130,8 @@ export class AppComponent {
   }
 
   onCardSelect(card: Feed) {
-    console.log('selected card', {id: card.id, name: card.name, isSelected: card.isSelected});
+    //console.log('selected card', {id: card.id, name: card.name, isSelected: card.isSelected});
     let currentCardExists = this.selectedFeedCards.filter(c => c.id === card.id);
-    console.log({currentCardExists});
     // if card already exists and we want to add it to selected list, we do nothing
     if (currentCardExists.length && card.isSelected) return;
 
@@ -132,9 +143,7 @@ export class AppComponent {
         if (c.id === card.id) deleteIndex = index;
       });
 
-      console.log(`delete index: ${deleteIndex}`);
       if (deleteIndex >= 0) this.selectedFeedCards.splice(deleteIndex, 1);
-      console.log(`after deletion`, this.selectedFeedCards);
     }
 
     // if selected card does not exist in selected list, let us add it
