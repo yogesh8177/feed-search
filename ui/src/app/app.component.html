@@ -2,7 +2,8 @@
 <div class="toolbar" role="banner">
   <h1 class="app-title">{{title}}</h1>
   <h3></h3>
-  <h3 class="page-status">Page: {{feedQueryParams.page}} Total: {{totalResults}}</h3>
+  <h3 *ngIf="!showSelectCard" class="page-status">Page: {{feedQueryParams.page}} Total: {{totalResults}}</h3>
+  <h3 *ngIf="showSelectCard" class="page-status">Selected ({{selectedFeedCards.length}})</h3>
 </div>
 
 <app-loader *ngIf="showLoader"></app-loader>
@@ -11,13 +12,18 @@
   <div class="card-container">
     <app-search class="card" (searchTerm) = "onSearchFieldChange($event)" [searchText]="feedQueryParams.searchTerm"></app-search>
     <div class="card only-desktop hidden"></div>
-    <div class="card only-desktop hidden"></div>
+    <div class="card"><button class="card-button" id="select-cards" (click)="toggleShowSelectCards()">{{showSelectCard ? 'Remove Selection' : 'Select Card(s)'}}</button></div>
     <div class="card only-desktop hidden"></div>
     <app-sort class="card" [optionGroups]="config?.sortOptions" (sortField) = "onSortFieldChange($event)" [selectedSort]="feedQueryParams.sortField+':'+feedQueryParams.type+':'+feedQueryParams.order"></app-sort>
   </div>
 
   <div class="card-container">
-    <app-feed-card class="card" *ngFor="let feedCard of feed" [feedCard]="feedCard"></app-feed-card>
+    <app-feed-card *ngFor="let feedCard of feed"
+      class            = "card"  
+      [showSelectCard] = "showSelectCard" 
+      (selectedCard)   = "onCardSelect($event)"
+      [feedCard]       = "feedCard">
+    </app-feed-card>
   </div>
 
   <app-paginator
@@ -28,7 +34,7 @@
    (updatedPage)      = "onPageUpdate($event)">
   </app-paginator>
 
-  <feed-comparator [feed] = "feed"></feed-comparator>
+  <feed-comparator [feed] = "selectedFeedCards.length ? selectedFeedCards : feed"></feed-comparator>
 
   <!-- Footer -->
   <footer>
