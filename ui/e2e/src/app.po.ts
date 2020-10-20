@@ -7,12 +7,36 @@ export class AppPage {
     return EC.elementToBeClickable(element);
   }
 
+  isVisible (element) {
+    return EC.visibilityOf(element);
+  }
+
   navigateTo(): Promise<unknown> {
     return browser.get(browser.baseUrl) as Promise<unknown>;
   }
 
   getTitleText(): Promise<string> {
     return element(by.className('app-title')).getText() as Promise<string>;
+  }
+
+  getPageStatusText(): Promise<string> {
+    return element(by.className('page-status')).getText() as Promise<string>;
+  }
+
+  getSelectCardButton(): WebElement {
+    return element(by.id('select-cards'));
+  }
+
+  getSelectCardCheckBoxes(): ElementArrayFinder {
+    return element.all(by.className('select-item'));
+  }
+
+  getCompareButton(): WebElement {
+    return element(by.id('compare-button'));
+  }
+
+  getElementByClass(className: string): WebElement {
+    return element(by.className(className));
   }
 
   getSearchInput(): Promise<string> {
