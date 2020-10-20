@@ -1,5 +1,5 @@
 import { AppPage } from './app.po';
-import { browser, logging, Key, protractor } from 'protractor';
+import { browser, logging, Key } from 'protractor';
 
 describe('Feed App', () => {
   let page: AppPage;
@@ -13,6 +13,11 @@ describe('Feed App', () => {
     const sortOption   = page.getSortWebElement('sort-1');
     const pageInput    = page.getPageInputWebElement();
     const jumpToButton = page.getJumpToPageButton();
+
+    browser.wait(page.isClickable(searchInput), 3000);
+    browser.wait(page.isClickable(sortOption), 3000);
+    browser.wait(page.isClickable(pageInput), 3000);
+    browser.wait(page.isClickable(jumpToButton), 3000);
 
     searchInput.clear();
     await browser.sleep(100);
