@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Superheroes App
+name: Superheroes Production
 
 on:
   push:
@@ -49,7 +49,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: yogesh8177/heroes-web
+        repository: yogesh8177/heroes-web-prod
         tags: ${{ github.run_number }}
         build_args: BUILD_VERSION=${{ github.run_number }}
         dockerfile: ./Dockerfile.prod
@@ -102,7 +102,7 @@ jobs:
         env:
           CI: ""
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./ui/dist/ui/ s3://heroes-search.ytechspark.com --delete
+        run: aws s3 sync ./ui/dist/ui/ s3://thesuperheroes.in --delete
 
       
 
