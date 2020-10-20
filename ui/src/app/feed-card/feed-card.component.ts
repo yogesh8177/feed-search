@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Feed } from '../models/Feed';
 
 @Component({
@@ -9,10 +9,19 @@ import { Feed } from '../models/Feed';
 export class FeedCardComponent implements OnInit {
   @Input() feedCard: Feed;
   @Input() comparisionStat: string = '';
+  @Input() showSelectCard: boolean = false;
+  @Output() selectedCard = new EventEmitter<Feed>();
+  isCardSelected: boolean = false;
   
   constructor() { }
-
+  
   ngOnInit(): void {
+  }
+  
+  setSelectedCard(selectedCard: Feed) {
+    this.isCardSelected     = !this.isCardSelected;
+    selectedCard.isSelected = this.isCardSelected;
+    this.selectedCard.emit(selectedCard);
   }
 
 }
