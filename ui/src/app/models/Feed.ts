@@ -9,6 +9,7 @@ export class Feed {
     image: any;
     totalScore: number;
     cardLabel: CardLabel;
+    isSelected: boolean = false;
 }
 
 export class FeedResponse {

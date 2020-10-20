@@ -185,6 +185,14 @@
     text-decoration: none;
     color: #000;
   }
+  
+  .card-button {
+    background-color: darkred;
+    width: inherit;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+  }
 
   svg#rocket {
     width: 80px;
