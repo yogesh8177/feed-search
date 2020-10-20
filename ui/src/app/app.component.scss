@@ -168,6 +168,14 @@
   .social-icon {
     margin-left: 10px;
   }
+  
+  .card-button {
+    background-color: darkred;
+    width: inherit;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+  }
 
   svg#rocket {
     width: 80px;
