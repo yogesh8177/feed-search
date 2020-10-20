@@ -14,7 +14,6 @@ export class PaginatorComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('currentPage', this.currentPage);
   }
 
   updateCurrentPage(event) {
