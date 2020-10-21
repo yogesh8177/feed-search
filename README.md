@@ -81,8 +81,6 @@ DEFAULT_SORT_ORDER=desc
 NODE_ENV=test
 ```
 
-Also make sure that you generate `SSL` certificate if deploying manually on a `VPS` and copy those generated certificates under `$PROJECT_ROOT/certificates` directory.
-
 Following are some useful endpoints for debugging and refreshing site content
 
 1. `http://localhost:8000/test` this endpoint will be useful for health checks.
