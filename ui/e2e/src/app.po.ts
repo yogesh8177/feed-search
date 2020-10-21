@@ -7,8 +7,12 @@ export class AppPage {
     return EC.elementToBeClickable(element);
   }
 
-  isVisible (element) {
+  isElementVisible (element) {
     return EC.visibilityOf(element);
+  }
+
+  isTextVisible(element, text) {
+    return EC.textToBePresentInElement(element, text);
   }
 
   navigateTo(): Promise<unknown> {
