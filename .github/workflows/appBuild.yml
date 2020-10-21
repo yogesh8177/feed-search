@@ -88,9 +88,9 @@ jobs:
       - name: Build Angular App
         run: |
             cd ./ui && npm install
-            rm ./assets/build.txt
-            touch ./assets/build.txt
-            echo ${{ github.run_number }} > ./assets/build.txt
+            rm ./src/assets/build.txt
+            touch ./src/assets/build.txt
+            echo ${{ github.run_number }} > ./src/assets/build.txt
             npm run build:prod
             
         env:
