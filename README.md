@@ -59,6 +59,10 @@ Below are steps to run our web server:
 Following are the necessary `env` variables that must be set for web service to run:
 
 ```
+# Web server config
+HOST=0.0.0.0
+PORT=8000
+
 # AWS IAM keys
 IAM_ACCESS_KEY_ID=<key id>
 IAM_SECRET_KEY=<secret key>
@@ -76,6 +80,8 @@ DEFAULT_SORT_ORDER=desc
 # Node env
 NODE_ENV=test
 ```
+
+Also make sure that you generate `SSL` certificate if deploying manually on a `VPS` and copy those generated certificates under `$PROJECT_ROOT/certificates` directory.
 
 Following are some useful endpoints for debugging and refreshing site content
 
