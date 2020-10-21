@@ -243,18 +243,7 @@ async function fetchDataToLoad(env, s3) {
     }
 }
 
-let server;
-
-if (env === 'production') {
-    const options = {
-        key: fs.readFileSync("./certificates/privkey.pem"),
-        cert: fs.readFileSync("./certificates/fullchain.pem")
-    };
-    server = https.createServer(options, requestListener);
-}
-else {
-    server = http.createServer(requestListener);
-}
+const server = http.createServer(requestListener);
 server.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);
 });
