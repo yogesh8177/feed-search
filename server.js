@@ -15,6 +15,8 @@ const env           = fetchEnvVariable('NODE_ENV');
 const fieldIndexes  = fetchEnvVariable('FIELD_INDEXES').split(',');
 const invertedIndexes = fetchEnvVariable('INVERTED_INDEXES').split(',');
 
+const buildVersion = fs.readFileSync('./build.txt').toString('utf-8');
+
 let S3_BUCKET;
 
 if (['production', 'staging'].includes(env)) {
@@ -107,6 +109,7 @@ const feedController = (req, res) => {
         }
         console.log({searchTerm, params});
         const result = engine.searchKeywords(searchTerm, params);
+        result.buildVersion = buildVersion;
         res.writeHead(200);
         res.end(JSON.stringify(result));
     }
@@ -114,7 +117,7 @@ const feedController = (req, res) => {
         console.error(`Error inside feedController`);
         console.error(error);
         res.writeHead(500);
-        res.end(JSON.stringify({error: 'Internal server error'}));
+        res.end(JSON.stringify({error: 'Internal server error', buildVersion}));
     }
 }
 
@@ -128,7 +131,8 @@ const refreshController = async (req, res) => {
         res.writeHead(200);
         res.end(JSON.stringify({
             message: 'refreshed', 
-            benchmark: `Refreshing took ${ (diff[0] * NS_PER_SEC + diff[1])  * MS_PER_NS } milliseconds`
+            benchmark: `Refreshing took ${ (diff[0] * NS_PER_SEC + diff[1])  * MS_PER_NS } milliseconds`,
+            buildVersion
         })); 
     }
     catch(error) {
@@ -137,7 +141,7 @@ const refreshController = async (req, res) => {
             error
         });
         res.writeHead(200);
-        res.end(JSON.stringify({message: 'error while refreshing', error: error.message})); 
+        res.end(JSON.stringify({message: 'error while refreshing', error: error.message, buildVersion})); 
     }
 }
 
@@ -152,6 +156,7 @@ const configController = async (req, res) => {
             config = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: fetchEnvVariable('S3_CONFIG_KEY')});
             console.log('fetched config via s3');
         }
+        config.buildVersion = buildVersion;
         res.writeHead(200);
         res.end(JSON.stringify(config)); 
     }
@@ -161,7 +166,7 @@ const configController = async (req, res) => {
             error
         });
         res.writeHead(500);
-        res.end('Internal server error'); 
+        res.end(JSON.stringify({error: 'Internal server error', buildVersion})); 
     }
 }
 
@@ -173,6 +178,12 @@ const requestListener = async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET');
 
     switch(url[0]) {
+
+        case '/':
+            res.writeHead(200);
+            res.end(JSON.stringify({status: 'live', buildVersion}));
+        break;
+
         case '/feed':
             return feedController(req, res);
         break;
@@ -187,7 +198,7 @@ const requestListener = async (req, res) => {
 
         case '/test':
             res.writeHead(200);
-            res.end(JSON.stringify({message: 'healthy'})); 
+            res.end(JSON.stringify({message: 'healthy', buildVersion})); 
         break;
 
         case '/loaderio-5a06a5b545ec5f56a42510093c4621e1.txt':
@@ -197,7 +208,7 @@ const requestListener = async (req, res) => {
 
         default:
             res.writeHead(404);
-            res.end(`{"message": "Requested resource not found"}`);
+            res.end(`{"message": "Requested resource not found", buildVersion: "${buildVersion}}"`);
         break;
     }
 };
