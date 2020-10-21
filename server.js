@@ -1,10 +1,11 @@
 const http          = require("http");
+const https         = require('https');
 const dotenv        = require('dotenv').config();
 const querystring   = require('querystring');
 const SearchEngine  = require('./database/searchEngine');
 const mockData      = require('./data/mock_data.json');
-const host          = process.env.HOST || '0.0.0.0';
-const port          = process.env.PORT || 8000;
+const host          = fetchEnvVariable('HOST') || '0.0.0.0';
+const port          = fetchEnvVariable('PORT') || 8000;
 const AWS           = require('aws-sdk');
 const fs            = require('fs');
 let s3;
@@ -16,7 +17,7 @@ const invertedIndexes = fetchEnvVariable('INVERTED_INDEXES').split(',');
 
 let S3_BUCKET;
 
-if (env === 'production') {
+if (['production', 'staging'].includes(env)) {
     S3_BUCKET = fetchEnvVariable('S3_BUCKET');
 
     AWS.config.update({
@@ -166,10 +167,11 @@ const configController = async (req, res) => {
 
 const requestListener = async (req, res) => {
     const url = req.url.split('?');
-
+    
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET');
+
     switch(url[0]) {
         case '/feed':
             return feedController(req, res);
@@ -241,7 +243,18 @@ async function fetchDataToLoad(env, s3) {
     }
 }
 
-const server = http.createServer(requestListener);
+let server;
+
+if (env === 'production') {
+    const options = {
+        key: fs.readFileSync("./certificates/privkey.pem"),
+        cert: fs.readFileSync("./certificates/fullchain.pem")
+    };
+    server = https.createServer(options, requestListener);
+}
+else {
+    server = http.createServer(requestListener);
+}
 server.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);
 });
