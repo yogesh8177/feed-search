@@ -7,12 +7,14 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('Server', () => {
-  it("Should return 404 for '/' url path", done => {
+  it("Should return buildVersion and status for '/' url path", done => {
     chai
       .request(server)
       .get("/")
       .end((err, res) => {
-        expect(res).to.have.status(404);
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property('status').to.equal('live');
+        expect(res.body).to.have.property('buildVersion');
         done();
       });
   });
@@ -30,6 +32,7 @@ describe('Server', () => {
       .get(`/feed?${querystring.stringify(params)}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
+        expect(res.body).to.have.property('buildVersion');
         done();
       });
   });
@@ -40,8 +43,8 @@ describe('Server', () => {
       .get(`/config`)
       .end((err, res) => {
         expect(res).to.have.status(200);
-        console.log({res});
         expect(res.body).to.have.property('appTitle');
+        expect(res.body).to.have.property('buildVersion');
         done();
       });
   });
@@ -54,6 +57,7 @@ describe('Server', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('benchmark');
+        expect(res.body).to.have.property('buildVersion');
         done();
       });
   });

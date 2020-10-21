@@ -14,6 +14,7 @@ import { FeedQueryParams } from './models/FeedQueryParams';
 })
 export class AppComponent {
   title = 'Feed';
+  buildVersion: string;
   config: Config;
   feed: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
@@ -43,6 +44,7 @@ export class AppComponent {
   }
   
   ngOnInit() {
+    this.loadBuildNumber();
     this.initializeLoader();
     this.initializeQueryParams();
     this.loadConfig();
@@ -130,5 +132,15 @@ export class AppComponent {
     console.log('Page updated', event);
     this.feedQueryParams.page = event;
     this.loadFeed(this.feedQueryParams);
+  }
+
+  loadBuildNumber() {
+    this.configService.fetchBuild().subscribe(
+      data => {
+        this.buildVersion = data;
+        console.log(`build number loaded: ${data}`);
+      },
+      error => console.error(error)
+    );
   }
 }

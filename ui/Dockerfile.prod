@@ -8,6 +8,10 @@ RUN cd ui && npm install
 
 WORKDIR /feed-ui/ui
 
+ENV BUILD_TEXT_PATH ./src/assets/build.txt
+
+RUN rm $BUILD_TEXT_PATH && touch $BUILD_TEXT_PATH && echo ${GITHUB_RUN_ID} > $BUILD_TEXT_PATH
+
 # RUN npm run build for production
 RUN npm run build:prod
 EXPOSE 4200/tcp

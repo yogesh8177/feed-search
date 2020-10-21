@@ -33,7 +33,11 @@ jobs:
         cd ./database && npm ci
         npm run build --if-present
         npm run coverage
-    - run: npm ci && npm run coverage
+    - run: |
+        rm ./build.txt
+        touch ./build.txt
+        echo ${{ github.run_number }} > ./build.txt
+        npm ci && npm run coverage
       env:
         NODE_ENV: github
         FIELD_INDEXES: dateLastEdited:Date,title:string
@@ -46,7 +50,7 @@ jobs:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: yogesh8177/feed-web
-        tags: latest
+        tags: ${{ github.run_number }}
   
   build-ui:
     runs-on: ubuntu-latest
@@ -70,7 +74,7 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: yogesh8177/feed-ui
-          tags: latest
+          tags: ${{ github.run_number }}
           dockerfile: ./ui/Dockerfile.prod
   
   s3_deploy:
@@ -86,7 +90,13 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Build Angular App
-        run: cd ./ui && npm install && npm run build:prod
+        run: |
+            cd ./ui && npm install
+            rm ./src/assets/build.txt
+            touch ./src/assets/build.txt
+            echo ${{ github.run_number }} > ./src/assets/build.txt
+            npm run build:prod
+            
         env:
           CI: ""
       - name: Deploy app build to S3 bucket
