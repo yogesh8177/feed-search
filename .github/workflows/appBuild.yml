@@ -36,7 +36,7 @@ jobs:
     - run: |
         rm ./build.txt
         touch ./build.txt
-        echo ${{ github.run_number }} > ./src/assets/build.txt
+        echo ${{ github.run_number }} > ./build.txt
         npm ci && npm run coverage
       env:
         NODE_ENV: github
