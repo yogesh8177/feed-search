@@ -121,7 +121,8 @@ describe('Feed App', () => {
       const topRankLabel = await page.getElementByClass(rankingClassAndLabels[0].className);
       const rankingLabel = await page.getElementByClass(rankingClassAndLabels[1].className);
 
-      browser.wait(page.isVisible(topRankLabel));
+      browser.wait(page.isTextVisible(topRankLabel, rankingClassAndLabels[0].label));
+      browser.wait(page.isTextVisible(rankingLabel, rankingClassAndLabels[1].label));
 
       expect(topRankLabel.getText()).toBe(rankingClassAndLabels[0].label);
       expect(rankingLabel.getText()).toBe(rankingClassAndLabels[1].label);
