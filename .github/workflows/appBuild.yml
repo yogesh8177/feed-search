@@ -51,9 +51,8 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: yogesh8177/feed-web
         tags: ${{ github.run_number }}
+        build_args: BUILD_VERSION=${{ github.run_number }}
         dockerfile: ./Dockerfile.prod
-      env:
-        BUILD_VERSION: ${{ github.run_number }}
   
   build-ui:
     runs-on: ubuntu-latest
@@ -71,14 +70,14 @@ jobs:
       - name: Run e2e
         run: docker-compose up --exit-code-from ui-e2e
         
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: yogesh8177/feed-ui
-          tags: ${{ github.run_number }}
-          dockerfile: ./ui/Dockerfile.prod
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_USER }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      #     repository: yogesh8177/heroes-ui-staging
+      #     tags: ${{ github.run_number }}
+      #     dockerfile: ./ui/Dockerfile.prod
   
   s3_deploy:
     runs-on: ubuntu-latest
