@@ -51,6 +51,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: yogesh8177/feed-web
         tags: ${{ github.run_number }}
+        dockerfile: ./Dockerfile.prod
   
   build-ui:
     runs-on: ubuntu-latest
