@@ -3,7 +3,7 @@ const SearchEngine  = require('../searchEngine');
 const mockData      = require('../../data/mock_data.json');
 const { strict } = require('assert');
 
-const totalMockData = mockData.documents.length;
+const totalMockData = mockData.length;
 
 // utility methods
 function checkArrayProperty(arrayObjects, propertiesToCheck) {
@@ -30,9 +30,9 @@ describe('Search Engine basic functionality tests', () => {
     });
 
     it('Should load all totalMockData items present in mock data', () => {
-      engine.loadDataIntoDb(mockData.documents);
+      engine.loadDataIntoDb(mockData);
       let documentMapKeyLength = Object.keys(engine.documentsMap).length;
-      assert.strictEqual(documentMapKeyLength, mockData.documents.length);
+      assert.strictEqual(documentMapKeyLength, mockData.length);
     });
 
     it('Documents should have auto incrementing id starting with 1 till total documents length', () => {
@@ -52,7 +52,7 @@ describe('Search Engine basic functionality tests', () => {
         assert.strictEqual(doc.hasOwnProperty('id'), true);
         assert.strictEqual(doc.hasOwnProperty('name'), true);
         assert.strictEqual(doc.hasOwnProperty('powerstats'), true);
-        assert.strictEqual(doc.hasOwnProperty('connections'), true);
+        assert.strictEqual(doc.hasOwnProperty('foodType'), true);
         documentId++; // increment doc id
       });
     });
@@ -110,45 +110,45 @@ describe('Search Engine basic functionality tests', () => {
   });
 
   describe('Searching in our db', () => {
-    it('Search should return 2 documents for search term `batman` ', () => {
+    it('Search should return 1 documents for search term `broccoli` ', () => {
       engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
-        pageSize: 10,
+        pageSize: 8,
         sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
-      let result = engine.searchKeywords(['batman'], params);
+      let result = engine.searchKeywords(['broccoli'], params);
+      assert.strictEqual(result.hasOwnProperty('total'), true);
+      assert.strictEqual(result.hasOwnProperty('documents'), true);
+      assert.strictEqual(Array.isArray(result.documents), true);
+      assert.strictEqual(result.total, 1);
+    });
+
+    it('Search should return 3 documents for search term `green` ', () => {
+      engine.createInvertedTextIndex(['name']);
+      const params = {
+        page: 1,
+        pageSize: 8,
+        sort: { sortField: 'id', order: 'asc', type: 'number' }
+      };
+      let result = engine.searchKeywords(['green'], params);
       assert.strictEqual(result.hasOwnProperty('total'), true);
       assert.strictEqual(result.hasOwnProperty('documents'), true);
       assert.strictEqual(Array.isArray(result.documents), true);
       assert.strictEqual(result.total, 3);
     });
 
-    it('Search should return 5 documents for search term `super` ', () => {
+    it('Search should match 4 document for search term `Green Onion` ', () => {
       engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
-        pageSize: 10,
-        sort: { sortField: 'id', order: 'asc', type: 'number' }
-      };
-      let result = engine.searchKeywords(['super'], params);
-      assert.strictEqual(result.hasOwnProperty('total'), true);
-      assert.strictEqual(result.hasOwnProperty('documents'), true);
-      assert.strictEqual(Array.isArray(result.documents), true);
-      assert.strictEqual(result.total, 5);
-    });
-
-    it('Search should match 1 document for search term `Abe Sapien` ', () => {
-      engine.createInvertedTextIndex(['name']);
-      const params = {
-        page: 1,
-        pageSize: 10,
+        pageSize: 8,
         sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
       const expectedNames = [
-        'Abe Sapien'
+        'Green Onion'
       ];
-      let result = engine.searchKeywords(['Abe','Sapien'], params);
+      let result = engine.searchKeywords(['Green','Onion'], params);
       let titlesFound = 0;
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name)) titlesFound++;
@@ -157,24 +157,22 @@ describe('Search Engine basic functionality tests', () => {
       assert.strictEqual(result.hasOwnProperty('total'), true);
       assert.strictEqual(result.hasOwnProperty('documents'), true);
       assert.strictEqual(Array.isArray(result.documents), true);
-      assert.strictEqual(result.total, 1);
+      assert.strictEqual(result.total, 4);
       assert.strictEqual(titlesFound, expectedNames.length);
     });
 
-    it('Search should match 3 documents for search term `Agent 13` ', () => {
+    it('Search should match 1 documents for search term `"Green Onion"` ', () => {
       engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
-        pageSize: 10,
+        pageSize: 8,
         sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
       const expectedNames = [
-        'Agent 13',
-        'Agent Bob',
-        'Agent Zero'
+        'Green Onion'
       ];
 
-      let result = engine.searchKeywords(['Agent', '13'], params);
+      let result = engine.searchKeywords(['Green Onion'], params);
       let titlesFound = 0;
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name)) titlesFound++;
@@ -186,18 +184,18 @@ describe('Search Engine basic functionality tests', () => {
       assert.strictEqual(titlesFound, expectedNames.length);
     });
 
-    it('Search should return items having `Abomination` in their name for search term `abomina`', () => {
+    it('Search should return items having `Broccoli` in their name for search term `brocco`', () => {
       engine.createInvertedTextIndex(['name']);
       const params = {
         page: 1,
-        pageSize: 100,
+        pageSize: 8,
         sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
 
-      let result = engine.searchKeywords(['abomina'], params);
+      let result = engine.searchKeywords(['brocco'], params);
       assert.strictEqual(result.total, 1);
       result.documents.forEach(doc => {
-        assert.strictEqual(doc.name, 'Abomination');
+        assert.strictEqual(doc.name, 'Broccoli');
       });
     });
   });
@@ -227,7 +225,7 @@ describe('Search Engine basic functionality tests', () => {
     it('Should return results without search keys and sort by name asc', () => {
       const params = {
         page: 1,
-        pageSize: 10,
+        pageSize: 8,
         sort: { sortField: 'name', order: 'asc', type: 'string' }
       };
       let result   = engine.searchKeywords([], params);
@@ -295,13 +293,13 @@ describe('Search Engine basic functionality tests', () => {
   describe('Pagination tests', () => {
     it(`Should match given names on page 2 where we sort by name in desc order`, () => {
       const expectedNames = [
-        'Wondra',
-        'Wonder Woman'
+        'Sweet Corn',
+        'SummerÊSquash'
       ];
       let matchedNames = 0;
       const params = {
         page: 2,
-        pageSize: 10,
+        pageSize: 8,
         sort: { sortField: 'name', order: 'desc', type: 'string' }
       };
       let result   = engine.searchKeywords([], params);
@@ -314,11 +312,11 @@ describe('Search Engine basic functionality tests', () => {
     });
 
     it('Should match given names on page 2 where we sort by name in asc order', () => {
-      const expectedNames = ['Air-Walker', 'Agent Zero'];
+      const expectedNames = ['Carrot', 'Catfish'];
 
       const params = {
         page: 2,
-        pageSize: 10,
+        pageSize: 8,
         sort: { sortField: 'name', order: 'asc', type: 'string' }
       };
       let matchedNames = 0;
@@ -333,13 +331,13 @@ describe('Search Engine basic functionality tests', () => {
 
     it(`Should match given names on page 2 where we sort by id in desc order`, () => {
       const expectedNames = [
-        'X-23',
-        'Wiz Kid'
+        'Rainbow Trout',
+        'Pollock'
       ];
       let matchedNames = 0;
       const params = {
         page: 2,
-        pageSize: 10,
+        pageSize: 8,
         sort: { sortField: 'id', order: 'desc', type: 'number' }
       };
       let result   = engine.searchKeywords([], params);
@@ -352,15 +350,15 @@ describe('Search Engine basic functionality tests', () => {
     });
 
     it('Should match given names on page 2 where we sort by id in asc order', () => {
-      const expectedNames = ['Air-Walker', 'Agent Zero'];
+      const expectedNames = ['GreenÊCabbage', 'Green Onion'];
 
       const params = {
         page: 2,
-        pageSize: 10,
+        pageSize: 8,
         sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
       let matchedNames = 0;
-      let result        = engine.searchKeywords([], params);
+      let result       = engine.searchKeywords([], params);
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name))
@@ -369,14 +367,14 @@ describe('Search Engine basic functionality tests', () => {
       assert.strictEqual(matchedNames, expectedNames.length);
     })
 
-    it('should return 1 documents on 74th page with pageSize 10', () => {
+    it('should return 5 documents on 8th page with pageSize 8', () => {
       const params = {
-        page: 74,
-        pageSize: 10,
+        page: 8,
+        pageSize: 8,
         sort: { sortField: 'id', order: 'desc', type: 'number' }
       };
       let result        = engine.searchKeywords([], params);
-      assert.strictEqual(result.documents.length, 1);
+      assert.strictEqual(result.documents.length, 5);
     });
   });
 
