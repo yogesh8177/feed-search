@@ -83,11 +83,11 @@ describe('Server', () => {
       });
   });
 
-  it("Search for the key `batman`, should return 3 documents", done => {
+  it("Search for the key `broccoli`, should return 3 documents", done => {
     const params = {
-      searchTerm: 'batman',
+      searchTerm: 'broccoli',
       page: 1,
-      pageSize: 10,
+      pageSize: 8,
       sortField: 'name',
       order: 'asc',
       type: 'string'
@@ -97,16 +97,16 @@ describe('Server', () => {
       .get(`/feed?${querystring.stringify(params)}`)
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body.total).to.equal(3);
+        expect(res.body.total).to.equal(1);
         done();
       });
   });
 
   it("Search return empty documents collection for invalid page i.e 1000", done => {
     const params = {
-      searchTerm: 'batman',
+      searchTerm: 'green',
       page: 100,
-      pageSize: 10,
+      pageSize: 8,
       sortField: 'name',
       order: 'asc',
       type: 'string'
