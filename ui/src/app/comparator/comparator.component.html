@@ -1,11 +1,13 @@
-<div class="comparision-content">
+<div class="comparision-content center-text">
     <h2 class="center-text">Compare characters ({{feed.length}})</h2>
+    <p>Select your characters from the list above, or compare all of them by default!</p>
     <div class="card-container">
         <div class="card" >
-            <button id="compare-button" (click) = "triggerCompare()">Compare</button>
+            <button id="compare-button" *ngIf="!comparedFeedItems.length" (click) = "triggerCompare()">Compare</button>
+            <button id="clear-compare-button" *ngIf="comparedFeedItems.length" (click) = "resetCompareComponent()">Clear comparison</button>
         </div>
         
-        <div *ngIf="maxCurrentScore" class="card">Max {{currentComparisionStat ? '(' + currentComparisionStat + ')' : '(Aggregate)'}} - {{maxCurrentScore}}</div>
+        <div id="max-comparision-score" *ngIf="maxCurrentScore" class="card">Max {{currentComparisionStat ? '(' + currentComparisionStat + ')' : '(Aggregate)'}} - {{maxCurrentScore}}</div>
         
         <div class="card" *ngIf="individualStatsArray.length">
             <select

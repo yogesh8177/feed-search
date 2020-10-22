@@ -1,5 +1,5 @@
 .comparision-content {
-    background-color: orangered;
+    background-color: black;
     max-width: 1200px;
     height: fit-content;
     color: #fff;
@@ -8,7 +8,7 @@
     margin-top: 10px;
 }
 
-#individual-stats-select, #compare-button {
+#individual-stats-select, #compare-button, #clear-compare-button, #max-comparision-score {
     text-align: center;
     outline: none;
     background-color: darkred;

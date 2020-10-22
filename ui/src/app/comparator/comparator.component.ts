@@ -109,8 +109,8 @@ export class ComparatorComponent implements OnInit, OnChanges {
         this.totalMaxScorers++;
     });
     this.individualStatsArray = Object.keys(_comparedFeedItems[0].powerstats);
-    console.log('comparision result:', {comparisionResult: _comparedFeedItems, totalWinners: this.totalMaxScorers});
-    _comparedFeedItems.forEach(item => console.log(`${comparisionStat || 'all stats'} => ${item.name} - ${item.totalScore}`));
+    //console.log('comparision result:', {comparisionResult: _comparedFeedItems, totalWinners: this.totalMaxScorers});
+    //_comparedFeedItems.forEach(item => console.log(`${comparisionStat || 'all stats'} => ${item.name} - ${item.totalScore}`));
     return _comparedFeedItems;
   }
 
