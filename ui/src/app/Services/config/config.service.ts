@@ -17,6 +17,6 @@ export class ConfigService {
   }
 
   fetchBuild() {
-    return this.http.get<string>(`./assets/build.txt`);
+    return this.http.get<string>(`assets/build.txt`);
   }
 }

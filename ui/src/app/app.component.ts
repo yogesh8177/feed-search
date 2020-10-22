@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { FeedService } from './Services/feed.service';
 import { ConfigService } from './Services/config/config.service';
-import { LoaderService } from './Services/loader.service';
 import { Feed, FeedResponse } from './models/Feed';
 import { Config } from './models/Config';
 import { TableData } from './models/TableData';
@@ -18,7 +17,6 @@ export class AppComponent {
   config: Config;
   feed: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
-  showLoader: string[] = [];
 
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
@@ -38,24 +36,15 @@ export class AppComponent {
 
   constructor(
     private feedService: FeedService,
-    private loaderServie: LoaderService,
     private configService: ConfigService
     ) {
   }
   
   ngOnInit() {
     this.loadBuildNumber();
-    this.initializeLoader();
     this.initializeQueryParams();
     this.loadConfig();
     this.loadFeed(this.feedQueryParams);
-  }
-
-  initializeLoader() {
-    this.loaderServie.isLoading.subscribe(
-      isLoading => this.showLoader = isLoading,
-      error => console.error(error)
-    );
   }
   
   initializeQueryParams() {
