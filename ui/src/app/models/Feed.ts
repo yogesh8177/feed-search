@@ -2,10 +2,7 @@ export class Feed {
     id: string;
     name: string;
     powerstats: any;
-    biography: any;
-    appearance: any;
-    work: any;
-    connections: any;
+    secondaryStats: any;
     image: any;
     totalScore: number;
     cardLabel: CardLabel;

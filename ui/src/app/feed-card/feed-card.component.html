@@ -2,7 +2,7 @@
     <div class="feed-image">
         <span *ngIf="feedCard.cardLabel" class="{{feedCard.cardLabel.className}}">{{feedCard.cardLabel.label}}</span>
         <span *ngIf="showSelectCard" class="select-item"><input type="checkbox" [checked]="feedCard.isSelected" (change) = "setSelectedCard(feedCard)"></span>
-        <img src="{{feedCard.image.url}}" />
+        <img src="{{feedCard.image.url || '#'}}" />
     </div>
     <div class="feed-content">
         <h3 class="feed-title"><span>{{(feedCard.name.length > 32) ? (feedCard.name | slice:0:32) + '..' : feedCard.name}}</span></h3>
