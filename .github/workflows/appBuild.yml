@@ -1,15 +1,15 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Nutrition Production
+name: Nutrition Staging
 
 on:
   push:
-    branches: [ master-nutrition ]
+    branches: [ nutrition-staging ]
     paths-ignore:
       - '**.md'
   pull_request:
-    branches: [ master-nutrition ]
+    branches: [ nutrition-staging ]
     paths-ignore:
       - '**.md'
 
@@ -49,7 +49,7 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: yogesh8177/nutrition-web-prod
+        repository: yogesh8177/nutrition-web-staging
         tags: ${{ github.run_number }}
         build_args: BUILD_VERSION=${{ github.run_number }}
         dockerfile: ./Dockerfile.prod
@@ -75,7 +75,7 @@ jobs:
       #   with:
       #     username: ${{ secrets.DOCKER_USER }}
       #     password: ${{ secrets.DOCKER_PASSWORD }}
-      #     repository: yogesh8177/nutrition-ui-production
+      #     repository: yogesh8177/nutrition-ui-staging
       #     tags: ${{ github.run_number }}
       #     dockerfile: ./ui/Dockerfile.prod
   
@@ -102,7 +102,7 @@ jobs:
         env:
           CI: ""
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./ui/dist/ui/ s3://nutrition.thesuperheroes.in --delete
+        run: aws s3 sync ./ui/dist/ui/ s3://nutrition.ytechspark.com --delete
 
       
 
