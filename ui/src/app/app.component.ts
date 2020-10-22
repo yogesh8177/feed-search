@@ -30,7 +30,7 @@ export class AppComponent {
   @HostListener('window:beforeunload', ['$event'])
   WindowBeforeUnoad($event: any) {
     console.log('saving filters before reload');
-    localStorage.setItem('queryParams', JSON.stringify(this.feedQueryParams));
+    sessionStorage.setItem('queryParams', JSON.stringify(this.feedQueryParams));
     console.log('state saved');
   }
 
