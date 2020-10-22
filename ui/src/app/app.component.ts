@@ -88,7 +88,7 @@ export class AppComponent {
         this.totalResults = data.total;
         this.feed = feedResponse.documents;
         this.sanitizeFeedResponse();
-        console.log(`feed loaded`, this.feed);
+        //console.log(`feed loaded`, this.feed);
       },
       error => console.error(error)
     );
@@ -100,7 +100,6 @@ export class AppComponent {
       selectedIdsMap[c.id] = c.isSelected;
     });
 
-    console.log({selectedIdsMap});
     this.feed.forEach(item => {
       Object.keys(item).forEach(key => {
         if (item[key] === null || item[key] === undefined) {
@@ -112,7 +111,6 @@ export class AppComponent {
       }
       else {
         item.isSelected = false;
-        console.log(`no history`)
       }
     });
   }
@@ -174,7 +172,6 @@ export class AppComponent {
     this.configService.fetchBuild().subscribe(
       data => {
         this.buildVersion = data;
-        console.log(`build number loaded: ${data}`);
       },
       error => console.error(error)
     );
