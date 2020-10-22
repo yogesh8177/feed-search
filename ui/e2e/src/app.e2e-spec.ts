@@ -51,9 +51,11 @@ describe('Feed App', () => {
       expect(feedCards.length).toEqual(10);
     });
 
-    it('should display page status as `Page: 1, Total: 731`', () => {
-      const pageStatusText = page.getPageStatusText();
-      expect(pageStatusText).toBe('Page: 1 Total: 731');
+    it('should display page status as `Page: 1 Total: 731`', () => {
+      const textToVerify = 'Page: 1 Total: 731';
+      const pageStatus = page.getPageStatusElement();
+      browser.wait(page.isTextVisible(pageStatus, textToVerify));
+      expect(pageStatus.getText()).toBe('Page: 1 Total: 731');
     });
   });
 
@@ -72,6 +74,7 @@ describe('Feed App', () => {
   describe('Compare cards', () => {
     it(`select first card, should update page status text as 'Selected (1)'`, () =>{
       const selectCardsButton = page.getSelectCardButton();
+      const textToVerify = 'Selected (1)';
 
       browser.wait(page.isClickable(selectCardsButton));
       selectCardsButton.click();
@@ -80,12 +83,14 @@ describe('Feed App', () => {
       expect(selectCheckBoxes.count()).toBe(pageSize);
       selectCheckBoxes.get(0).click();
 
-      const pageStatusText = page.getPageStatusText();
-      expect(pageStatusText).toBe(`Selected (1)`);
+      const pageStatus = page.getPageStatusElement();
+      browser.wait(page.isTextVisible(pageStatus, textToVerify));
+      expect(pageStatus.getText()).toBe(textToVerify);
     })
 
-    it('select and un-select a card, should display page status text as `Selected(0)`', () => {
+    it('select and un-select a card, should display page status text as `Selected (0)`', () => {
       const selectCardsButton = page.getSelectCardButton();
+      const textToVerify = 'Selected (0)';
 
       browser.wait(page.isClickable(selectCardsButton));
       selectCardsButton.click();
@@ -95,8 +100,9 @@ describe('Feed App', () => {
       selectCheckBoxes.get(0).click();
       selectCheckBoxes.get(0).click();
 
-      const pageStatusText = page.getPageStatusText();
-      expect(pageStatusText).toBe(`Selected (0)`);
+      const pageStatus = page.getPageStatusElement();
+      browser.wait(page.isTextVisible(pageStatus, textToVerify));
+      expect(pageStatus.getText()).toBe(textToVerify);
     });
 
     it('select two cards and compare, should display comparision cards having span with appropriate class names', async () => {
