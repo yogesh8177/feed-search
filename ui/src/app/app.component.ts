@@ -48,7 +48,7 @@ export class AppComponent {
   }
   
   initializeQueryParams() {
-    let savedState = JSON.parse(localStorage.getItem('queryParams'));
+    let savedState = JSON.parse(sessionStorage.getItem('queryParams'));
     if (!savedState) {
       this.feedQueryParams.searchTerm = '';
       this.feedQueryParams.page       = 1;
