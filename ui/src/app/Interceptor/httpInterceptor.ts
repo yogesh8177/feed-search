@@ -15,7 +15,12 @@ export class MyHttpInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.loaderService.isLoading.next(true);
-    return next.handle(req).pipe(finalize(() => this.loaderService.isLoading.next(false)));
+    this.loaderService.isLoading.next(this.loaderService.isLoading.getValue().concat(req.url));
+    return next.handle(req).pipe(finalize(() => {
+      let currentValues = this.loaderService.isLoading.getValue();
+      let indexToRemove = currentValues.indexOf(req.url);
+      currentValues.splice(indexToRemove, 1);
+      this.loaderService.isLoading.next(currentValues);
+    }));
   }
 }

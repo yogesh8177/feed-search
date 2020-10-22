@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { LoaderService} from '../Services/loader.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { LoaderService} from '../Services/loader.service';
 })
 export class LoaderComponent implements OnInit {
 
-  isLoading: boolean = false;
+  @Input() loadingItems: string;
   constructor() { }
 
   ngOnInit(): void {

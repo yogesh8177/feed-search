@@ -18,7 +18,7 @@ export class AppComponent {
   config: Config;
   feed: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
-  showLoader: boolean = false;
+  showLoader: string[] = [];
 
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
