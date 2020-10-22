@@ -8,7 +8,7 @@ import { Feed } from '../models/Feed';
 })
 export class FeedCardComponent implements OnInit {
   @Input() feedCard: Feed;
-  @Input() comparisionStat: string = '';
+  @Input() comparisonStat: string = '';
   @Input() showSelectCard: boolean = false;
   @Output() selectedCard = new EventEmitter<Feed>();
   
