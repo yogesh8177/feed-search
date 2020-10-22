@@ -23,8 +23,8 @@ export class AppPage {
     return element(by.className('app-title')).getText() as Promise<string>;
   }
 
-  getPageStatusText(): Promise<string> {
-    return element(by.className('page-status')).getText() as Promise<string>;
+  getPageStatusElement(): ElementFinder {
+    return element(by.className('page-status'));
   }
 
   getSelectCardButton(): WebElement {
