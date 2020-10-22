@@ -8,7 +8,7 @@
         <h3 class="feed-title"><span>{{(feedCard.name.length > 32) ? (feedCard.name | slice:0:32) + '..' : feedCard.name}}</span></h3>
         <ul class="stats-container">
             <li *ngFor="let powerStat of feedCard.powerstats | keyvalue" class="stat-item">
-                <strong class="{{comparisionStat === powerStat.key ? 'active-compare-stat' : ''}}">{{powerStat.key}}</strong> - 
+                <strong class="{{comparisonStat === powerStat.key ? 'active-compare-stat' : ''}}">{{powerStat.key}}</strong> - 
                 <span *ngIf="powerStat.value >= 75" class="stat-value-red">{{powerStat.value}}</span>
                 <span *ngIf="(powerStat.value >= 55 && powerStat.value <= 74)" class="stat-value-green">{{powerStat.value}}</span>
                 <span *ngIf="powerStat.value <= 54" class="stat-value-orange">{{powerStat.value}}</span>

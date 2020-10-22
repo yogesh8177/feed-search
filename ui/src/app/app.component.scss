@@ -7,6 +7,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+
   h1,
   h2,
   h3,
@@ -126,7 +127,7 @@
   }
 
   .feed-image {
-    width: 200px;
+    width: inherit;
   }
 
   .card-container .card:not(:last-child) {
@@ -261,11 +262,21 @@
     display: flex;
     align-items: center;
     line-height: 20px;
+    justify-content: center;
+    background-color: #24292e;
+    color: #fff;
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
   }
 
   footer a {
     display: flex;
     align-items: center;
+  }
+
+  .build-version {
+    padding: 3px;
   }
 
   .github-star-badge {
@@ -357,6 +368,23 @@
   }
 
   @media screen and (max-width: 920px) {
+    svg#rocket-smoke {
+      display: none;
+      visibility: hidden;
+    }
+    .only-desktop {
+      display: none;
+    }
+    .card-container {
+      justify-content: center;
+    }
+    .card {
+      padding: 0;
+      width: 330px;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
     svg#rocket-smoke {
       display: none;
       visibility: hidden;
