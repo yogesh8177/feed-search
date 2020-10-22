@@ -15,7 +15,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
   totalMaxScorers: number = 0;
   individualStatsArray: string[] = [];
   selectedStatToCompare: string = '';
-  currentComparisionStat: string = '';
+  currentComparisonStat: string = '';
 
   constructor() { }
 
@@ -37,7 +37,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
     this.totalMaxScorers = 0;
     this.individualStatsArray.length = 0;
     this.selectedStatToCompare = '';
-    this.currentComparisionStat = '';
+    this.currentComparisonStat = '';
   }
 
   /**
@@ -64,19 +64,19 @@ export class ComparatorComponent implements OnInit, OnChanges {
     this.comparedFeedItems = comparedFeed;
   }
 
-  setComparisionStat(stat: string) {
+  setComparisonStat(stat: string) {
     this.selectedStatToCompare = stat;
     this.triggerCompare();
   }
 
-  compareFeedItems(feedItems: Feed[], comparisionStat: string): Feed[] {
+  compareFeedItems(feedItems: Feed[], comparisonStat: string): Feed[] {
     let _comparedFeedItems: Feed[] = [];
     this.maxCurrentScore = 0;
     this.totalMaxScorers = 0;
-    this.currentComparisionStat = comparisionStat;
+    this.currentComparisonStat = comparisonStat;
 
     feedItems.forEach(item => {
-      let statToCompare = comparisionStat;
+      let statToCompare = comparisonStat;
       let totalScore    = 0;
       let calculatedFeed: Feed = Object.assign({}, item);
 
@@ -98,7 +98,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
         this.maxCurrentScore = this.maxCurrentScore < totalScore ? totalScore : this.maxCurrentScore;
       }
       else {
-        console.error('Unexpected stat type encountered', {comparisionStat, type: typeof statToCompare});
+        console.error('Unexpected stat type encountered', {comparisonStat, type: typeof statToCompare});
       }
     });
 
@@ -110,7 +110,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
     });
     this.individualStatsArray = Object.keys(_comparedFeedItems[0].powerstats);
     //console.log('comparision result:', {comparisionResult: _comparedFeedItems, totalWinners: this.totalMaxScorers});
-    //_comparedFeedItems.forEach(item => console.log(`${comparisionStat || 'all stats'} => ${item.name} - ${item.totalScore}`));
+    //_comparedFeedItems.forEach(item => console.log(`${comparisonStat || 'all stats'} => ${item.name} - ${item.totalScore}`));
     return _comparedFeedItems;
   }
 
