@@ -20,6 +20,7 @@ export class AppComponent {
   selectedFeedCards: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   socialMedia: SocialMedia;
+  showSelectCard: boolean = false;
 
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
