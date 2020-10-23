@@ -1,11 +1,12 @@
 #searchBox, #searchBox::placeholder {
     border: 0px;
     padding: 2px;
+    border-radius: inherit;
+    height: 40px;
     outline: none;
     text-align: center;
     background-color: darkred;
     color: #fff;
-    width: inherit;
 }
 
 #searchButton {
