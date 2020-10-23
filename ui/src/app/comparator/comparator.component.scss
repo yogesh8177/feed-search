@@ -7,6 +7,7 @@
     width: 100%;
     padding: 5px;
     margin-top: 30px;
+    border-top: 2px solid orangered;
 }
 
 #individual-stats-select, #compare-button, #clear-compare-button, #max-comparision-score {
@@ -35,7 +36,8 @@
 }
 
 hr {
-  border: 1px solid darkred
+  background-color: orangered;
+  border: 1px solid orangered
 }
 
 /* Responsive Styles */
