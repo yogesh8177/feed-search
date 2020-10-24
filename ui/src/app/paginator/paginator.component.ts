@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { GoogleAnalyticsService } from '../Services/analytics/google-analytics.service';
 
 @Component({
   selector: 'app-paginator',
@@ -11,7 +12,9 @@ export class PaginatorComponent implements OnInit {
   @Input() maxPage: number;
   @Output() updatedPage = new EventEmitter<number>();
 
-  constructor() { }
+  constructor(
+    private googleAnalytics: GoogleAnalyticsService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -24,6 +27,7 @@ export class PaginatorComponent implements OnInit {
     if ((this.currentPage * this.currentPageSize) < this.maxPage) {
       this.currentPage++;
       this.updatedPage.emit(this.currentPage);
+      this.googleAnalytics.emitAnalyticsEvent('currentPage', {page: this.currentPage});
     }
   }
 
@@ -31,12 +35,14 @@ export class PaginatorComponent implements OnInit {
     if ((this.currentPage -1) > 0) {
       this.currentPage--;
       this.updatedPage.emit(this.currentPage);
+      this.googleAnalytics.emitAnalyticsEvent('currentPage', {page: this.currentPage});
     }
   }
 
   jumpToPage() {
     console.log('Jumping to page', this.currentPage);
     this.updatedPage.emit(this.currentPage);
+    this.googleAnalytics.emitAnalyticsEvent('currentPage', {page: this.currentPage});
   }
 
 }
