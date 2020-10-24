@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { Feed, CardLabel } from '../models/Feed';
-declare let gtag: Function;
+import { GoogleAnalyticsService } from '../Services/analytics/google-analytics.service';
 
 @Component({
   selector: 'feed-comparator',
@@ -18,7 +18,9 @@ export class ComparatorComponent implements OnInit, OnChanges {
   selectedStatToCompare: string = '';
   currentComparisonStat: string = '';
 
-  constructor() { }
+  constructor(
+    private googleAnalytics: GoogleAnalyticsService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     Object.keys(changes).forEach(key => {
@@ -63,7 +65,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
       rankStartIndex++;
     });
     this.comparedFeedItems = comparedFeed;
-    gtag('event', 'cards-compare', {compareCardIds: comparedFeed.map(c => c.name).join(','), powerStat: this.selectedStatToCompare});
+    this.googleAnalytics.emitAnalyticsEvent('cards-compare', {compareCardIds: comparedFeed.map(c => c.name).join(','), powerStat: this.selectedStatToCompare});
   }
 
   setComparisonStat(stat: string) {
