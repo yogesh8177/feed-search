@@ -37,7 +37,15 @@
         "page": 1,
         "pageSize": 6,
         "sortField": "dateLastEdited",
-        "type": "Date",
-        "order": "desc"
+        "order": "desc",
+        "type": "number"
+    },
+    "socialMedia": {
+        "facebook": {
+            "link": "https://www.facebook.com/thesuperheroes.in"
+        },
+        "instagram": {
+            "link": "https://www.instagram.com/thesuperheroes.in/?hl=en"
+        }
     }
 }
