@@ -19,6 +19,7 @@ export class AppComponent {
   feed: Feed[] = [];
   selectedFeedCards: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
+  showSelectCard: boolean = false;
   socialMedia: SocialMedia;
 
   tableHeaders: object[] = [
