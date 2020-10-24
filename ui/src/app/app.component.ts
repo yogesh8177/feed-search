@@ -6,6 +6,7 @@ import { Config } from './models/Config';
 import { TableData } from './models/TableData';
 import { FeedQueryParams } from './models/FeedQueryParams';
 import { SocialMedia } from './models/SocialMedia';
+declare let gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -156,6 +157,7 @@ export class AppComponent {
     this.feedQueryParams.order     = order;
     console.log('sort field changed', this.feedQueryParams);
     this.loadFeed(this.feedQueryParams);
+    gtag('event', 'sortField', {sortField: event});
   }
 
   onSearchFieldChange(event: string) {
@@ -163,6 +165,7 @@ export class AppComponent {
     this.feedQueryParams.searchTerm = event;
     this.feedQueryParams.page       = 1;
     this.loadFeed(this.feedQueryParams);
+    gtag('event', 'searchTerm', {searchTerm: event});
   }
 
   onPageUpdate(event: number) {
@@ -182,5 +185,6 @@ export class AppComponent {
 
   visitSocialMedia(socialMedia: string) {
     window.open(this.socialMedia[socialMedia].link);
+    gtag('event', 'social-icons-click', {socialMedia});
   }
 }
