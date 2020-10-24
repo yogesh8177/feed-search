@@ -167,6 +167,23 @@
 
   .social-icon {
     margin-left: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: inherit;
+    cursor: pointer;
+  }
+
+  .social-icon > img {
+    width: inherit;
+    height: inherit;
+  }
+
+  .social-icon > a {
+    width: inherit;
+    height: inherit;
+    text-decoration: none;
+    color: #000;
   }
   
   .card-button {

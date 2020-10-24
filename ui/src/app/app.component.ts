@@ -5,6 +5,7 @@ import { Feed, FeedResponse } from './models/Feed';
 import { Config } from './models/Config';
 import { TableData } from './models/TableData';
 import { FeedQueryParams } from './models/FeedQueryParams';
+import { SocialMedia } from './models/SocialMedia';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent {
   selectedFeedCards: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   showSelectCard: boolean = false;
+  socialMedia: SocialMedia;
 
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
@@ -75,6 +77,7 @@ export class AppComponent {
       data => {
         this.config = data;
         this.title  = this.config.appTitle; 
+        this.socialMedia = this.config.socialMedia;
       },
       error => console.error(error)
     );
@@ -175,5 +178,9 @@ export class AppComponent {
       },
       error => console.error(error)
     );
+  }
+
+  visitSocialMedia(socialMedia: string) {
+    window.open(this.socialMedia[socialMedia].link);
   }
 }
