@@ -106,3 +106,6 @@ dist
 # test outputs
 *_data.json
 *Logs.json
+
+# Local test scripts
+local-scripts
