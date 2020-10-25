@@ -47,5 +47,8 @@
         "instagram": {
             "link": "https://www.instagram.com/thesuperheroes.in/?hl=en"
         }
+    },
+    "privacyPolicy": {
+        "link": "https://feed-app-privacy.s3.amazonaws.com/privacy-policy.html"
     }
 }
