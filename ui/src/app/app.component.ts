@@ -22,6 +22,7 @@ export class AppComponent {
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   showSelectCard: boolean = false;
   socialMedia: SocialMedia;
+  errors: string[] = [];
 
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
@@ -81,12 +82,16 @@ export class AppComponent {
         this.title  = this.config.appTitle; 
         this.socialMedia = this.config.socialMedia;
       },
-      error => console.error(error)
+      error => {
+        console.error(error);
+        this.errors.push('Error while loading config, please refresh the page to try again');
+      }
     );
   }
   
   loadFeed(params: FeedQueryParams) {
     this.feed.length = 0;
+    this.errors.length = 0;
     this.feedService.getFeed(params).subscribe(
       data => {
         let feedResponse: FeedResponse = data;
@@ -94,8 +99,12 @@ export class AppComponent {
         this.feed = feedResponse.documents;
         this.sanitizeFeedResponse();
         //console.log(`feed loaded`, this.feed);
+        (this.feed.length === 0 && params.searchTerm) && this.errors.push(`No search results, please use double quotes for exact match. Eg: ["iron man"] instead of [iron man].`);
       },
-      error => console.error(error)
+      error => {
+        console.error(error);
+        this.errors.push('Error while loading feed, please refresh the page to try again!');
+      }
     );
   }
 
