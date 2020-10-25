@@ -27,7 +27,7 @@ export class PaginatorComponent implements OnInit {
     if ((this.currentPage * this.currentPageSize) < this.maxPage) {
       this.currentPage++;
       this.updatedPage.emit(this.currentPage);
-      this.googleAnalytics.emitAnalyticsEvent('currentPage', {page: this.currentPage});
+      this.googleAnalytics.emitAnalyticsEvent('currentPage', {nextPage: this.currentPage});
     }
   }
 
@@ -35,14 +35,14 @@ export class PaginatorComponent implements OnInit {
     if ((this.currentPage -1) > 0) {
       this.currentPage--;
       this.updatedPage.emit(this.currentPage);
-      this.googleAnalytics.emitAnalyticsEvent('currentPage', {page: this.currentPage});
+      this.googleAnalytics.emitAnalyticsEvent('currentPage', {prevPage: this.currentPage});
     }
   }
 
   jumpToPage() {
     console.log('Jumping to page', this.currentPage);
     this.updatedPage.emit(this.currentPage);
-    this.googleAnalytics.emitAnalyticsEvent('currentPage', {page: this.currentPage});
+    this.googleAnalytics.emitAnalyticsEvent('currentPage', {jumpToPage: this.currentPage});
   }
 
 }
