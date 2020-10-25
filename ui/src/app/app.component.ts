@@ -186,6 +186,6 @@ export class AppComponent {
 
   visitSocialMedia(socialMedia: string) {
     window.open(this.socialMedia[socialMedia].link);
-    this.googleAnalytics.emitAnalyticsEvent('social-icons-click', {socialMedia});
+    this.googleAnalytics.emitAnalyticsEvent('socialIconsClick', {socialMedia});
   }
 }

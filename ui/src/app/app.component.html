@@ -9,7 +9,9 @@
 <app-loader></app-loader>
 
 <div class="content" role="main">
-  <p class="center-text"><span class="info-tip">Find the comparison tool at the bottom of the page.</span></p>
+  <p class="center-text">
+    <span class="info-tip">Find the comparison tool at the bottom of the page. </span>
+  </p>
   <div class="card-container">
     <app-search class="card" (searchTerm) = "onSearchFieldChange($event)" [searchText]="feedQueryParams.searchTerm"></app-search>
     <div class="card only-desktop hidden"></div>
