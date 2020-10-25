@@ -5,7 +5,6 @@ import { Feed, FeedResponse } from './models/Feed';
 import { Config } from './models/Config';
 import { TableData } from './models/TableData';
 import { FeedQueryParams } from './models/FeedQueryParams';
-import { SocialMedia } from './models/SocialMedia';
 import { GoogleAnalyticsService } from './Services/analytics/google-analytics.service';
 
 @Component({
@@ -21,7 +20,6 @@ export class AppComponent {
   selectedFeedCards: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   showSelectCard: boolean = false;
-  socialMedia: SocialMedia;
   errors: string[] = [];
 
   tableHeaders: object[] = [
@@ -80,7 +78,6 @@ export class AppComponent {
       data => {
         this.config = data;
         this.title  = this.config.appTitle; 
-        this.socialMedia = this.config.socialMedia;
       },
       error => {
         console.error(error);
@@ -194,7 +191,7 @@ export class AppComponent {
   }
 
   visitSocialMedia(socialMedia: string) {
-    window.open(this.socialMedia[socialMedia].link);
+    window.open(this.config.socialMedia[socialMedia].link);
     this.googleAnalytics.emitAnalyticsEvent('social-icons-click', {socialMedia});
   }
 }

@@ -5,4 +5,5 @@ export class Config {
     appTitle: string;
     sortOptions: OptionGroup;
     socialMedia: SocialMedia;
+    privacyPolicy: any;
 }
