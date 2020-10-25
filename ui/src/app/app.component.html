@@ -20,6 +20,9 @@
     <app-sort class="card" [optionGroups]="config?.sortOptions" (sortField) = "onSortFieldChange($event)" [selectedSort]="feedQueryParams.sortField+':'+feedQueryParams.type+':'+feedQueryParams.order"></app-sort>
   </div>
 
+  <div class="error-box" *ngIf="errors.length">
+    <p *ngFor="let error of errors">{{error}}</p>
+  </div>
   <div class="card-container">
     <app-feed-card *ngFor="let feedCard of feed"
       class            = "card"  
