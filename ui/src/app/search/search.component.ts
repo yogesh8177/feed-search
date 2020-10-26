@@ -9,6 +9,7 @@ export class SearchComponent implements OnInit {
   
   @Input() searchText: string = '';
   @Output() searchTerm = new EventEmitter<string>();
+  showSearchToolTip: boolean = false;
 
 
   constructor() { }
@@ -19,6 +20,10 @@ export class SearchComponent implements OnInit {
   setSearchTerm(event) {
     this.searchText = event;
     this.searchTerm.emit(event);
+  }
+
+  setToolTip(event: boolean) {
+    this.showSearchToolTip = event;
   }
 
 }
