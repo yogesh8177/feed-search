@@ -1,10 +1,10 @@
-<div class="card">
-    <div class="feed-image">
+<div class="card" (click) = "flipThisCard()">
+    <div class="feed-image" *ngIf="!flipCard">
         <span *ngIf="feedCard.cardLabel" class="{{feedCard.cardLabel.className}}">{{feedCard.cardLabel.label}}</span>
         <span *ngIf="showSelectCard" class="select-item"><input type="checkbox" [checked]="feedCard.isSelected" (change) = "setSelectedCard(feedCard)"></span>
         <img src="{{feedCard.image.url}}" />
     </div>
-    <div class="feed-content">
+    <div class="feed-content" *ngIf="!flipCard">
         <h3 class="feed-title"><span>{{(feedCard.name.length > 32) ? (feedCard.name | slice:0:32) + '..' : feedCard.name}}</span></h3>
         <ul class="stats-container">
             <li *ngFor="let powerStat of feedCard.powerstats | keyvalue" class="stat-item">
@@ -15,5 +15,13 @@
                 <span *ngIf="powerStat.value === 'null' || !powerStat.value" class="stat-value-grey">NA</span>
             </li>
         </ul>
+    </div>
+    <div class="feed-content" *ngIf="flipCard">
+        <h3 class="feed-title"><span>{{(feedCard.name.length > 32) ? (feedCard.name | slice:0:32) + '..' : feedCard.name}}</span></h3>
+        <h5>Publisher: {{feedCard.biography.publisher || 'NA'}}</h5>
+        <h5>Type: {{feedCard.biography.alignment === 'good' ? 'Hero' : 'Villian'}}</h5>
+        <h5>Race: {{feedCard.appearance.race || 'NA'}}</h5>
+        <h5>First appearance: {{feedCard.biography['first-appearance'] || 'NA'}}</h5>
+        <h5>Occupation: {{feedCard.work.occupation || 'NA'}}</h5>
     </div>
 </div>
