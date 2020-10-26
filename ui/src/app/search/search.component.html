@@ -1,4 +1,14 @@
 <div class="searchContainer">
-    <input type="search" id="searchBox" name="search" placeholder="Search hero.." value="{{searchText}}" (change) = "setSearchTerm($event.target.value)"/>
+    <span class="tool-tip" *ngIf="showSearchToolTip">Exact match (""), eg: ["iron man"] instead of [iron man]</span>
+    <input 
+        type="search" 
+        id="searchBox" 
+        name="search" 
+        placeholder="Search hero.." 
+        value="{{searchText}}" 
+        (change) = "setSearchTerm($event.target.value)"
+        (focus) = "setToolTip(true)"
+        (focusout) = "setToolTip(false)"
+    />
     <span id="searchButton" class="material-icons">search</span>
 </div>
