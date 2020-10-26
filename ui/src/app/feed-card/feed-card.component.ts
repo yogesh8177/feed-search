@@ -11,6 +11,7 @@ export class FeedCardComponent implements OnInit {
   @Input() comparisonStat: string = '';
   @Input() showSelectCard: boolean = false;
   @Output() selectedCard = new EventEmitter<Feed>();
+  flipCard: boolean = false;
   
   constructor() { }
   
@@ -20,6 +21,10 @@ export class FeedCardComponent implements OnInit {
   setSelectedCard(selectedCard: Feed) {
     selectedCard.isSelected = !selectedCard.isSelected;
     this.selectedCard.emit(selectedCard);
+  }
+
+  flipThisCard() {
+    this.flipCard = !this.flipCard;
   }
 
 }
