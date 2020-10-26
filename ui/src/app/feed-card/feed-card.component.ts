@@ -27,9 +27,11 @@ export class FeedCardComponent implements OnInit {
   }
 
   flipThisCard() {
-    this.flipCard = !this.flipCard;
-    if (this.flipCard)
-      this.googleAnalytics.emitAnalyticsEvent('card-info', {character: this.feedCard.name});
+    if (!this.showSelectCard) {
+      this.flipCard = !this.flipCard;
+      if (this.flipCard)
+        this.googleAnalytics.emitAnalyticsEvent('card-info', {character: this.feedCard.name});
+    }
   }
 
 }
