@@ -4,7 +4,7 @@ import { GoogleAnalyticsService } from '../Services/analytics/google-analytics.s
 @Component({
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
-  styleUrls: ['./paginator.component.scss']
+  styleUrls: ['../app.component.scss', './paginator.component.scss']
 })
 export class PaginatorComponent implements OnInit {
   @Input() currentPage: number;
