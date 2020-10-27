@@ -1,20 +1,32 @@
 .nav-button {
-    background-color: #24292e;
-    margin-left: 2px;
-    margin-right: 2px;
+    background-color: darkred;
+    border-radius: 5px;
     border: none;
+    height: 40px;
+    text-align: center;
+    padding: 12px;
 }
 
 #jumpTo {
     background-color: darkred;
     color: #fff;
     border: 1px solid darkred;
+    border-radius: 4px;
+    width: 50px;
+    padding: 2px;
 }
 
 .nav-button, #jumpTo {
     color: #fff;
     outline: none;
-    padding: 2px;
     cursor: pointer;
-    width: 40px;
+}
+
+#pageInput {
+    height: 35px;
+    width: 40px
+}
+
+.center-align {
+    align-items: center;
 }
