@@ -11,6 +11,7 @@ import { TableComponent } from './table/table.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { LoaderComponent } from './loader/loader.component';
 import { ComparatorComponent } from './comparator/comparator.component';
+import { LiveMatchComponent } from './live-match/live-match.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ComparatorComponent } from './comparator/comparator.component';
     TableComponent,
     PaginatorComponent,
     LoaderComponent,
-    ComparatorComponent
+    ComparatorComponent,
+    LiveMatchComponent
   ],
   imports: [
     BrowserModule,

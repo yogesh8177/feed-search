@@ -5,6 +5,8 @@
 export const environment = {
   feedApiUrl: 'http://localhost:8000/feed',
   feedConfigApiUrl: 'http://localhost:8000/config',
+  liveMatchUrl: 'http://localhost:8000/live-match',
+  fetchVotesUrl: '',
   production: false
 };
 
