@@ -1,7 +1,12 @@
-<button class="card nav-button" (click) = "goToPrevPage()">Prev</button>
-<div class="card">
-    <input type="number" id="pageInput" min="1" value="{{currentPage}}" (change) = "updateCurrentPage($event.target.value)" />
-    <button id="jumpTo" (click) = "jumpToPage()">Go</button>
+<div class="card-container">
+    <button class="card nav-button" (click) = "goToPrevPage()">Prev</button>
+    <button class="card nav-button" (click) = "goToNextPage()">Next</button>
 </div>
-<button class="card nav-button" (click) = "goToNextPage()">Next</button>
+<div class="card-container">
+    <div class="card">
+        <label></label>
+        <input type="number" id="pageInput" min="1" value="{{currentPage}}" (change) = "updateCurrentPage($event.target.value)" />
+        <button id="jumpTo" (click) = "jumpToPage()">Go</button>
+    </div>
+</div>
 
