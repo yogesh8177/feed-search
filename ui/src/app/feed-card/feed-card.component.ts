@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Feed } from '../models/Feed';
+import  { GoogleAnalyticsService } from '../Services/analytics/google-analytics.service';
 
 @Component({
   selector: 'app-feed-card',
@@ -11,8 +12,11 @@ export class FeedCardComponent implements OnInit {
   @Input() comparisonStat: string = '';
   @Input() showSelectCard: boolean = false;
   @Output() selectedCard = new EventEmitter<Feed>();
+  flipCard: boolean = false;
   
-  constructor() { }
+  constructor(
+    private googleAnalytics: GoogleAnalyticsService
+  ) { }
   
   ngOnInit(): void {
   }
@@ -20,6 +24,14 @@ export class FeedCardComponent implements OnInit {
   setSelectedCard(selectedCard: Feed) {
     selectedCard.isSelected = !selectedCard.isSelected;
     this.selectedCard.emit(selectedCard);
+  }
+
+  flipThisCard() {
+    if (!this.showSelectCard) {
+      this.flipCard = !this.flipCard;
+      if (this.flipCard)
+        this.googleAnalytics.emitAnalyticsEvent('card-info', {character: this.feedCard.name});
+    }
   }
 
 }

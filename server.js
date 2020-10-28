@@ -1,5 +1,4 @@
 const http          = require("http");
-const https         = require('https');
 const dotenv        = require('dotenv').config();
 const querystring   = require('querystring');
 const SearchEngine  = require('./database/searchEngine');
@@ -170,6 +169,31 @@ const configController = async (req, res) => {
     }
 }
 
+const liveMatchController = async (req, res) => {
+    try{
+        let liveMatch;
+        if (['test', 'docker', 'github'].includes(env)) {
+            liveMatch = JSON.parse(fs.readFileSync('./data/live-match.json'));
+            console.log('fetched live-match via fs');
+        }
+        else {
+            liveMatch = await fetchFromS3(s3, {Bucket: S3_BUCKET, Key: 'superheroes/feed/live-match.json'});
+            console.log('fetched live-match via s3');
+        }
+        liveMatch.buildVersion = buildVersion;
+        res.writeHead(200);
+        res.end(JSON.stringify(liveMatch)); 
+    }
+    catch(error) {
+        console.error({
+            message: 'Error while fetching live-match',
+            error
+        });
+        res.writeHead(500);
+        res.end(JSON.stringify({error: 'Internal server error', buildVersion})); 
+    }
+}
+
 const requestListener = async (req, res) => {
     const url = req.url.split('?');
     
@@ -190,6 +214,10 @@ const requestListener = async (req, res) => {
 
         case '/config':
             return configController(req, res);
+        break;
+
+        case '/live-match':
+            await liveMatchController(req, res);
         break;
 
         case '/refresh':
