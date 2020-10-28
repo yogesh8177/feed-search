@@ -1,0 +1,24 @@
+version: "3.7"
+services: 
+  web:
+    image: yogesh8177/heroes-web-prod:419
+    env_file: .env-web
+    expose:
+      - 8000
+    command: npm start
+
+  voting-service:
+    image: yogesh8177/heroes-voting-prod:509
+    env_file: .env-voting
+    expose: 
+      - 3000
+    command: npm start
+    depends_on: 
+      - redis
+
+  redis:
+    image: bitnami/redis:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    expose: 
+      - 6379
