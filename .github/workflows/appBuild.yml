@@ -78,7 +78,7 @@ jobs:
       - run: |
           cd ./voting-service
           npm install
-          npm start
+          npm test
         env:
           NODE_ENV: github
           REDIS_HOST: localhost
