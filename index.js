@@ -20,7 +20,7 @@ let redisOptions = {
 if (util.NODE_ENV === 'staging') {
     redisOptions.password = util.fetchEnvVariable('REDIS_PASSWORD');
 }
-const client = redis.createClient(options);
+const client = redis.createClient(redisOptions);
 
 const incrByAsync = promisify(client.incrby).bind(client);
 
