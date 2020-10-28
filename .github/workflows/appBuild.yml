@@ -86,6 +86,16 @@ jobs:
           HOST: 0.0.0.0
           PORT: 3000
 
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: yogesh8177/heroes-voting-prod
+          tags: ${{ github.run_number }}
+          build_args: BUILD_VERSION=${{ github.run_number }}
+          dockerfile: ./voting-service/Dockerfile
+
   
   build-ui:
     runs-on: ubuntu-latest
