@@ -13,10 +13,14 @@ const redisPrefix = util.NODE_ENV;
 
 const buildVersion = fs.readFileSync('./build.txt').toString('utf-8');
 
-const client = redis.createClient({
+let redisOptions = {
     host: REDIS_HOST,
-    port: REDIS_PORT
-});
+    port: REDIS_PORT,
+};
+if (util.NODE_ENV === 'staging') {
+    redisOptions.password = util.fetchEnvVariable('REDIS_PASSWORD');
+}
+const client = redis.createClient(options);
 
 const incrByAsync = promisify(client.incrby).bind(client);
 
