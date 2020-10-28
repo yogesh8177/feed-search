@@ -1,4 +1,4 @@
-const server      = require("../index");
+const { server, shutDown }      = require("../index");
 const querystring = require('querystring');
 const chai        = require("chai");
 const chaiHttp    = require("chai-http");
@@ -16,6 +16,7 @@ describe('Server', () => {
         expect(res.body).to.have.property('status').to.equal('live');
         expect(res.body).to.have.property('buildVersion');
         done();
+        shutDown();
       });
   });
   

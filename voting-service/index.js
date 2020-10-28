@@ -118,4 +118,11 @@ server.listen(PORT, HOST, () => {
     console.log(`Server is running on http://${HOST}:${PORT}`);
 });
 
-module.exports = server;
+function shutDown () {
+    process.exit(0);
+}
+
+module.exports = { 
+    server,
+    shutDown
+};
