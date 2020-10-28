@@ -39,6 +39,7 @@ export class LiveMatchComponent implements OnInit {
   }
 
   initializePlayerVotes(players: Feed[]) {
+    this.votes.length = 0;
     players.forEach(player => {
       let vote: Vote = new Vote();
       vote.count = 0;
