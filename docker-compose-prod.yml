@@ -3,15 +3,15 @@ services:
   web:
     image: yogesh8177/heroes-web-prod:419
     env_file: .env-web
-    expose:
-      - 8000
+    ports:
+      - 8000:8000
     command: npm start
 
   voting-service:
     image: yogesh8177/heroes-voting-prod:509
     env_file: .env-voting
-    expose: 
-      - 3000
+    ports: 
+      - 3000:3000
     command: npm start
     depends_on: 
       - redis
