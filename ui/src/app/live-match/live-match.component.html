@@ -12,13 +12,14 @@
         </app-feed-card>
     </div>
     <div class="live-match-footer">
-       
-            <div class="vote-card" *ngFor="let vote of votes" (click) = "castVote(vote)">
+            <div class="vote-card" [ngClass]="{'inactive': disableVote}" *ngFor="let vote of votes" (click) = "castVote(vote)">
                 Vote: {{vote.playerName}} - 
                 <span *ngIf="vote.count < 35" class="vote-count-yellow">{{vote.count}}</span>
                 <span *ngIf="vote.count >= 35 && vote.count < 65" class="vote-count-orange">{{vote.count}}</span>
                 <span *ngIf="vote.count >= 65" class="vote-count-green">{{vote.count}}</span>
             </div>
-        
+            <div class="vote-card" [ngClass]="{'inactive': disableRefresh}">
+                <span id="refresh-votes-btn" (click) = "fetchVotes(votes)">Refresh votes</span>
+            </div>
     </div>
 </div>

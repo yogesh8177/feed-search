@@ -1,0 +1,24 @@
+{
+  "name": "voting-service",
+  "version": "1.0.0",
+  "description": "Voting serivce",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha ./tests/index.js"
+  },
+  "keywords": [
+    "vote"
+  ],
+  "author": "Yogesh",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.2.0"
+  }
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Feed } from '../models/Feed';
-import { Vote } from '../models/Votes';
+import { Vote, VoteResponse } from '../models/Votes';
 import { GoogleAnalyticsService } from '../Services/analytics/google-analytics.service';
 import { LiveMatchService } from '../Services/live-match/live-match.service';
 
@@ -15,6 +15,8 @@ export class LiveMatchComponent implements OnInit {
   players: Feed[] = [];
   votes: Vote[] = [];
   showLiveMatch: boolean = false;
+  disableRefresh: boolean = false;
+  disableVote: boolean = false;
 
   constructor(
     private googleAnalytics: GoogleAnalyticsService,
@@ -44,18 +46,50 @@ export class LiveMatchComponent implements OnInit {
       vote.playerName = player.name;
       this.votes.push(vote);
     });
-    console.log({votes: this.votes});
     this.fetchVotes(this.votes);
   }
 
   fetchVotes(votes: Vote[]) {
-    this.votes = this.liveMatchService.fetchVotes();
+    if (this.disableRefresh) return;
+    this.liveMatchService.fetchVotes(votes).subscribe(
+      response => {
+        let voteCounts = response.data;
+        // sequence of results are maintained!
+        voteCounts.forEach((vote, index) => {
+          this.votes[index].count = vote.count;
+        });
+        
+        this.disableComponent('disableRefresh');
+        this.googleAnalytics.emitAnalyticsEvent('fetch-votes', {players: this.votes.map(v => v.playerName)});
+      },
+      error => console.error(error)
+    );
   }
 
   castVote(vote: Vote) {
-    this.votes.forEach(v => {
-      if (v.voteeId === vote.voteeId) v.count++;
-    });
+    if (this.disableVote) return;
+    let voteToCast = this.votes.filter(v => v.voteeId === vote.voteeId);
+    if (!voteToCast.length) {
+      console.error(`invalid vote, could not find voteeId`);
+    }
+    else {
+      this.disableComponent('disableVote');
+      this.liveMatchService.castVote(voteToCast[0]).subscribe(
+        response => {
+          this.fetchVotes(this.votes);
+          this.googleAnalytics.emitAnalyticsEvent('cast-vote', { id: vote.voteeId, player: vote.playerName });
+        },
+        error => console.error(error)
+      );
+    }
+  }
+
+  disableComponent (component: string) {
+    let self = this;
+    self[component] = true;
+    setTimeout(() => {
+      self[component] = false;
+    }, 5000);
   }
 
   closeLiveMatch() {

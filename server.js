@@ -1,5 +1,4 @@
 const http          = require("http");
-const https         = require('https');
 const dotenv        = require('dotenv').config();
 const querystring   = require('querystring');
 const SearchEngine  = require('./database/searchEngine');
