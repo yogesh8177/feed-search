@@ -79,7 +79,7 @@ jobs:
           npm start
         env:
           NODE_ENV: github
-          REDIS_HOST: localhost
+          REDIS_HOST: 0.0.0.0
           REDIS_PORT: 6379
           HOST: 0.0.0.0
           PORT: 3000
