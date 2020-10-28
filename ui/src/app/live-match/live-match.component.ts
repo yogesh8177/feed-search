@@ -15,6 +15,8 @@ export class LiveMatchComponent implements OnInit {
   players: Feed[] = [];
   votes: Vote[] = [];
   showLiveMatch: boolean = false;
+  disableRefresh: boolean = false;
+  disableVote: boolean = false;
 
   constructor(
     private googleAnalytics: GoogleAnalyticsService,
@@ -49,13 +51,32 @@ export class LiveMatchComponent implements OnInit {
   }
 
   fetchVotes(votes: Vote[]) {
-    this.votes = this.liveMatchService.fetchVotes();
+    if (this.disableRefresh) return;
+    this.votes = this.liveMatchService.fetchVotes(votes);
+    this.disableComponent('disableRefresh');
+    this.googleAnalytics.emitAnalyticsEvent('fetch-votes', {players: this.votes.map(v => v.playerName)});
   }
 
   castVote(vote: Vote) {
+    if (this.disableVote) return;
     this.votes.forEach(v => {
-      if (v.voteeId === vote.voteeId) v.count++;
+      if (v.voteeId === vote.voteeId) {
+        v.count++;
+        this.disableComponent('disableVote');
+        this.liveMatchService.castVote(v);
+        this.googleAnalytics.emitAnalyticsEvent('cast-vote', {id: vote.voteeId, player: vote.playerName});
+      }
     });
+  }
+
+  disableComponent (component: string) {
+    let self = this;
+    self[component] = true;
+    console.log(`disabled: ${component}`, self[component]);
+    setTimeout(() => {
+      self[component] = false;
+      console.log(`enabling: ${component}`);
+    }, 15000);
   }
 
   closeLiveMatch() {

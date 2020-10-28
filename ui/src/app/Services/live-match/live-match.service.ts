@@ -15,7 +15,8 @@ export class LiveMatchService {
     return this.http.get<LiveMatch>(environment.liveMatchUrl);
   }
 
-  fetchVotes() {
+  fetchVotes(votes: Vote[]) {
+    console.log(`fetching votes`);
     let mockVotes: Vote[] = [
       {
         voteeId: "2",
@@ -29,5 +30,9 @@ export class LiveMatchService {
       }
     ];
     return mockVotes;
+  }
+
+  castVote(vote: Vote) {
+    console.log(`casting vote`);
   }
 }
