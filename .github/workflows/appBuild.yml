@@ -55,7 +55,9 @@ jobs:
 
   build-voting-service:
     runs-on: ubuntu-latest
-    container: node:12
+    strategy:
+      matrix:
+        node-version: [12.x]
     services: 
       redis:
         image: redis
@@ -79,7 +81,7 @@ jobs:
           npm start
         env:
           NODE_ENV: github
-          REDIS_HOST: 0.0.0.0
+          REDIS_HOST: localhost
           REDIS_PORT: 6379
           HOST: 0.0.0.0
           PORT: 3000
