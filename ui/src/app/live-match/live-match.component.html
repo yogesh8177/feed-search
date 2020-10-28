@@ -1,0 +1,25 @@
+<div class="match-float-bttn" (click) = "showLiveMatchUI()">
+    <span class="live-text">Live match</span>
+</div>
+<div class="live-match-container" *ngIf="showLiveMatch && players.length">
+    <span class="close-match-bttn" (click) = "closeLiveMatch()">Close</span>
+    <h3 class="live-match-header"><span class="live-text">Live</span>&nbsp;{{title}}</h3>
+    <div class="player-card-container">
+        <app-feed-card *ngFor="let player of players"
+          class            = "player-card"  
+          [showSelectCard] = "false"
+          [feedCard]       = "player">
+        </app-feed-card>
+    </div>
+    <div class="live-match-footer">
+            <div class="vote-card" [ngClass]="{'inactive': disableVote}" *ngFor="let vote of votes" (click) = "castVote(vote)">
+                Vote: {{vote.playerName}} - 
+                <span *ngIf="vote.count < 35" class="vote-count-yellow">{{vote.count}}</span>
+                <span *ngIf="vote.count >= 35 && vote.count < 65" class="vote-count-orange">{{vote.count}}</span>
+                <span *ngIf="vote.count >= 65" class="vote-count-green">{{vote.count}}</span>
+            </div>
+            <div class="vote-card" [ngClass]="{'inactive': disableRefresh}">
+                <span id="refresh-votes-btn" (click) = "fetchVotes(votes)">Refresh votes</span>
+            </div>
+    </div>
+</div>

@@ -23,7 +23,8 @@ export class LoaderComponent implements OnInit {
       requests => {
         this.loadingItemArray = requests.map<string>(url => {
           let urlComponents = url.split('?')[0].split('/');
-          return urlComponents[urlComponents.length - 1];
+          let loadingItem = urlComponents[urlComponents.length - 1].split('-');
+          return loadingItem[loadingItem.length - 1];
         });
       },
       error => console.error(error)

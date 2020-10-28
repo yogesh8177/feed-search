@@ -35,6 +35,15 @@
   text-align: justify;
 }
 
+.feed-info {
+  position: absolute;
+  display: inline-block;
+  background-color: inherit;
+  width: inherit;
+  height: inherit;
+  z-index: 1;
+}
+
 hr {
   background-color: orangered;
   border: 1px solid orangered
