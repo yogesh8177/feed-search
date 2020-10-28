@@ -19,7 +19,7 @@
                 <span *ngIf="vote.count >= 65" class="vote-count-green">{{vote.count}}</span>
             </div>
             <div class="vote-card" [ngClass]="{'inactive': disableRefresh}">
-                <span id="refresh-votes-btn" (click) = "fetchVotes()">Refresh votes</span>
+                <span id="refresh-votes-btn" (click) = "fetchVotes(votes)">Refresh votes</span>
             </div>
     </div>
 </div>

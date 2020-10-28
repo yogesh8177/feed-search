@@ -3,3 +3,8 @@ export class Vote {
     voteeId: string;
     playerName: string;
 }
+
+export class VoteResponse {
+    data: Vote[];
+    buildVersion: string;
+}

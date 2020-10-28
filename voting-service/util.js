@@ -6,8 +6,8 @@ function fetchEnvVariable(variableName) {
     return (NODE_ENV === 'test') ? dotenv.parsed[variableName] : process.env[variableName];
 }
 
-const validateRequestMethod = (req, method) => {
-    if (req.method !== method) return Promise.reject(new Error(`method: ${req.method} not supported`));
+const validateRequestMethod = (req, methods) => {
+    if (!methods.includes(req.method)) return Promise.reject(new Error(`method: ${req.method} not supported`));
     return Promise.resolve();
 };
 

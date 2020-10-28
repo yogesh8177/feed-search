@@ -22,7 +22,7 @@ const incrByAsync = promisify(client.incrby).bind(client);
 
 const fetchVotesController = async (req, res) => {
     try {
-        await util.validateRequestMethod(req, 'GET');
+        await util.validateRequestMethod(req, ['GET']);
 
         const queryParams = querystring.parse(req.url.split('?')[1]);
         const { voteeIds = '' } = queryParams;
@@ -59,18 +59,24 @@ const fetchVotesController = async (req, res) => {
 const castVoteController = async (req, res) => {
     try {
         let response = {};
-        await util.validateRequestMethod(req, 'POST');
+        await util.validateRequestMethod(req, ['POST', 'OPTIONS']);
         let body = '';
         req.on('data', chunk => {
             body += chunk.toString(); // convert Buffer to string
         });
         req.on('end', async () => {
-            console.log(body);
-            let jsonBody = JSON.parse(body);
-            await incrByAsync(`${redisPrefix}:vote:${jsonBody.voteeId}`, 1);
-            response = jsonBody;
-            response.message = 'vote casted';
-            util.successResponse(res, {response, buildVersion});
+            if (body) {
+                let jsonBody = JSON.parse(body);
+                await incrByAsync(`${redisPrefix}:vote:${jsonBody.voteeId}`, 1);
+                response = jsonBody;
+                response.message = 'vote casted';
+                util.successResponse(res, {response, buildVersion});
+            }
+            else {
+                // Serving options request
+                res.writeHead(200);
+                res.end('ok');
+            }
         });
     }
     catch(error) {
@@ -84,6 +90,7 @@ const requestListener = async (req, res) => {
     
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
     res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET');
 
     switch(url[0]) {
