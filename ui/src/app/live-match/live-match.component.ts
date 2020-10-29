@@ -106,7 +106,6 @@ export class LiveMatchComponent implements OnInit {
 
   errorHandler(error) {
     console.error(error);
-    if (error.status === 502)
-      alert(this.serviceUnavailable);
+    alert(this.serviceUnavailable); 
   }
 }
