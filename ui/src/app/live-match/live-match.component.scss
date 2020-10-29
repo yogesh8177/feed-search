@@ -27,19 +27,34 @@
 }
 
 .live-match-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     background-color: black;
     color: #fff;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    vertical-align: middle;
+    background-color: black;
+}
+
+.vote-buttons {
+    cursor: pointer;
+    padding: 5px;
+    background-color: #fff;
+    color: #000;
+    width: 160px;
     height: fit-content;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 .player-card-container {
     width: 75%;
     height: 480px;
     margin-left: 12%;
-    background-color: darkslategrey;
+    background-color: white;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -109,20 +124,21 @@
 .live-text {
     padding: 4px;
     font-weight: bolder;
-    background-color: darkred;
-    color: #fff;
+    background-color: white;
+    color: #000;
     border-radius: 4px;
 }
 
 @media screen and (max-width: 920px) {
     .player-card-container {
         width: 100%;
-        height: 68%;
+        height: 88%;
         margin-left: 0;
         overflow-y: scroll;
     }
 
     .live-match-footer {
+        height: 10%;
         overflow-y: scroll;
     }
 }
