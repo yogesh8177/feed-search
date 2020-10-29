@@ -18,6 +18,8 @@ export class LiveMatchComponent implements OnInit {
   disableRefresh: boolean = false;
   disableVote: boolean = false;
 
+  private serviceUnavailable: string = 'Service is unavailable at this time, please try again after some time!';
+
   constructor(
     private googleAnalytics: GoogleAnalyticsService,
     private liveMatchService: LiveMatchService
@@ -63,7 +65,7 @@ export class LiveMatchComponent implements OnInit {
         this.disableComponent('disableRefresh');
         this.googleAnalytics.emitAnalyticsEvent('fetch-votes', {players: this.votes.map(v => v.playerName)});
       },
-      error => console.error(error)
+      error => this.errorHandler(error)
     );
   }
 
@@ -80,7 +82,7 @@ export class LiveMatchComponent implements OnInit {
           this.fetchVotes(this.votes);
           this.googleAnalytics.emitAnalyticsEvent('cast-vote', { id: vote.voteeId, player: vote.playerName });
         },
-        error => console.error(error)
+        error => this.errorHandler(error)
       );
     }
   }
@@ -100,5 +102,11 @@ export class LiveMatchComponent implements OnInit {
   showLiveMatchUI() {
     this.loadLiveMatch();
     this.showLiveMatch = true;
+  }
+
+  errorHandler(error) {
+    console.error(error);
+    if (error.status === 502)
+      alert(this.serviceUnavailable);
   }
 }
