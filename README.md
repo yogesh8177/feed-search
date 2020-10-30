@@ -42,6 +42,7 @@ Initialized in memory db [
   "documentId",
   "documentsMap",
   "invertedIndex",
+  "nGramsIndex",
   "maxPageSize",
   "dateLastEditedIndex",
   "titleIndex"

@@ -106,6 +106,7 @@ const feedController = (req, res) => {
         }
         else {
             searchTerm = searchTerm.split(' ');
+            params.nGrams = true;
         }
         console.log({searchTerm, params});
         const result = engine.searchKeywords(searchTerm, params);
