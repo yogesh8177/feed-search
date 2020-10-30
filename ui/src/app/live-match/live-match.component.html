@@ -22,4 +22,7 @@
                 <span id="refresh-votes-btn" (click) = "fetchVotes(votes)">Refresh votes</span>
             </div>
     </div>
+    <div class="live-match-footer" *ngIf="hideVotingSection">
+        <p>Next match coming up soon!</p>
+    </div>
 </div>
