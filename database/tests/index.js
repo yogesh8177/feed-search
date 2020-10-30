@@ -193,7 +193,8 @@ describe('Search Engine basic functionality tests', () => {
       const params = {
         page: 1,
         pageSize: 100,
-        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' }
+        sort: { sortField: 'dateLastEdited', order: 'desc', type: 'Date' },
+        nGrams: true // must pass this to support nGrams search
       };
 
       let result = engine.searchKeywords(['region'], params);

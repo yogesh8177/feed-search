@@ -6,6 +6,8 @@ class SearchEngine {
         this.documentsMap = {};
         // words to document inverted index.
         this.invertedIndex = {};
+        // nGrams inverted index
+        this.nGramsIndex = {};
         // max result size
         this.maxPageSize = 10;
         // min nGram size
@@ -93,11 +95,11 @@ class SearchEngine {
             while(currentNgramSize <= token.length) {
                 for(let i = 0; i <= (tokenLength - currentNgramSize); i++) {
                     const nGram = token.slice(i, i + currentNgramSize);
-                    if (this.invertedIndex.hasOwnProperty(nGram)) {
-                        this.invertedIndex[nGram].add(documentId);
+                    if (this.nGramsIndex.hasOwnProperty(nGram)) {
+                        this.nGramsIndex[nGram].add(documentId);
                     }
                     else {
-                        this.invertedIndex[nGram] = new Set([documentId]);
+                        this.nGramsIndex[nGram] = new Set([documentId]);
                     }
                 }
                 currentNgramSize++;
@@ -146,10 +148,13 @@ class SearchEngine {
         // We have search terms, thus we need to search for keywords
         let resultIds = new Set();
         let resultSet = {total: 0, documents: []};
+
+        let searchMode = params.nGrams ? 'nGramsIndex' : 'invertedIndex';
+
         keyWords.forEach(key => {
             let searchTerm = key.toLowerCase();
-            if (this.invertedIndex.hasOwnProperty(searchTerm)) {
-                this.invertedIndex[searchTerm].forEach(item => {
+            if (this[searchMode].hasOwnProperty(searchTerm)) {
+                this[searchMode][searchTerm].forEach(item => {
                     resultIds.add(item);
                 });
             }
