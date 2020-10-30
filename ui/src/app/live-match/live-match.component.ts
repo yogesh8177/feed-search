@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Feed } from '../models/Feed';
+import { Feed, CardLabel } from '../models/Feed';
 import { Vote, VoteResponse } from '../models/Votes';
 import { GoogleAnalyticsService } from '../Services/analytics/google-analytics.service';
 import { LiveMatchService } from '../Services/live-match/live-match.service';
@@ -12,11 +12,13 @@ import { LiveMatchService } from '../Services/live-match/live-match.service';
 export class LiveMatchComponent implements OnInit {
 
   title: string;
+  status: string;
   players: Feed[] = [];
   votes: Vote[] = [];
   showLiveMatch: boolean = false;
   disableRefresh: boolean = false;
   disableVote: boolean = false;
+  hideVotingSection: boolean = false;
 
   private serviceUnavailable: string = 'Service is unavailable at this time, please try again after some time!';
 
@@ -34,6 +36,11 @@ export class LiveMatchComponent implements OnInit {
       response => {
         this.players = response.players;
         this.title = response.title;
+        this.status = response.status;
+        this.hideVotingSection = response.winnerId ? true : false;
+        this.players.forEach(player => {
+          if (player.id === response.winnerId) player.cardLabel = new CardLabel('Winner!', 'top-rank');
+        });
         this.initializePlayerVotes(this.players);
       },
       error => console.error(error)
