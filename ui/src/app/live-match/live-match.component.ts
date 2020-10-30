@@ -114,5 +114,6 @@ export class LiveMatchComponent implements OnInit {
   errorHandler(error) {
     console.error(error);
     alert(this.serviceUnavailable); 
+    this.closeLiveMatch();
   }
 }
