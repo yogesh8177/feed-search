@@ -129,7 +129,8 @@ describe('Search Engine basic functionality tests', () => {
       const params = {
         page: 1,
         pageSize: 10,
-        sort: { sortField: 'id', order: 'asc', type: 'number' }
+        sort: { sortField: 'id', order: 'asc', type: 'number' },
+        nGrams: true
       };
       let result = engine.searchKeywords(['super'], params);
       assert.strictEqual(result.hasOwnProperty('total'), true);
