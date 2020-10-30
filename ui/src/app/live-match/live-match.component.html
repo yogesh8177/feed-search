@@ -3,7 +3,7 @@
 </div>
 <div class="live-match-container" *ngIf="showLiveMatch && players.length">
     <span class="close-match-bttn" (click) = "closeLiveMatch()">Close</span>
-    <h3 class="live-match-header"><span class="live-text">Live</span>&nbsp;{{title}}</h3>
+    <h3 class="live-match-header"><span class="live-text">{{status}}</span>&nbsp;{{title}}</h3>
     <div class="player-card-container">
         <app-feed-card *ngFor="let player of players"
           class            = "player-card"  
@@ -11,7 +11,7 @@
           [feedCard]       = "player">
         </app-feed-card>
     </div>
-    <div class="live-match-footer">
+    <div class="live-match-footer" *ngIf="!hideVotingSection">
             <div class="vote-buttons" [ngClass]="{'inactive': disableVote}" *ngFor="let vote of votes" (click) = "castVote(vote)">
                 Vote: {{vote.playerName}} - 
                 <span *ngIf="vote.count < 35" class="vote-count-yellow">{{vote.count}}</span>
