@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha --file ./tests/index.js",
+    "test": "mocha --file ./tests/*.test.js",
     "coverage": "nyc npm run test"
   },
   "keywords": [
