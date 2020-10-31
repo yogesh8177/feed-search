@@ -49,6 +49,29 @@ describe('Server', () => {
       });
   });
 
+  it ("should return auto complete results for term `super`", done => {
+    const expectedResults = [
+      'superboy',
+      'superboy-prime',
+      'supergirl',
+      'superman',
+      'super'
+    ];
+
+    chai
+      .request(server)
+      .get(`/auto-complete?autoComplete=super`)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property('data').to.be.an('array');
+        expect(res.body).to.have.property('buildVersion');
+        expectedResults.forEach((result, index) => {
+          expect(res.body.data[index]).equals(result);
+        })
+        done();
+      });
+  });
+
   it("Should return 200 for '/refresh' url path", done => {
     chai
       .request(server)
