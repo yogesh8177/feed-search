@@ -51,7 +51,7 @@ class Trie {
 
     suggestWords(subString) {
         if (!subString) return [];
-        let results = this.searchByPrefix(subString, this.node, 0);
+        let results = this.searchByPrefix(subString, this.node, 0) || [];
         return results.map((item, index) => index > 0 ? `${subString}${item}` : item);
     }
 
