@@ -1,3 +1,5 @@
+const Trie = require('./trie').Trie;
+
 class SearchEngine {
     constructor() {
         // initial documentId value
@@ -12,6 +14,8 @@ class SearchEngine {
         this.maxPageSize = 10;
         // min nGram size
         this.minNgram = 2;
+        // trie
+        this.trie = null;
     }
 
     /**
@@ -29,6 +33,9 @@ class SearchEngine {
                 doc.dateLastEdited = new Date(doc.dateLastEdited);
                 this.documentsMap[++this.documentId] = doc;
             });
+            this.trie = new Trie(data);
+            this.trie.setFieldToGenerateTrie(['name'])
+                    .buildTrieForFields();
             return;
         }
         let doc = Object.assign({}, data);
@@ -167,6 +174,10 @@ class SearchEngine {
         resultSet.documents = this.paginateSearchResults(resultSet.documents, params);
         
         return resultSet;
+    }
+
+    suggestWords(prefix) {
+        return this.trie.suggestWords(prefix);
     }
 
     paginateOnIndex(params) {

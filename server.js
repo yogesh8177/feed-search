@@ -145,6 +145,24 @@ const refreshController = async (req, res) => {
     }
 }
 
+const autoCompleteController = async (req, res) => {
+    try {
+        const queryParams = querystring.parse(req.url.split('?')[1]);
+        const { autoComplete } = queryParams;
+        let results = engine.suggestWords(autoComplete);
+        res.writeHead(200);
+        res.end(JSON.stringify({data: results, buildVersion}));
+    }
+    catch(error) {
+        console.error({
+            message: 'Error in auto-complete',
+            error
+        });
+        res.writeHead(200);
+        res.end(JSON.stringify({message: 'error in auto-complete', error: error.message, buildVersion})); 
+    }
+}
+
 const configController = async (req, res) => {
     try{
         let config;
@@ -219,6 +237,10 @@ const requestListener = async (req, res) => {
 
         case '/live-match':
             await liveMatchController(req, res);
+        break;
+
+        case '/auto-complete':
+            autoCompleteController(req, res);
         break;
 
         case '/refresh':
