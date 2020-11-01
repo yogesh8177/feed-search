@@ -24,7 +24,6 @@ class Trie {
                 self.buildTrie(word, self.node, 0);
             });
         });
-        require('fs').writeFileSync('./trie.json', JSON.stringify(this.node, null, 2));
     }
 
     buildTrie(word, currentNode, currentCharIndex) {
