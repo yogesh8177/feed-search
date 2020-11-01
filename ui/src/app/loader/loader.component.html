@@ -1,5 +1,5 @@
 <div class="loader" *ngIf="loadingItemArray.length">
     <p class="loader-text" *ngFor="let item of loadingItemArray">
-        <strong>Loading ({{item.split('.')[0]}}) please wait...</strong>
+        <strong>Loading ({{item?.split('.')[0]}}) please wait...</strong>
     </p>
 </div>

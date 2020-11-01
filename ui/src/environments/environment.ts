@@ -4,6 +4,7 @@
 
 export const environment = {
   feedApiUrl: 'http://localhost:8000/feed',
+  autoCompleteUrl: 'http://localhost:8000/auto-complete',
   feedConfigApiUrl: 'http://localhost:8000/config',
   liveMatchUrl: 'http://localhost:8000/live-match',
   fetchVotesUrl: 'http://localhost:3000/fetch-votes',

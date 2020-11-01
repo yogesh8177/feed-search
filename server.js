@@ -150,6 +150,9 @@ const autoCompleteController = async (req, res) => {
         const queryParams = querystring.parse(req.url.split('?')[1]);
         const { autoComplete } = queryParams;
         let results = engine.suggestWords(autoComplete);
+        if (results.length > 10) {
+            results = results.splice(0, 10);
+        }
         res.writeHead(200);
         res.end(JSON.stringify({data: results, buildVersion}));
     }
