@@ -21,9 +21,10 @@ describe('Feed App', () => {
     browser.wait(page.isClickable(pageInput), 3000);
     browser.wait(page.isClickable(jumpToButton), 3000);
 
-    searchInput.clear();
-    await browser.sleep(100);
     sortOption.click();
+    searchInput.clear();
+    searchInput.sendKeys(Key.ENTER);
+    await browser.sleep(100);
     await browser.sleep(100);
     pageInput.clear();
     pageInput.sendKeys(1);
@@ -220,7 +221,6 @@ describe('Feed App', () => {
     it('should return 1 feed cards when we paginate to 74th page', async () => {
       const pageInput    = page.getPageInputWebElement();
       const jumpToButton = page.getJumpToPageButton();
-      const searchInput  = page.getSearchWebElement();
 
       await browser.sleep(1000);
       pageInput.clear();
