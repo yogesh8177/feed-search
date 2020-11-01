@@ -54,8 +54,7 @@ describe('Server', () => {
       'superboy',
       'superboy-prime',
       'supergirl',
-      'superman',
-      'super'
+      'superman'
     ];
 
     chai
@@ -65,6 +64,7 @@ describe('Server', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('data').to.be.an('array');
         expect(res.body).to.have.property('buildVersion');
+        console.log('ab@', res.body);
         expectedResults.forEach((result, index) => {
           expect(res.body.data[index]).equals(result);
         })

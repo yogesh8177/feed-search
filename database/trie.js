@@ -93,10 +93,6 @@ class Trie {
             }
             return resultList; 
         }
-
-        if (node.isWordComplete) {
-            resultList.push(`@${prefix}${parentChar}`);
-        }
         
         let childrenChars = Object.keys(node.children);
 
