@@ -11,7 +11,6 @@ export class SearchComponent implements OnInit {
   
   @Input() searchText: string = '';
   @Output() searchTerm = new EventEmitter<string>();
-  showSearchToolTip: boolean = false;
   autoCompleteResults: AutoCompleteResults;
 
   constructor(private searchService: SearchService) { }
@@ -27,21 +26,27 @@ export class SearchComponent implements OnInit {
     this.searchTerm.emit(event);
   }
 
-  setToolTip(event: boolean) {
-    this.showSearchToolTip = event;
-    this.autoCompleteResults.data.length = 0;
-  }
-
   triggerAutoComplete(prefix: string) {
+    if (prefix.length === 0) {
+      this.autoCompleteResults.data.length = 0;
+      return;
+    }
     if (prefix.length > 1) {
       this.searchService.autoComplete(prefix).subscribe(
         results => {
           this.autoCompleteResults = results;
-          console.log(`autocomplete result`, this.autoCompleteResults);
+          //console.log(`autocomplete result`, this.autoCompleteResults);
         },
         error => console.error(error)
       );
     }
+  }
+
+  onSuggestionSelect(suggestion: string) {
+    let selectedSuggestion = `"${suggestion}"`;
+    console.log({selectedSuggestion});
+    this.setSearchTerm(selectedSuggestion);
+    this.autoCompleteResults.data.length = 0;
   }
 
 }

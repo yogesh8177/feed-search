@@ -1,22 +1,20 @@
 <div class="searchContainer">
-    <!-- <span class="tool-tip" *ngIf="showSearchToolTip">Exact match (""), eg: ["iron man"] instead of [iron man]</span> -->
     <input 
         type="search" 
         id="searchBox" 
         name="search" 
         placeholder="Search hero.." 
         value="{{searchText}}" 
-        (change) = "setSearchTerm($event.target.value)"
-        (focus) = "setToolTip(true)"
-        (focusout) = "setToolTip(false)"
+        (change) = "searchText = $event.target.value"
+        (search) = "setSearchTerm($event.target.value)"
         (input) = "triggerAutoComplete($event.target.value)"
     />
-    <span id="searchButton" class="material-icons">search</span>
+    <span id="searchButton" class="material-icons" (click) = "setSearchTerm(searchText)">search</span>
     <div class="auto-complete" *ngIf="autoCompleteResults.data.length">
-        <ul (click) = "setSearchTerm($event.target.value)">
+        <ul>
             <li><h3><strong>Did you mean?</strong></h3></li>
             <li><h6>Use double quotes for exact match. eg: "iron man"</h6></li>
-            <li *ngFor="let item of autoCompleteResults.data" value="{{item}}">{{item}}</li>
+            <li *ngFor="let item of autoCompleteResults.data" value="{{item}}" (click) = "onSuggestionSelect(item)">{{item}}</li>
         </ul>
     </div>
 </div>
