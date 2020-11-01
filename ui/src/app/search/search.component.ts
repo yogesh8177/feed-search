@@ -33,13 +33,15 @@ export class SearchComponent implements OnInit {
   }
 
   triggerAutoComplete(prefix: string) {
-    this.searchService.autoComplete(prefix).subscribe(
-      results => {
-        this.autoCompleteResults = results;
-        console.log(`autocomplete result`, this.autoCompleteResults);
-      },
-      error => console.error(error)
-    );
+    if (prefix.length > 1) {
+      this.searchService.autoComplete(prefix).subscribe(
+        results => {
+          this.autoCompleteResults = results;
+          console.log(`autocomplete result`, this.autoCompleteResults);
+        },
+        error => console.error(error)
+      );
+    }
   }
 
 }
