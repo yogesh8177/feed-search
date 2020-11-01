@@ -148,8 +148,8 @@ const refreshController = async (req, res) => {
 const autoCompleteController = async (req, res) => {
     try {
         const queryParams = querystring.parse(req.url.split('?')[1]);
-        const { autoComplete } = queryParams;
-        let results = engine.suggestWords(autoComplete);
+        const { autoComplete = '' } = queryParams;
+        let results = engine.suggestWords(autoComplete.trim().toLowerCase());
         if (results.length > 10) {
             results = results.splice(0, 10);
         }
