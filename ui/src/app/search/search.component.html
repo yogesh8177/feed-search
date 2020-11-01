@@ -13,9 +13,9 @@
     />
     <span id="searchButton" class="material-icons">search</span>
     <div class="auto-complete" *ngIf="autoCompleteResults.data.length">
-        <ul>
-            <li><h3><strong>Do you mean:</strong></h3></li>
-            <li *ngFor="let item of autoCompleteResults.data">{{item}}</li>
+        <ul (click) = "setSearchTerm($event.target.value)">
+            <li><h3><strong>Did you mean?</strong></h3></li>
+            <li *ngFor="let item of autoCompleteResults.data" value="{{item}}">{{item}}</li>
         </ul>
     </div>
 </div>

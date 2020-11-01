@@ -24,6 +24,7 @@ class Trie {
                 self.buildTrie(word, self.node, 0);
             });
         });
+        require('fs').writeFileSync('./trie.json', JSON.stringify(this.node, null, 2));
     }
 
     buildTrie(word, currentNode, currentCharIndex) {
@@ -52,27 +53,29 @@ class Trie {
     suggestWords(subString) {
         if (!subString) return [];
         let results = this.searchByPrefix(subString, this.node, 0) || [];
-        return results.map((item, index) => index > 0 ? `${subString}${item}` : item);
+        return results;
     }
 
     searchByPrefix(prefix, node, currentCharIndex, searchResult = '') {
         let self = this;
+        let suggestions = [];
         if (currentCharIndex >= prefix.length) {
             // prefix exists, now let us suggest words based on this prefix!
             Object.keys(node.children).forEach(char => {
-                let remainingWords = self.findRemainingWords(node.children[char], char);
-                searchResult += remainingWords;
+                //console.log('expanding for', char, searchResult);
+                let nextNode = node.children[char];
+                let remainingWords = self.findRemainingWords(nextNode, prefix, char);
+                suggestions = suggestions.concat(remainingWords);
             });
-            return searchResult.split('\n');
+            return suggestions;
         }
 
         let currentChar = prefix[currentCharIndex];
 
         if (node.children.hasOwnProperty(currentChar)) {
             searchResult += currentChar;
-            if (node.isWordComplete) searchResult += '\n';
             let nextNode = node.children[currentChar];
-            // console.log(`found upto: ${searchResult}`);
+            //console.log(`found upto: ${searchResult}`);
             return this.searchByPrefix(prefix, nextNode, ++currentCharIndex, searchResult);
         }
         else {
@@ -81,39 +84,30 @@ class Trie {
         }
     }
 
-    findRemainingWords(node, words = '') {
+    findRemainingWords(node, prefix, parentChar, resultList = []) {
         let self = this;
-        //console.log(`remaining words upto`, words, Object.keys(node.children).length);
-        // console.log('=>', words);
+        //console.log('=>', `@${prefix}${parentChar}`);
+        //console.log({resultList});
         if (Object.keys(node.children).length === 0) {
             if (node.isWordComplete) {
-                words += '\n';
+                resultList.push(`${prefix}${parentChar}`);
             }
-            if (words.indexOf('\n') !== -1) {
-                //console.log(`returning remaining words`, words.split('\n'));
-                return words;
-            }
-            return null;   
+            return resultList; 
         }
 
-        if (node.isWordComplete)  {
-            // If we find variation of same word, eg: comb ad combs, then we
-            // use the lastest word as prefix.
-            // words contain all words till now, eg: `a-bomb\na-domb\n`
-            let wordsTillNow = words.split('\n');
-            words += `\n${wordsTillNow[wordsTillNow.length - 1]}`;
+        if (node.isWordComplete) {
+            resultList.push(`@${prefix}${parentChar}`);
         }
-
+        
         let childrenChars = Object.keys(node.children);
 
         for (let char of childrenChars) {
-            words += char;
             if (node.isWordComplete)  {
-                //words += `\n`;
+                resultList.push(`${prefix}${parentChar}`);
             }
-            words = self.findRemainingWords(node.children[char], words);
+            self.findRemainingWords(node.children[char], prefix, `${parentChar}${char}`, resultList);
         }
-        return words;
+        return resultList;
     }
 }
 
