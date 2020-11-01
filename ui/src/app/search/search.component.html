@@ -1,5 +1,5 @@
 <div class="searchContainer">
-    <span class="tool-tip" *ngIf="showSearchToolTip">Exact match (""), eg: ["iron man"] instead of [iron man]</span>
+    <!-- <span class="tool-tip" *ngIf="showSearchToolTip">Exact match (""), eg: ["iron man"] instead of [iron man]</span> -->
     <input 
         type="search" 
         id="searchBox" 
@@ -15,6 +15,7 @@
     <div class="auto-complete" *ngIf="autoCompleteResults.data.length">
         <ul (click) = "setSearchTerm($event.target.value)">
             <li><h3><strong>Did you mean?</strong></h3></li>
+            <li><h6>Use double quotes for exact match. eg: "iron man"</h6></li>
             <li *ngFor="let item of autoCompleteResults.data" value="{{item}}">{{item}}</li>
         </ul>
     </div>
