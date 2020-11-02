@@ -10,6 +10,29 @@
     border-top: 2px solid orangered;
 }
 
+.compare-float-button {
+  position: fixed;
+  display: inline-block;
+  text-align: center;
+  bottom: 60px;
+  left: 5px;
+  border-radius: 5px;
+  width: 100px;
+  padding: 5px;
+  background-color: #fff;
+  color: #000;
+  font-weight: bolder;
+  border: 0;
+  cursor: pointer;
+  transition: 0.4s ease-in;
+}
+
+.compare-float-button:hover {
+  transform: scale(1.2);
+  background-color: darkred;
+  color: #fff;
+}
+
 #individual-stats-select, #compare-button, #clear-compare-button, #max-comparision-score {
     text-align: center;
     outline: none;
