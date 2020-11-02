@@ -1,9 +1,9 @@
 export const environment = {
-  feedApiUrl: 'https://api.thesuperheroes.in/feed',
-  autoCompleteUrl: 'https://api.thesuperheroes.in/auto-complete',
-  feedConfigApiUrl: 'https://api.thesuperheroes.in/config',
-  liveMatchUrl: 'https://api.thesuperheroes.in/live-match',
-  fetchVotesUrl: 'https://voting.thesuperheroes.in/fetch-votes',
-  castVoteUrl: 'https://voting.thesuperheroes.in/cast-vote',
+  feedApiUrl: 'https://heroes-search.herokuapp.com/feed',
+  autoCompleteUrl: 'https://heroes-search.herokuapp.com/auto-complete',
+  feedConfigApiUrl: 'https://heroes-search.herokuapp.com/config',
+  liveMatchUrl: 'https://heroes-search.herokuapp.com/live-match',
+  fetchVotesUrl: 'https://heroes-voting-service.herokuapp.com/fetch-votes',
+  castVoteUrl: 'https://heroes-voting-service.herokuapp.com/cast-vote',
   production: true
 };
