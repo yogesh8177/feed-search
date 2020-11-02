@@ -5,11 +5,11 @@ name: Superheroes Staging
 
 on:
   push:
-    branches: [ master-superheroes-staging ]
+    branches: [ superheroes-staging ]
     paths-ignore:
       - '**.md'
   pull_request:
-    branches: [ master-superheroes-staging ]
+    branches: [ superheroes-staging ]
     paths-ignore:
       - '**.md'
 
