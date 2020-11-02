@@ -6,8 +6,7 @@
     <h3 class="live-match-header"><span class="live-text">{{status}}</span>&nbsp;{{title}}</h3>
     <div class="player-card-container">
         <app-feed-card *ngFor="let player of players"
-          class            = "player-card"  
-          [showSelectCard] = "false"
+          class            = "player-card"
           [feedCard]       = "player">
         </app-feed-card>
     </div>

@@ -19,7 +19,7 @@ export class AppComponent {
   feed: Feed[] = [];
   selectedFeedCards: Feed[] = [];
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
-  showSelectCard: boolean = false;
+  isSelectionMode: boolean = false;
   errors: string[] = [];
 
   tableHeaders: object[] = [
@@ -127,8 +127,8 @@ export class AppComponent {
   }
 
   toggleShowSelectCards() {
-    this.showSelectCard = !this.showSelectCard;
-    if (!this.showSelectCard) this.clearSelectedItems();
+    this.isSelectionMode = !this.isSelectionMode;
+    if (!this.isSelectionMode) this.clearSelectedItems();
   }
 
   clearSelectedItems() {
