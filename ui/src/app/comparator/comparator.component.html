@@ -1,4 +1,4 @@
-<button class="compare-float-button" *ngIf="feed.length" (click) = "scrollTo(compareSection); triggerCompare();">Compare ({{feed.length}})</button>
+<button class="compare-float-button" *ngIf="feed.length" (click) = "triggerCompare(); scrollTo(compareSection);">Compare ({{feed.length}})</button>
 <div class="comparision-content center-text" #compareSection>
     <h2>Compare characters ({{feed.length}})</h2>
     <div>
@@ -22,7 +22,7 @@
         
         <div id="max-comparision-score" *ngIf="maxCurrentScore" class="card">Max {{currentComparisonStat ? '(' + currentComparisonStat + ')' : '(Aggregate)'}} - {{maxCurrentScore}}</div>
         
-        <div class="card" *ngIf="individualStatsArray.length">
+        <div class="card" *ngIf="feed.length && individualStatsArray.length">
             <select
             id       = "individual-stats-select" 
             [value]  = "selectedStatToCompare" 

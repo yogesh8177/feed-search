@@ -1,7 +1,7 @@
 <div class="card" (click) = "flipThisCard()">
     <div class="feed-image" *ngIf="!flipCard">
         <span *ngIf="feedCard.cardLabel" class="{{feedCard.cardLabel.className}}">{{feedCard.cardLabel.label}}</span>
-        <span *ngIf="showSelectCard" class="select-item"><input type="checkbox" [checked]="feedCard.isSelected" (change) = "setSelectedCard(feedCard)"></span>
+        <span *ngIf="isSelectionMode" class="select-item"><input type="checkbox" [checked]="feedCard.isSelected" (change) = "setSelectedCard(feedCard)"></span>
         <img src="{{feedCard.image.url}}" />
     </div>
     <div class="feed-content" *ngIf="!flipCard">

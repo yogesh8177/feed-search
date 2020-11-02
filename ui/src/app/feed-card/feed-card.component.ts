@@ -10,7 +10,7 @@ import  { GoogleAnalyticsService } from '../Services/analytics/google-analytics.
 export class FeedCardComponent implements OnInit {
   @Input() feedCard: Feed;
   @Input() comparisonStat: string = '';
-  @Input() showSelectCard: boolean = false;
+  @Input() isSelectionMode: boolean = false;
   @Output() selectedCard = new EventEmitter<Feed>();
   flipCard: boolean = false;
   
@@ -27,7 +27,7 @@ export class FeedCardComponent implements OnInit {
   }
 
   flipThisCard() {
-    if (!this.showSelectCard) {
+    if (!this.isSelectionMode) {
       this.flipCard = !this.flipCard;
       if (this.flipCard)
         this.googleAnalytics.emitAnalyticsEvent('card-info', {character: this.feedCard.name});
