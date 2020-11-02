@@ -145,7 +145,7 @@ jobs:
         env:
           CI: ""
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./ui/dist/ui/ s3://thesuperheroes.in --delete
+        run: aws s3 sync ./ui/dist/ui/ s3://heroes-search.ytechspark.com --delete
 
       
 
