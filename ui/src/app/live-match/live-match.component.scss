@@ -1,7 +1,7 @@
 .match-float-bttn {
     position: fixed;
-    bottom: 40px;
-    right: 20px;
+    bottom: 60px;
+    right: 10px;
     cursor: pointer;
     transition: 0.4s ease-in;
     z-index: 9;
@@ -9,6 +9,8 @@
 
 .match-float-bttn:hover {
     transform: scale(1.2);
+    background-color: darkred;
+    color: #fff;
 }
 
 .live-match-container {

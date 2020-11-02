@@ -54,6 +54,10 @@ export class ComparatorComponent implements OnInit, OnChanges {
       }
    */
   triggerCompare() {
+    if (!this.feed.length) {
+      alert('Please select card(s) to compare!');
+      return;
+    }
     let comparedFeed = this.compareFeedItems(this.feed, this.selectedStatToCompare);
     this.winnerFeedItems = comparedFeed.splice(0, this.totalMaxScorers).map(item => {
       item.cardLabel = new CardLabel('Winner!', 'top-rank');
@@ -116,6 +120,10 @@ export class ComparatorComponent implements OnInit, OnChanges {
     //console.log('comparision result:', {comparisionResult: _comparedFeedItems, totalWinners: this.totalMaxScorers});
     //_comparedFeedItems.forEach(item => console.log(`${comparisonStat || 'all stats'} => ${item.name} - ${item.totalScore}`));
     return _comparedFeedItems;
+  }
+
+  scrollTo(element: HTMLElement) {
+    element.scrollIntoView();
   }
 
 }

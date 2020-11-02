@@ -1,4 +1,5 @@
-<div class="comparision-content center-text">
+<button class="compare-float-button" *ngIf="feed.length" (click) = "scrollTo(compareSection); triggerCompare();">Compare ({{feed.length}})</button>
+<div class="comparision-content center-text" #compareSection>
     <h2>Compare characters ({{feed.length}})</h2>
     <div>
         <p>Select your characters from the list above, or compare all of them by default!</p>
