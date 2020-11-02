@@ -9,7 +9,7 @@
 <app-loader></app-loader>
 
 <div class="content" role="main">
-  <app-live-match></app-live-match>
+  <app-live-match *ngIf="!isSelectionMode"></app-live-match>
   <p class="center-text">
     <span class="info-tip">Find the comparison tool at the bottom of the page. </span>
   </p>
