@@ -176,7 +176,7 @@ export class AppComponent {
   }
 
   onPageUpdate(event: number) {
-    console.log('Page updated', event);
+    //console.log('Page updated', event);
     this.feedQueryParams.page = event;
     this.loadFeed(this.feedQueryParams);
   }

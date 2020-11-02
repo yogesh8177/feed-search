@@ -7,7 +7,7 @@
         value="{{searchText}}" 
         (change) = "searchText = $event.target.value"
         (search) = "setSearchTerm($event.target.value)"
-        (input) = "triggerAutoComplete($event.target.value)"
+        (input) = "searchSubject.next($event.target.value)"
     />
     <span id="searchButton" class="material-icons" (click) = "setSearchTerm(searchText)">search</span>
     <div class="auto-complete" *ngIf="autoCompleteResults.data.length">
