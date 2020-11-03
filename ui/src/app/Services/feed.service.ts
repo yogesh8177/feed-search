@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Feed, FeedResponse } from '../models/Feed';
 import { FeedQueryParams } from '../models/FeedQueryParams';
 import { environment } from '../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,19 @@ export class FeedService {
 
     let feedSearchUrl = `${this.feedUrl}?${queryParams.toString()}`;
     //console.log(`Feed search url`, feedSearchUrl);
-    return this.http.get<FeedResponse>(feedSearchUrl);
+    return this.http.get<FeedResponse>(feedSearchUrl)
+            .pipe(
+              map<FeedResponse, FeedResponse>(res => {
+                // sanitize response and propogate results further...
+                res.documents.forEach(item => {
+                  Object.keys(item).forEach(key => {
+                    if (item[key] === null || item[key] === undefined) {
+                      item[key] = 'No content';
+                    }
+                  });
+                });
+                return res;
+              })
+            );
   }
 }
