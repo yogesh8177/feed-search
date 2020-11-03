@@ -36,7 +36,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     .subscribe(
       results => {
         this.autoCompleteResults = results;
-        console.log(`loaded from switchmap`)
+        //console.log(`loaded from switchmap`)
       },
       error => console.error(error)
     );
@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onSuggestionSelect(suggestion: string) {
     let selectedSuggestion = `"${suggestion}"`;
-    console.log({selectedSuggestion});
+    //console.log({selectedSuggestion});
     this.setSearchTerm(selectedSuggestion);
     this.autoCompleteResults.data.length = 0;
   }

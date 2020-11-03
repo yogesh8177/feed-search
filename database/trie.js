@@ -2,10 +2,13 @@ const mockData = require('../data/mock_data.json');
 
 class Trie {
     // Pass array of objects
-    constructor(arrayOfObjects) {
+    constructor(arrayOfObjects, options) {
         // initialize root node, root will have character = null
         this.node = new Node();
         this.dataArray = arrayOfObjects;
+        // `.` separated property names to save inside extraFields key for a word in trie!
+        // Eg: 'biography.publisher' will store the string value of publisher inside `extraFields` key.
+        this.extraDotNestedFields = options.extraDotNestedFields || '';
     }
 
     // field name(s) to generate a trie!
@@ -18,34 +21,40 @@ class Trie {
     buildTrieForFields() {
         let self = this;
         this.trieFieldArray.forEach(field => {
-            let currentFieldValues = this.dataArray.map(item => item[field]);
-            currentFieldValues.forEach(word => {
+            let currentFieldValues = this.dataArray.map(item => {
+                 return {
+                        word: item[field], 
+                        extraFields: self.extraDotNestedFields.split('.').reduce((a,b) => a[b], item)
+                    }; 
+                });
+            currentFieldValues.forEach(value => {
                 //console.log('building trie for word: ', word);
-                self.buildTrie(word, self.node, 0);
+                self.buildTrie(value, self.node, 0);
             });
         });
     }
 
-    buildTrie(word, currentNode, currentCharIndex) {
+    buildTrie(value, currentNode, currentCharIndex) {
         // if we are at last char, mark word as complete!
-        if (currentCharIndex >= word.length) {
+        if (currentCharIndex >= value.word.length) {
             currentNode.isWordComplete = true;
+            currentNode.extraFields = value.extraFields;
             //console.log('building complete', word);
             return;
         }
 
-        let character = word[currentCharIndex].toLowerCase();
+        let character = value.word[currentCharIndex].toLowerCase();
         //console.log('building for char', character, currentCharIndex, word.length);
         // if current char already exists, lets move down the tree!
         if (currentNode.children.hasOwnProperty(character)) {
             currentNode = currentNode.children[character];
-            this.buildTrie(word, currentNode, ++currentCharIndex);
+            this.buildTrie(value, currentNode, ++currentCharIndex);
         }
         // if character does not exist, then add it to trie!
         else {
             let node = new Node();
             currentNode.children[character] = node;
-            this.buildTrie(word, currentNode.children[character], ++currentCharIndex);
+            this.buildTrie(value, currentNode.children[character], ++currentCharIndex);
         }
     }
 
@@ -86,20 +95,17 @@ class Trie {
     findRemainingWords(node, prefix, parentChar, resultList = []) {
         let self = this;
         //console.log('=>', `@${prefix}${parentChar}`);
-        //console.log({resultList});
+        if (node.isWordComplete) {
+            resultList.push({ word: `${prefix}${parentChar}`, extraFields: node.extraFields});
+        }
+
         if (Object.keys(node.children).length === 0) {
-            if (node.isWordComplete) {
-                resultList.push(`${prefix}${parentChar}`);
-            }
             return resultList; 
         }
         
         let childrenChars = Object.keys(node.children);
 
         for (let char of childrenChars) {
-            if (node.isWordComplete)  {
-                resultList.push(`${prefix}${parentChar}`);
-            }
             self.findRemainingWords(node.children[char], prefix, `${parentChar}${char}`, resultList);
         }
         return resultList;
@@ -110,6 +116,7 @@ class Node {
     constructor() {
         this.isWordComplete = false;
         this.children = {};
+        this.extraFields = null;
     }
 }
 

@@ -4,10 +4,13 @@ const { strict } = require('assert');
 const { assert } = require('console');
 
 const totalMockData = mockData.documents.length;
+const trieOptions = {
+    extraDotNestedFields: 'biography.publisher'
+};
 
 describe("Trie tests", () => {
     it("Should instantiate a new trie", done => {
-        let trie = new Trie(mockData.documents);
+        let trie = new Trie(mockData.documents, trieOptions);
         trie.setFieldToGenerateTrie(['name'])
             .buildTrieForFields();
         done();
@@ -16,11 +19,13 @@ describe("Trie tests", () => {
     it("Should return expected search results for search term `granny`", done => {
         const searchTerm = 'granny';
         const expectedResults = [
-            searchTerm,
-            'granny goodness'
+            {
+                word: "granny goodness",
+                extraFields: "DC Comics"
+            }
         ];
 
-        let trie = new Trie(mockData.documents);
+        let trie = new Trie(mockData.documents, trieOptions);
         trie.setFieldToGenerateTrie(['name'])
             .buildTrieForFields();
         done();

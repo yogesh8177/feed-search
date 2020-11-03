@@ -22,7 +22,7 @@ class SearchEngine {
      * Load data into our engine
      * @param {mixed} data array or an object to load into our search engine
      */
-    loadDataIntoDb(data) {
+    loadDataIntoDb(data, options = {}) {
         if (typeof data !== 'object') {
             return Promise.reject(Error(`Supplied data is not an Array or Object`));
         }
@@ -33,9 +33,12 @@ class SearchEngine {
                 doc.dateLastEdited = new Date(doc.dateLastEdited);
                 this.documentsMap[++this.documentId] = doc;
             });
-            this.trie = new Trie(data);
-            this.trie.setFieldToGenerateTrie(['name'])
-                    .buildTrieForFields();
+
+            if (options.loadTrie) {
+                this.trie = new Trie(data, options);
+                this.trie.setFieldToGenerateTrie(['name'])
+                        .buildTrieForFields();
+            }
             return;
         }
         let doc = Object.assign({}, data);

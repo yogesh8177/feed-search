@@ -45,10 +45,21 @@
     z-index: 9999;
 }
 
-ul.auto-complete {
+.auto-complete ul {
     margin-left: 5px;
+    padding-left: 5px;
 }
 
 .auto-complete li {
     list-style-type: none;
+    padding: 2px;
+}
+
+.auto-complete h6{
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+
+.small-text {
+    font-size: xx-small;
 }

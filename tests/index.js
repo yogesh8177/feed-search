@@ -51,10 +51,22 @@ describe('Server', () => {
 
   it ("should return auto complete results for term `super`", done => {
     const expectedResults = [
-      'superboy',
-      'superboy-prime',
-      'supergirl',
-      'superman'
+      {
+        word: "superboy",
+        extraFields: "DC Comics"
+      },
+      {
+        word: "superboy-prime",
+        extraFields: "DC Comics"
+      },
+      {
+        word: "supergirl",
+        extraFields: "DC Comics"
+      },
+      {
+        word: "superman",
+        extraFields: "Superman Prime One-Million"
+      }
     ];
 
     chai
@@ -64,9 +76,9 @@ describe('Server', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('data').to.be.an('array');
         expect(res.body).to.have.property('buildVersion');
-        console.log('ab@', res.body);
         expectedResults.forEach((result, index) => {
-          expect(res.body.data[index]).equals(result);
+          expect(res.body.data[index].word).equals(result.word);
+          expect(res.body.data[index].extraFields).equals(result.extraFields);
         })
         done();
       });

@@ -1,3 +1,8 @@
 export class AutoCompleteResults {
-    data: string[];
+    data: Suggestion[];
+}
+
+class Suggestion {
+    word: string;
+    extraFields: any;
 }
