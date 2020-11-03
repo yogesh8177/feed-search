@@ -38,13 +38,14 @@ const initializeSearchEngine = async () => {
                 delete engine[key];
             });
         }
+        let engineOptions = {loadTrie: true, extraDotNestedFields: 'biography.publisher'};
         engine = null;
         engine = new SearchEngine();
         const dataToLoad = ['test', 'docker', 'github'].includes(env) ? mockData : await fetchDataToLoad(env, s3);
         if (Array.isArray(dataToLoad))
-            engine.loadDataIntoDb(dataToLoad);
+            engine.loadDataIntoDb(dataToLoad, engineOptions);
         else
-            engine.loadDataIntoDb(dataToLoad.documents);
+            engine.loadDataIntoDb(dataToLoad.documents, engineOptions);
         
         fieldIndexes.forEach(item => {
             let field = item.split(':');
@@ -251,8 +252,14 @@ const requestListener = async (req, res) => {
         break;
 
         case '/test':
+            let memoryUsage = (process.memoryUsage().rss / 1024 / 1024).toFixed(2);
             res.writeHead(200);
-            res.end(JSON.stringify({message: 'healthy', buildVersion})); 
+            res.end(JSON.stringify({message: 'healthy', memoryUsage, buildVersion})); 
+        break;
+
+        case '/trie':
+            res.writeHead(200);
+            res.end(JSON.stringify({trie: engine.trie, buildVersion})); 
         break;
 
         case '/loaderio-5a06a5b545ec5f56a42510093c4621e1.txt':

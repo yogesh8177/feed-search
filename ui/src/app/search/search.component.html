@@ -14,7 +14,11 @@
         <ul>
             <li><h3><strong>Did you mean?</strong></h3></li>
             <li><h6>Use double quotes for exact match. eg: "iron man"</h6></li>
-            <li *ngFor="let item of autoCompleteResults.data" value="{{item}}" (click) = "onSuggestionSelect(item)">{{item}}</li>
+            <li *ngFor="let item of autoCompleteResults.data" 
+                value="{{item.word}}" 
+                (click) = "onSuggestionSelect(item.word)">
+                {{item.word}} <span class="small-text">({{item.extraFields || 'NA'}})</span>
+            </li>
         </ul>
     </div>
 </div>
