@@ -38,11 +38,12 @@
 
 .auto-complete {
     position: absolute;
+    margin-top: 40px;
     background-color: #fff;
     color: #000;
-    width: 200px;
+    width: inherit;
     font-weight: bolder;
-    z-index: 9999;
+    z-index: 999;
 }
 
 .auto-complete ul {
@@ -62,4 +63,5 @@
 
 .small-text {
     font-size: xx-small;
+    color: darkred;
 }
