@@ -6,6 +6,7 @@ import { Config } from './models/Config';
 import { TableData } from './models/TableData';
 import { FeedQueryParams } from './models/FeedQueryParams';
 import { GoogleAnalyticsService } from './Services/analytics/google-analytics.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -89,12 +90,14 @@ export class AppComponent {
   loadFeed(params: FeedQueryParams) {
     this.feed.length = 0;
     this.errors.length = 0;
-    this.feedService.getFeed(params).subscribe(
-      data => {
-        let feedResponse: FeedResponse = data;
-        this.totalResults = data.total;
+    this.feedService.getFeed(params)
+    .pipe(
+      map<FeedResponse, FeedResponse>(res => this.sanitizeFeedResponse(res))
+    )
+    .subscribe(
+      feedResponse => {
+        this.totalResults = feedResponse.total;
         this.feed = feedResponse.documents;
-        this.sanitizeFeedResponse();
         //console.log(`feed loaded`, this.feed);
         (this.feed.length === 0 && params.searchTerm) && this.errors.push(`No search results, please use double quotes for exact match. Eg: ["iron man"] instead of [iron man].`);
       },
@@ -105,25 +108,16 @@ export class AppComponent {
     );
   }
 
-  sanitizeFeedResponse() {
+  sanitizeFeedResponse(feedResponse: FeedResponse) {
     let selectedIdsMap = {};
     this.selectedFeedCards.map(c => { 
       selectedIdsMap[c.id] = c.isSelected;
     });
 
-    this.feed.forEach(item => {
-      Object.keys(item).forEach(key => {
-        if (item[key] === null || item[key] === undefined) {
-          item[key] = 'No content';
-        }
-      });
-      if (selectedIdsMap.hasOwnProperty(item.id)) {
-        item.isSelected = selectedIdsMap[item.id];
-      }
-      else {
-        item.isSelected = false;
-      }
+    feedResponse.documents.forEach(item => {
+      item.isSelected = selectedIdsMap.hasOwnProperty(item.id) ? selectedIdsMap[item.id] : false;
     });
+    return feedResponse;
   }
 
   toggleShowSelectCards() {
