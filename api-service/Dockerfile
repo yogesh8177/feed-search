@@ -9,7 +9,7 @@ RUN npm run build
 
 
 FROM node:14
-COPY --from=Build /build/dist /app
+COPY --from=Build /build/api-service/dist /app
 
 WORKDIR /app/api-service
 
