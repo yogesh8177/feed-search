@@ -52,7 +52,7 @@ jobs:
         repository: yogesh8177/heroes-web-staging
         tags: ${{ github.run_number }}
         build_args: BUILD_VERSION=${{ github.run_number }}
-        dockerfile: ./Dockerfile.prod
+        dockerfile: ./api-service/Dockerfile.prod
 
   build-voting-service:
     runs-on: ubuntu-latest
