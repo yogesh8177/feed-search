@@ -1,0 +1,23 @@
+FROM node:14
+
+WORKDIR /feed-web
+COPY ./api-service/package*.json ./
+
+RUN npm install
+RUN npm run build
+COPY ./api-service/dist .
+
+WORKDIR /api-service
+
+COPY . .
+
+ENV BUILD_TEXT_FILE ./build.txt
+
+ARG BUILD_VERSION
+
+RUN rm ${BUILD_TEXT_FILE} && touch ${BUILD_TEXT_FILE} && echo ${BUILD_VERSION} > ${BUILD_TEXT_FILE} 
+
+ENV NODE_ENV production
+
+EXPOSE 8000
+CMD [ "node", "app.js" ]
