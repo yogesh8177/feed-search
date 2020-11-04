@@ -9,7 +9,11 @@
       "sourceMap": true,
       "outDir": "dist"
     },
-    "files": ["app.ts"],
+    "files": [
+      "app.ts",
+      "../database/searchEngine.ts",
+      "../database/trie.ts"
+    ],
     "include": [
       "tests",
       "**/data/*",
