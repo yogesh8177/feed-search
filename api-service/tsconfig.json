@@ -10,9 +10,7 @@
       "outDir": "dist"
     },
     "files": [
-      "app.ts",
-      "../database/searchEngine.ts",
-      "../database/trie.ts"
+      "app.ts"
     ],
     "include": [
       "tests",
