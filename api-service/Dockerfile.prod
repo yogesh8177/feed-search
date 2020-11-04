@@ -1,15 +1,16 @@
-FROM node:14
+FROM node:14 as Build
 
-WORKDIR /feed-web
-COPY ./api-service/package*.json ./
+COPY ./api-service /build
+
+WORKDIR /build
 
 RUN npm install
 RUN npm run build
-COPY ./api-service/dist .
 
-WORKDIR /api-service
+FROM node:14
+COPY --from=Build /build/dist /app
 
-COPY . .
+WORKDIR /app/api-service
 
 ENV BUILD_TEXT_FILE ./build.txt
 

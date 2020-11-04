@@ -10,7 +10,9 @@
       "outDir": "dist"
     },
     "include": [
-      "./*",
+      "app.ts",
+      "build.txt",
+      "tests",
       "**/data/*",
       "**/database/*"
     ],
