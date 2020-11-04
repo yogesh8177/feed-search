@@ -1,6 +1,20 @@
-const Trie = require('./trie').Trie;
+import { Trie } from './trie';
 
-class SearchEngine {
+export class EngineOptions {
+    loadTrie: boolean = false;
+    extraDotNestedFields: string = '';
+}
+
+export class SearchEngine {
+
+    documentId: number;
+    documentsMap: object;
+    invertedIndex: object;
+    nGramsIndex: object;
+    maxPageSize: number;
+    minNgram: number;
+    trie: Trie;
+
     constructor() {
         // initial documentId value
         this.documentId = 0;
@@ -22,10 +36,11 @@ class SearchEngine {
      * Load data into our engine
      * @param {mixed} data array or an object to load into our search engine
      */
-    loadDataIntoDb(data, options = {}) {
+    loadDataIntoDb(data, options: EngineOptions) {
         if (typeof data !== 'object') {
             return Promise.reject(Error(`Supplied data is not an Array or Object`));
         }
+
         // Load our data into documents array and assign a unique integer ID.
         if (Array.isArray(data)) {
             data.forEach(item => {
@@ -171,7 +186,7 @@ class SearchEngine {
         });
 
         resultIds.forEach(id => {
-            resultSet.documents.push(this.documentsMap[id]);
+            resultSet.documents.push(this.documentsMap[id.toString()]);
         });
         resultSet.total = resultIds.size;
         resultSet.documents = this.paginateSearchResults(resultSet.documents, params);
@@ -262,4 +277,4 @@ class SearchEngine {
     }
 }
 
-module.exports = SearchEngine;
+//module.exports = SearchEngine;

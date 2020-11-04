@@ -1,9 +1,11 @@
-const assert        = require('assert');
-const SearchEngine  = require('../searchEngine');
-const mockData      = require('../../data/mock_data.json');
-const { strict } = require('assert');
+import assert from 'assert';
+import { SearchEngine, EngineOptions } from '../searchEngine';
+import * as mockData from '../../data/mock_data.json';
 
 const totalMockData = mockData.documents.length;
+const engineOptions = new EngineOptions();
+engineOptions.loadTrie = true;
+engineOptions.extraDotNestedFields = 'biography.publisher';
 
 // utility methods
 function checkArrayProperty(arrayObjects, propertiesToCheck) {
@@ -21,7 +23,7 @@ describe('Search Engine basic functionality tests', () => {
 
     it('Should fail if we do not pass any data', async () => {
       try {
-        await engine.loadDataIntoDb();
+        await engine.loadDataIntoDb(undefined, engineOptions);
         return Promise.reject(`Should have failed as we didn't pass payload`);
       }
       catch (e) {
@@ -30,7 +32,7 @@ describe('Search Engine basic functionality tests', () => {
     });
 
     it('Should load all totalMockData items present in mock data', () => {
-      engine.loadDataIntoDb(mockData.documents);
+      engine.loadDataIntoDb(mockData.documents, engineOptions);
       let documentMapKeyLength = Object.keys(engine.documentsMap).length;
       assert.strictEqual(documentMapKeyLength, mockData.documents.length);
     });
@@ -81,9 +83,9 @@ describe('Search Engine basic functionality tests', () => {
       engine.createFieldIndexOn('id', 'number');
       let isSorted = true;
       // Note, index name will be indexFieldIndex => nameIndex in this case.
-      const indexLength = engine.nameIndex.length;
+      const indexLength = engine['nameIndex'].length;
       for (let i = indexLength - 1; i >= 1; i--) {
-        if (engine.nameIndex[i].id < engine.nameIndex[i - 1].name) {
+        if (engine['nameIndex'][i].id < engine['nameIndex'][i - 1].name) {
           isSorted = false;
           break;
         }
@@ -96,15 +98,15 @@ describe('Search Engine basic functionality tests', () => {
       engine.createFieldIndexOn('name', 'string');
       let isSorted = true;
       // Note, index name will be indexFieldIndex => nameIndex in this case.
-      const indexLength = engine.nameIndex.length;
+      const indexLength = engine['nameIndex'].length;
       for (let i = indexLength - 1; i >= 1; i--) {
-        if (engine.nameIndex[i].name < engine.nameIndex[i - 1].name) {
+        if (engine['nameIndex'][i].name < engine['nameIndex'][i - 1].name) {
           isSorted = false;
           break;
         }
         //console.log(`index[${i}] > index[${i-1}] = ${engine.nameIndex[i].name} > ${engine.nameIndex[i-1].name}`);
       }
-      checkArrayProperty(engine.nameIndex, ['id', 'name']);
+      checkArrayProperty(engine['nameIndex'], ['id', 'name']);
       assert.strictEqual(isSorted, true);
     });
   });
@@ -117,7 +119,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 10,
         sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
-      let result = engine.searchKeywords(['batman'], params);
+      let result = engine.searchKeywords(['batman'], params) as any;
       assert.strictEqual(result.hasOwnProperty('total'), true);
       assert.strictEqual(result.hasOwnProperty('documents'), true);
       assert.strictEqual(Array.isArray(result.documents), true);
@@ -132,7 +134,7 @@ describe('Search Engine basic functionality tests', () => {
         sort: { sortField: 'id', order: 'asc', type: 'number' },
         nGrams: true
       };
-      let result = engine.searchKeywords(['super'], params);
+      let result = engine.searchKeywords(['super'], params) as any;
       assert.strictEqual(result.hasOwnProperty('total'), true);
       assert.strictEqual(result.hasOwnProperty('documents'), true);
       assert.strictEqual(Array.isArray(result.documents), true);
@@ -149,7 +151,7 @@ describe('Search Engine basic functionality tests', () => {
       const expectedNames = [
         'Abe Sapien'
       ];
-      let result = engine.searchKeywords(['Abe','Sapien'], params);
+      let result = engine.searchKeywords(['Abe','Sapien'], params) as any;
       let titlesFound = 0;
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name)) titlesFound++;
@@ -175,7 +177,7 @@ describe('Search Engine basic functionality tests', () => {
         'Agent Zero'
       ];
 
-      let result = engine.searchKeywords(['Agent', '13'], params);
+      let result = engine.searchKeywords(['Agent', '13'], params) as any;
       let titlesFound = 0;
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name)) titlesFound++;
@@ -196,7 +198,7 @@ describe('Search Engine basic functionality tests', () => {
         nGrams: true // must pass this to support nGrams search
       };
 
-      let result = engine.searchKeywords(['abomina'], params);
+      let result = engine.searchKeywords(['abomina'], params) as any;
       assert.strictEqual(result.total, 1);
       result.documents.forEach(doc => {
         assert.strictEqual(doc.name, 'Abomination');
@@ -211,7 +213,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 8,
         sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
-      let result   = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params) as any;
       let isSorted = true;
 
       for (let i = params.pageSize - 1; i >= 1; i--) {
@@ -232,7 +234,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 10,
         sort: { sortField: 'name', order: 'asc', type: 'string' }
       };
-      let result   = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params) as any;
       let isSorted = true;
   
       for (let i = params.pageSize - 1; i >= 1; i--) {
@@ -254,7 +256,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 8,
         sort: { sortField: 'id', order: 'desc', type: 'number' }
       };
-      let result   = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params) as any;
       let isSorted = true;
   
       for (let i = params.pageSize - 1; i >= 1; i--) {
@@ -276,7 +278,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 8,
         sort: { sortField: 'name', order: 'desc', type: 'string' }
       };
-      let result   = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params) as any;
       let isSorted = true;
   
       for (let i = params.pageSize - 1; i >= 1; i--) {
@@ -306,7 +308,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 10,
         sort: { sortField: 'name', order: 'desc', type: 'string' }
       };
-      let result   = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params) as any;
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name))
@@ -324,7 +326,7 @@ describe('Search Engine basic functionality tests', () => {
         sort: { sortField: 'name', order: 'asc', type: 'string' }
       };
       let matchedNames = 0;
-      let result        = engine.searchKeywords([], params);
+      let result       = engine.searchKeywords([], params) as any;
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name))
@@ -344,7 +346,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 10,
         sort: { sortField: 'id', order: 'desc', type: 'number' }
       };
-      let result   = engine.searchKeywords([], params);
+      let result   = engine.searchKeywords([], params) as any;
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name))
@@ -362,7 +364,7 @@ describe('Search Engine basic functionality tests', () => {
         sort: { sortField: 'id', order: 'asc', type: 'number' }
       };
       let matchedNames = 0;
-      let result        = engine.searchKeywords([], params);
+      let result        = engine.searchKeywords([], params) as any;
       assert.strictEqual(result.documents.length, params.pageSize);
       result.documents.forEach(doc => {
         if (expectedNames.includes(doc.name))
@@ -377,7 +379,7 @@ describe('Search Engine basic functionality tests', () => {
         pageSize: 10,
         sort: { sortField: 'id', order: 'desc', type: 'number' }
       };
-      let result        = engine.searchKeywords([], params);
+      let result        = engine.searchKeywords([], params) as any;
       assert.strictEqual(result.documents.length, 1);
     });
   });
