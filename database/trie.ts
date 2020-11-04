@@ -1,6 +1,10 @@
-const mockData = require('../data/mock_data.json');
+import * as mockData from '../data/mock_data.json';
 
-class Trie {
+export class Trie {
+    node: Node;
+    dataArray: any[];
+    extraDotNestedFields: string;
+    trieFieldArray: any[]
     // Pass array of objects
     constructor(arrayOfObjects, options) {
         // initialize root node, root will have character = null
@@ -113,6 +117,11 @@ class Trie {
 }
 
 class Node {
+
+    isWordComplete: boolean;
+    children: any;
+    extraFields: string = null;
+
     constructor() {
         this.isWordComplete = false;
         this.children = {};

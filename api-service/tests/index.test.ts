@@ -1,7 +1,7 @@
-const server      = require("../server");
-const querystring = require('querystring');
-const chai        = require("chai");
-const chaiHttp    = require("chai-http");
+import { server }  from "../app";
+import * as querystring from 'querystring';
+import chai from "chai";
+import chaiHttp from "chai-http";
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -89,6 +89,7 @@ describe('Server', () => {
       .request(server)
       .get(`/refresh`)
       .end((err, res) => {
+        console.log(`refresh result`, res.body);
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('message');
         expect(res.body).to.have.property('benchmark');

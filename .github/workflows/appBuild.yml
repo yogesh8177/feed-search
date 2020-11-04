@@ -33,6 +33,7 @@ jobs:
         npm run build --if-present
         npm run coverage
     - run: |
+        cd ./api-service
         rm ./build.txt
         touch ./build.txt
         echo ${{ github.run_number }} > ./build.txt
@@ -51,7 +52,7 @@ jobs:
         repository: yogesh8177/heroes-web-prod
         tags: ${{ github.run_number }}
         build_args: BUILD_VERSION=${{ github.run_number }}
-        dockerfile: ./Dockerfile.prod
+        dockerfile: ./api-service/Dockerfile.prod
 
   build-voting-service:
     runs-on: ubuntu-latest
