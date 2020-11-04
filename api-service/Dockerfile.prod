@@ -1,9 +1,16 @@
-FROM node:14
+FROM node:14 as Build
 
-WORKDIR /feed-web
-COPY package*.json ./
+COPY ./ /build
+
+WORKDIR /build/api-service
+
 RUN npm install
-COPY . .
+RUN npm run build
+
+FROM node:14
+COPY --from=Build /build/api-service/dist /app
+
+WORKDIR /app/api-service
 
 ENV BUILD_TEXT_FILE ./build.txt
 
@@ -14,4 +21,4 @@ RUN rm ${BUILD_TEXT_FILE} && touch ${BUILD_TEXT_FILE} && echo ${BUILD_VERSION} >
 ENV NODE_ENV production
 
 EXPOSE 8000
-CMD [ "node", "server.js" ]
+CMD [ "node", "app.js" ]

@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "experimentalDecorators": true,
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es6",
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "sourceMap": true,
+      "outDir": "dist"
+    },
+    "files": [
+      "app.ts"
+    ],
+    "include": [
+      "tests",
+      "**/data/*",
+      "**/database/*"
+    ],
+    "exclude": [
+        "ui/*",
+        "voting-service/*"
+    ],
+    "lib": ["es2015"]
+  }

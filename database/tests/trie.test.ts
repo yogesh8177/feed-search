@@ -1,7 +1,6 @@
-const Trie = require('../trie').Trie;
-const mockData      = require('../../data/mock_data.json');
-const { strict } = require('assert');
-const { assert } = require('console');
+import { Trie } from '../trie';
+import * as mockData  from '../../data/mock_data.json';
+import assert from 'assert';
 
 const totalMockData = mockData.documents.length;
 const trieOptions = {
