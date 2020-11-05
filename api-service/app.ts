@@ -4,7 +4,7 @@ const dotenv = dotEnv.config();
 import GlobalOptions from './models/GlobalOptions';
 
 import { SearchEngine, EngineOptions } from './database/searchEngine';
-const mockData = require('./data/mock_data.json');
+import mockData from './data/mock_data.json';
 import * as AWS  from 'aws-sdk';
 import * as fs from 'fs';
 import * as Controllers from './controllers/controllers';

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "postbuild": "cp -r ./node_modules ./dist/node_modules && cp build.txt ./dist && cp *.json ./dist && cp -r ./config ./dist/config",
+    "postbuild": "cp -r ./node_modules ./dist/node_modules && cp build.txt ./dist && cp *.json ./dist && cp -r ./config ./dist/config && cp -r ./data ./dist",
     "start:test": "npm run build && NODE_ENV=test node ./dist/app.js",
     "start:prod": "npm run build && NODE_ENV=production node ./dist/app.js",
     "start:docker": "NODE_ENV=docker node app.js",

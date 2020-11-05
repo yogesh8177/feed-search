@@ -9,12 +9,6 @@
       "sourceMap": true,
       "outDir": "dist"
     },
-    "files": [
-      "app.ts"
-    ],
-    "include": [
-      "tests"
-    ],
     "exclude": [
         "ui/*",
         "voting-service/*"
