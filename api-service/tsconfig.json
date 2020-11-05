@@ -14,8 +14,8 @@
     ],
     "include": [
       "tests",
-      "**/data/*",
-      "**/database/*"
+      "data/*",
+      "config/*"
     ],
     "exclude": [
         "ui/*",
