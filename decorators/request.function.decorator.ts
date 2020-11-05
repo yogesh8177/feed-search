@@ -12,9 +12,6 @@ const requestHandler = (
             try {
 
                 args[1].setHeader('Content-Type', 'application/json');
-                args[1].setHeader('Access-Control-Allow-Origin', '*');
-                args[1].setHeader('Access-Control-Allow-Methods', 'OPTIONS, POST, GET');
-
                 const queryParams = querystring.parse(args[0].url.split('?')[1]);
                 args[0].queryParams = queryParams;
 
@@ -23,7 +20,6 @@ const requestHandler = (
                 result.buildVersion = globalOptions.buildVersion;
                 args[1].writeHead(result.statusCode || 200);
                 args[1].end(JSON.stringify(result));
-                
                 return result;
             }
             catch(error) {
