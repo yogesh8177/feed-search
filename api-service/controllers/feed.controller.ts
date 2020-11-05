@@ -1,11 +1,12 @@
 import { QueryParams } from '../models/QueryParams';
-import { requestHandler, globals } from '../decorators/decorators';
+import { requestHandler, globals, cors } from '../decorators/decorators';
 import GlobalOptions from '../models/GlobalOptions';
 
 @globals
 export class FeedController {
     constructor (private options?: GlobalOptions) {}
 
+    @cors()
     @requestHandler
     getFeed(req, res) {
         const { defaultSortField, defaultSortFieldType, defaultSortOrder} = this.options;
