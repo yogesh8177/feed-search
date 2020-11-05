@@ -1,17 +1,17 @@
 FROM node:14 as Build
 
-COPY ./ /build
+COPY ./api-service /build
 
-WORKDIR /build/api-service
+WORKDIR /build
 
-RUN npm install && pwd && ls -a
+RUN npm install
 RUN npm run build
 
 
 FROM node:14
-COPY --from=Build /build/api-service/dist /app
+COPY --from=Build /build/dist /app
 
-WORKDIR /app/api-service
+WORKDIR /app
 
 EXPOSE 8000
 CMD [ "node", "app.js" ]

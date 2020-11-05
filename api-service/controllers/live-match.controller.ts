@@ -11,7 +11,7 @@ export class LiveMatchController {
     async fetchMatch(req, res) {
         let liveMatch;
         if (['test', 'docker', 'github'].includes(this.options.env)) {
-            liveMatch = JSON.parse(fs.readFileSync('../data/live-match.json').toString('utf-8'));
+            liveMatch = JSON.parse(fs.readFileSync('./data/live-match.json').toString('utf-8'));
             console.log('fetched live-match via fs');
         }
         else {
