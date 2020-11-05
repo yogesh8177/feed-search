@@ -9,6 +9,11 @@
       "sourceMap": true,
       "outDir": "dist"
     },
+    "files": ["searchEngine.ts"],
+    "include": [
+      "**/data/*",
+      "tests"
+    ],
     "exclude": [
         "ui/*",
         "voting-service/*"
