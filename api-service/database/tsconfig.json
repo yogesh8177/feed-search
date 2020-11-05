@@ -11,7 +11,7 @@
     },
     "files": ["searchEngine.ts"],
     "include": [
-      "**/data/*",
+      "data/*",
       "tests"
     ],
     "exclude": [
