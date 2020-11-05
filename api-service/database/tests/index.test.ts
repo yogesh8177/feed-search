@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { SearchEngine, EngineOptions } from '../searchEngine';
-import mockData from '../data/mock_data.json';
+import * as mockData from '../data/mock_data.json';
 
 const totalMockData = mockData.documents.length;
 const engineOptions = new EngineOptions();
