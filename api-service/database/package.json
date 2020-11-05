@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "postbuild": "cp -r ./node_modules ./dist/database/node_modules",
-    "test": "npm run build && mocha --file ./dist/database/tests/*.test.js",
+    "postbuild": "cp -r ./node_modules ./dist/node_modules && cp -r ../data ./dist",
+    "test": "npm run build && mocha --file ./dist/tests/*.test.js",
     "coverage": "nyc npm run test"
   },
   "keywords": [
