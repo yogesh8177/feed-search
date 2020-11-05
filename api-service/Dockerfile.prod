@@ -5,8 +5,7 @@ COPY ./ /build
 WORKDIR /build
 
 RUN npm install
-RUN pwd && ls -a
-RUN npm run build
+RUN ls -a && npm run build
 
 FROM node:14
 COPY --from=Build /build/dist /app
