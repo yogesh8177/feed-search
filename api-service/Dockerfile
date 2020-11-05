@@ -1,15 +1,15 @@
 FROM node:14 as Build
 
-COPY ./api-service /build
+COPY ./ /build
 
-WORKDIR /build
+WORKDIR /build/api-service
 
 RUN npm install
 RUN npm run build
 
 
 FROM node:14
-COPY --from=Build /build/dist /app
+COPY --from=Build /build/api-service/dist /app
 
 WORKDIR /app
 
