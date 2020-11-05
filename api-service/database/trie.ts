@@ -1,5 +1,3 @@
-import * as mockData from '../data/mock_data.json';
-
 export class Trie {
     node: Node;
     dataArray: any[];

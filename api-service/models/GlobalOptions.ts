@@ -1,4 +1,4 @@
-import { SearchEngine } from '../../database/searchEngine';
+import { SearchEngine } from '../database/searchEngine';
 
 export default class GlobalOptions {
     engine: SearchEngine;
