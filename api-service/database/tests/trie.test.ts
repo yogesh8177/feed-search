@@ -2,7 +2,6 @@ import { Trie } from '../trie';
 const mockData = require('../data/mock_data.json');
 import assert from 'assert';
 
-const totalMockData = mockData.documents.length;
 const trieOptions = {
     extraDotNestedFields: 'biography.publisher'
 };
