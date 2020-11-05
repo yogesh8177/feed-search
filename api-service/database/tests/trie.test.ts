@@ -1,5 +1,5 @@
 import { Trie } from '../trie';
-const mockData = require('../data/mock_data.json');
+import mockData from '../data/mock_data.json';
 import assert from 'assert';
 
 const trieOptions = {
