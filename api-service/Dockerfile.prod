@@ -1,6 +1,6 @@
 FROM node:14 as Build
 
-COPY ./api-service /build
+COPY ./ /build
 
 WORKDIR /build
 
