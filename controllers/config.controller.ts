@@ -11,7 +11,7 @@ export class ConfigController {
     async fetchConfig(req, res) {
         let config;
         if (['test', 'docker', 'github'].includes(this.options.env)) {
-            config = JSON.parse(fs.readFileSync('../config/ui/config.json').toString('utf-8'));
+            config = JSON.parse(fs.readFileSync('./config/ui/config.json').toString('utf-8'));
             console.log('fetched config via fs');
         }
         else {

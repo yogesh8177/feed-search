@@ -49,6 +49,19 @@ describe('Server', () => {
       });
   });
 
+  it("Should return 200 for '/live-match' url path", done => {
+    chai
+      .request(server)
+      .get(`/live-match`)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property('title');
+        expect(res.body).to.have.property('status');
+        expect(res.body).to.have.property('buildVersion');
+        done();
+      });
+  });
+
   it ("should return auto complete results for term `super`", done => {
     const expectedResults = [
       {

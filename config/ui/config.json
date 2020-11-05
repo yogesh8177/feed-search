@@ -1,0 +1,54 @@
+{
+    "appTitle": "Superheroes",
+    "sortOptions": [
+        {
+            "label": "ID",
+            "options": [
+                {
+                    "id": 1,
+                    "value": "id:number:asc",
+                    "title": "1-100 (asc)"
+                },
+                {
+                    "id": 2,
+                    "value": "id:number:desc",
+                    "title": "100-1 (desc)"
+                }
+            ]
+        },
+        {
+            "label": "Name",
+            "options": [
+                {
+                    "id": 3,
+                    "value": "name:string:asc",
+                    "title": "A-Z (asc)"
+                },
+                {
+                    "id": 4,
+                    "value": "name:string:desc",
+                    "title": "Z-A (desc)"
+                }
+            ]
+        }
+    ],
+    "queryParams": {
+        "searchTerm": "",
+        "page": 1,
+        "pageSize": 6,
+        "sortField": "dateLastEdited",
+        "order": "desc",
+        "type": "number"
+    },
+    "socialMedia": {
+        "facebook": {
+            "link": "https://www.facebook.com/thesuperheroes.in"
+        },
+        "instagram": {
+            "link": "https://www.instagram.com/thesuperheroes.in/?hl=en"
+        }
+    },
+    "privacyPolicy": {
+        "link": "https://feed-app-privacy.s3.amazonaws.com/privacy-policy.html"
+    }
+}

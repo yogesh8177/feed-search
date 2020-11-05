@@ -8,11 +8,11 @@
   },
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "postbuild": "cp -r ./node_modules ./dist/api-service/node_modules && cp build.txt ./dist/api-service && cp *.json ./dist/api-service && cp -r ../config ./dist/config",
-    "start:test": "npm run build && NODE_ENV=test node ./dist/api-service/app.js",
-    "start:prod": "npm run build && NODE_ENV=production node ./dist/api-service/app.js",
+    "postbuild": "cp -r ./node_modules ./dist/node_modules && cp build.txt ./dist && cp *.json ./dist && cp -r ./config ./dist/config && cp -r ./data ./dist",
+    "start:test": "npm run build && NODE_ENV=test node ./dist/app.js",
+    "start:prod": "npm run build && NODE_ENV=production node ./dist/app.js",
     "start:docker": "NODE_ENV=docker node app.js",
-    "test": "npm run build && mocha ./dist/api-service/tests/*.test.js",
+    "test": "npm run build && mocha ./dist/tests/*.test.js",
     "coverage": "nyc npm run test"
   },
   "repository": {
