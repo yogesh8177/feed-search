@@ -1,4 +1,4 @@
-import { requestHandler, globals, cors } from '../decorators/decorators';
+import { requestHandler, globals, cors, benchmark } from '../decorators/decorators';
 import GlobalOptions from '../models/GlobalOptions';
 
 @globals
@@ -6,6 +6,7 @@ export class SearchController {
 
     constructor(private options?: GlobalOptions) {}
 
+    @benchmark()
     @cors()
     @requestHandler
     autoComplete(req, res) {
