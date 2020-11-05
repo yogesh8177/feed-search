@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
+      "resolveJsonModule": true,
       "experimentalDecorators": true,
       "module": "commonjs",
       "esModuleInterop": true,
       "target": "es6",
       "moduleResolution": "node",
-      "resolveJsonModule": true,
       "sourceMap": true,
       "outDir": "dist"
     },
@@ -13,9 +13,7 @@
       "app.ts"
     ],
     "include": [
-      "tests",
-      "data/*",
-      "config/*"
+      "tests"
     ],
     "exclude": [
         "ui/*",
