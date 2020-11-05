@@ -8,11 +8,7 @@ export class FeedController {
 
     @requestHandler
     getFeed(req, res) {
-
-        const defaultSortField: string = this.options.defaultSortField;
-        const defaultSortFieldType: string = this.options.defaultSortFieldType;
-        const defaultSortOrder: string = this.options.defaultSortOrder;
-
+        const { defaultSortField, defaultSortFieldType, defaultSortOrder} = this.options;
         const queryStringParams = req.queryParams;
         /**
          * Expected queryParam format
@@ -29,8 +25,7 @@ export class FeedController {
         queryParams.sort.sortField = queryStringParams.sortField as string || defaultSortField;
         queryParams.sort.order = queryStringParams.order as string || defaultSortOrder;
         queryParams.sort.type = queryStringParams.type as string || defaultSortFieldType;
-        //let {searchTerm = '', page = 1, pageSize = 10, sortField = defaultSortField, order = defaultSortOrder, type = defaultSortFieldType} = queryParams;
-        //console.log({page, pageSize, sortField, order, type});
+    
         let currentSearchTerm: string = queryStringParams.searchTerm as string || '';
 
         currentSearchTerm = currentSearchTerm.trim();
