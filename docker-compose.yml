@@ -6,7 +6,7 @@ networks:
 services: 
   web: 
     build: 
-      context: ./api-service
+      context: /api-service
       dockerfile: ./Dockerfile
     command: npm run start:docker
     environment: 
