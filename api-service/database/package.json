@@ -9,7 +9,7 @@
   "scripts": {
     "build": "rm -rf ./dist && tsc --build tsconfig.json",
     "postbuild": "cp -r ./node_modules ./dist/node_modules && cp -r ../data ./dist && echo 'copied'",
-    "test": "npm run build && mocha --file ./dist/tests/*.test.js",
+    "test": "npm run build && mocha --file ./dist/database/tests/*.test.js",
     "coverage": "nyc npm run test"
   },
   "keywords": [
