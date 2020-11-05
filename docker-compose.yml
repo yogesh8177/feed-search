@@ -6,8 +6,8 @@ networks:
 services: 
   web: 
     build: 
-      context: .
-      dockerfile: ./api-service/Dockerfile
+      context: ./api-service
+      dockerfile: ./Dockerfile
     command: npm run start:docker
     environment: 
       - NODE_ENV=github
