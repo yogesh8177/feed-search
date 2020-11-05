@@ -1,11 +1,12 @@
 import * as fs from 'fs';
-import { requestHandler, globals, cors } from '../decorators/decorators';
+import { requestHandler, globals, cors, benchmark } from '../decorators/decorators';
 import GlobalOptions from '../models/GlobalOptions';
 
 @globals
 export class ConfigController {
     constructor(private options?: GlobalOptions) {}
 
+    @benchmark()
     @cors()
     @requestHandler
     async fetchConfig(req, res) {
