@@ -1,11 +1,12 @@
 import { QueryParams } from '../models/QueryParams';
-import { requestHandler, globals, cors } from '../decorators/decorators';
+import { requestHandler, globals, cors, benchmark } from '../decorators/decorators';
 import GlobalOptions from '../models/GlobalOptions';
 
 @globals
 export class FeedController {
     constructor (private options?: GlobalOptions) {}
 
+    @benchmark()
     @cors()
     @requestHandler
     getFeed(req, res) {

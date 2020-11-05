@@ -1,5 +1,5 @@
 import { globalOptions } from '../app';
-import { requestHandler, globals, cors } from '../decorators/decorators';
+import { requestHandler, globals, cors, benchmark } from '../decorators/decorators';
 import GlobalOptions from '../models/GlobalOptions';
 
 @globals
@@ -7,12 +7,14 @@ export class HomeController {
 
     constructor(private options?: GlobalOptions) {}
 
+    @benchmark()
     @cors()
     @requestHandler
     root(req, res) {
         return {status: 'live'};
     }
 
+    @benchmark()
     @cors()
     @requestHandler
     test(req, res) {
@@ -20,6 +22,7 @@ export class HomeController {
         return {message: 'healthy', memoryUsage};
     }
 
+    @benchmark()
     @cors()
     @requestHandler
     async refresh(req, res) {
