@@ -182,7 +182,6 @@ export class SearchEngine {
         // given word!
         if (searchMode === 'invertedIndex') {
             let trieResult = this.suggestWords(keyWords[0], true);
-            console.log({trieResult});
         }
 
         keyWords.forEach(key => {
