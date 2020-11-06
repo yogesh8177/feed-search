@@ -19,6 +19,7 @@
             value="{{item.word}}" 
             (click) = "onSuggestionSelect(item.word)">
             {{item.word}} <span class="small-text">({{item.extraFields || 'NA'}})</span>
+            <span class="hits">[{{item.hits}} hits]</span>
         </li>
     </ul>
 </div>
