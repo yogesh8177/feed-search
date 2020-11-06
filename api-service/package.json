@@ -13,6 +13,7 @@
     "start:prod": "npm run build && NODE_ENV=production node ./dist/app.js",
     "start:docker": "NODE_ENV=docker node app.js",
     "test": "npm run build && mocha ./dist/tests/*.test.js",
+    "start": "node ./dist/app.js",
     "coverage": "nyc npm run test"
   },
   "repository": {
