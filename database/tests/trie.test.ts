@@ -19,17 +19,39 @@ describe("Trie tests", () => {
         const expectedResults = [
             {
                 word: "granny goodness",
-                extraFields: "DC Comics"
+                extraFields: "DC Comics",
+                hits: 0
             }
         ];
 
         let trie = new Trie(mockData.documents, trieOptions);
         trie.setFieldToGenerateTrie(['name'])
             .buildTrieForFields();
-        done();
 
         let results = trie.suggestWords(searchTerm);
-        assert.strictEqual(results, expectedResults);
+        assert.deepStrictEqual(results, expectedResults);
         done();
     });
+
+    it("should search only by prefix 'gamora' twice, and increment hit to 2", done => {
+        const searchTerm = 'gamora';
+        const expectedResults = [
+            {
+                word: "gamora",
+                extraFields: "Marvel Comics",
+                hits: 2,
+            }
+        ];
+
+        let trie = new Trie(mockData.documents, trieOptions);
+        trie.setFieldToGenerateTrie(['name'])
+            .buildTrieForFields();
+
+        trie.suggestWords(searchTerm, true);
+        let results = trie.suggestWords(searchTerm, true);
+        
+        assert.deepStrictEqual(results, expectedResults);
+        done();
+
+    })
 })

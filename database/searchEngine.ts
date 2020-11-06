@@ -176,6 +176,14 @@ export class SearchEngine {
 
         let searchMode = params.nGrams ? 'nGramsIndex' : 'invertedIndex';
 
+        // if it is inverted index mode, we need exact match!
+        // thus, there is high probability that this will be a prefix
+        // that will match for our trie! Thus we will increment hit for the 
+        // given word!
+        if (searchMode === 'invertedIndex') {
+            let trieResult = this.suggestWords(keyWords[0], true);
+        }
+
         keyWords.forEach(key => {
             let searchTerm = key.toLowerCase();
             if (this[searchMode].hasOwnProperty(searchTerm)) {
@@ -194,8 +202,8 @@ export class SearchEngine {
         return resultSet;
     }
 
-    suggestWords(prefix) {
-        return this.trie.suggestWords(prefix);
+    suggestWords(prefix, searchOnlyPrefix = false) {
+        return this.trie.suggestWords(prefix, searchOnlyPrefix);
     }
 
     paginateOnIndex(params) {
