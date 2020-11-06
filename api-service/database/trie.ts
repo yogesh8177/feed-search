@@ -60,17 +60,25 @@ export class Trie {
         }
     }
 
-    suggestWords(subString) {
-        if (!subString) return [];
-        let results = this.searchByPrefix(subString, this.node, 0) || [];
+    suggestWords(prefix, searchOnlyPrefix = false) {
+        if (!prefix) return [];
+        let results = this.searchByPrefix(searchOnlyPrefix, prefix, this.node, 0) || [];
+        results.sort((a, b) => b.hits - a.hits);
         return results;
     }
 
-    searchByPrefix(prefix, node, currentCharIndex, searchResult = '') {
+    searchByPrefix(searchOnlyPrefix, prefix, node, currentCharIndex, searchResult = '') : Suggestion[] {
         let self = this;
-        let suggestions = [];
+        let suggestions: Suggestion[] = [];
         if (currentCharIndex >= prefix.length) {
             // prefix exists, now let us suggest words based on this prefix!
+            if (node.isWordComplete) {
+                // if prefix itself is a word, we increment hit count!
+                node.hits++;
+                suggestions.push({ word: prefix, extraFields: node.extraFields, hits: node.hits });
+            }
+            if (searchOnlyPrefix) return suggestions;
+            
             Object.keys(node.children).forEach(char => {
                 //console.log('expanding for', char, searchResult);
                 let nextNode = node.children[char];
@@ -86,19 +94,19 @@ export class Trie {
             searchResult += currentChar;
             let nextNode = node.children[currentChar];
             //console.log(`found upto: ${searchResult}`);
-            return this.searchByPrefix(prefix, nextNode, ++currentCharIndex, searchResult);
+            return this.searchByPrefix(searchOnlyPrefix, prefix, nextNode, ++currentCharIndex, searchResult);
         }
         else {
             console.log(`Could not find words for prefix: ${prefix}`);
-            return null;
+            return suggestions;
         }
     }
 
-    findRemainingWords(node, prefix, parentChar, resultList = []) {
+    findRemainingWords(node, prefix, parentChar, resultList: Suggestion[] = []) : Suggestion[] {
         let self = this;
         //console.log('=>', `@${prefix}${parentChar}`);
         if (node.isWordComplete) {
-            resultList.push({ word: `${prefix}${parentChar}`, extraFields: node.extraFields});
+            resultList.push({ word: `${prefix}${parentChar}`, extraFields: node.extraFields, hits: node.hits});
         }
 
         if (Object.keys(node.children).length === 0) {
@@ -119,13 +127,21 @@ class Node {
     isWordComplete: boolean;
     children: any;
     extraFields: string = null;
+    hits: number;
 
     constructor() {
         this.isWordComplete = false;
         this.children = {};
         this.extraFields = null;
+        this.hits = 0;
     }
 }
+
+class Suggestion {
+    word: string;
+    extraFields: any;
+    hits: number
+};
 
 module.exports = {
     Trie
