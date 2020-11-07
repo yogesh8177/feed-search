@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange, ViewChild, ElementRef } from '@angular/core';
 import { Feed, CardLabel } from '../models/Feed';
 import { GoogleAnalyticsService } from '../Services/analytics/google-analytics.service';
 
@@ -10,6 +10,7 @@ import { GoogleAnalyticsService } from '../Services/analytics/google-analytics.s
 export class ComparatorComponent implements OnInit, OnChanges {
 
   @Input() feed: Feed[];
+  @ViewChild('compareSection') compareSection: ElementRef;
   comparedFeedItems: Feed[] = [];
   winnerFeedItems: Feed[] = [];
   maxCurrentScore: number = 0;
@@ -54,8 +55,8 @@ export class ComparatorComponent implements OnInit, OnChanges {
       }
    */
   triggerCompare() {
-    if (!this.feed.length) {
-      alert('Please select card(s) to compare!');
+    if (!this.feed.length || this.feed.length === 1) {
+      alert('Please select atleast 2 card(s) to compare! You may search for other cards while selecion mode is on!');
       return;
     }
     let comparedFeed = this.compareFeedItems(this.feed, this.selectedStatToCompare);
@@ -69,6 +70,7 @@ export class ComparatorComponent implements OnInit, OnChanges {
       rankStartIndex++;
     });
     this.comparedFeedItems = comparedFeed;
+    this.scrollTo(this.compareSection);
     this.googleAnalytics.emitAnalyticsEvent('cards-compare', {compareCardIds: comparedFeed.map(c => c.name).join(','), powerStat: this.selectedStatToCompare});
   }
 
@@ -122,8 +124,10 @@ export class ComparatorComponent implements OnInit, OnChanges {
     return _comparedFeedItems;
   }
 
-  scrollTo(element: HTMLElement) {
-    element.scrollIntoView();
+  scrollTo(element: ElementRef) {
+    setTimeout(() => {
+      element.nativeElement.scrollIntoView({behavior: "smooth", block: "start", inline: "start"});
+    }, 500);
   }
 
 }
