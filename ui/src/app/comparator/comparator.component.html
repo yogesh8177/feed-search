@@ -1,5 +1,5 @@
-<button class="compare-float-button" *ngIf="feed.length" (click) = "triggerCompare(); scrollTo(compareSection);">Compare ({{feed.length}})</button>
-<div class="comparision-content center-text" #compareSection>
+<button class="compare-float-button" *ngIf="feed.length" (click) = "triggerCompare();">Compare ({{feed.length}})</button>
+<div class="comparision-content center-text">
     <h2>Compare characters ({{feed.length}})</h2>
     <div>
         <p>Select your characters from the list above, or compare all of them by default!</p>
@@ -15,7 +15,7 @@
         <hr/>
     </div>
     <div class="card-container">
-        <div class="card" >
+        <div class="card" #compareSection>
             <button id="compare-button" *ngIf="!comparedFeedItems.length" (click) = "triggerCompare()">Compare</button>
             <button id="clear-compare-button" *ngIf="comparedFeedItems.length" (click) = "resetCompareComponent()">Clear comparison</button>
         </div>
