@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FeedService } from './Services/feed.service';
 import { ConfigService } from './Services/config/config.service';
 import { Feed, FeedResponse } from './models/Feed';
@@ -22,6 +22,7 @@ export class AppComponent {
   feedQueryParams: FeedQueryParams = new FeedQueryParams();
   isSelectionMode: boolean = false;
   errors: string[] = [];
+  @ViewChild('cardSection') cardSection: ElementRef;
 
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
@@ -34,9 +35,9 @@ export class AppComponent {
 
   @HostListener('window:beforeunload', ['$event'])
   WindowBeforeUnoad($event: any) {
-    console.log('saving filters before reload');
+    //console.log('saving filters before reload');
     sessionStorage.setItem('queryParams', JSON.stringify(this.feedQueryParams));
-    console.log('state saved');
+    //console.log('state saved');
   }
 
   constructor(
@@ -98,6 +99,7 @@ export class AppComponent {
       feedResponse => {
         this.totalResults = feedResponse.total;
         this.feed = feedResponse.documents;
+        this.scrollTo(this.cardSection);
         //console.log(`feed loaded`, this.feed);
         (this.feed.length === 0 && params.searchTerm) && this.errors.push(`No search results, please use double quotes for exact match. Eg: ["iron man"] instead of [iron man].`);
       },
@@ -187,5 +189,9 @@ export class AppComponent {
   visitSocialMedia(socialMedia: string) {
     window.open(this.config.socialMedia[socialMedia].link);
     this.googleAnalytics.emitAnalyticsEvent('social-icons-click', {socialMedia});
+  }
+
+  scrollTo(element: ElementRef) {
+    element.nativeElement.scrollIntoView({behavior: "smooth", block: "start", inline: "start"});
   }
 }

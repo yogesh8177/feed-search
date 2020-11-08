@@ -13,7 +13,7 @@
   <p class="center-text">
     <span class="info-tip">Find the comparison tool at the bottom of the page. </span>
   </p>
-  <div class="card-container">
+  <div class="card-container" #cardSection>
     <app-search class="card" (searchTerm) = "onSearchFieldChange($event)" [searchText]="feedQueryParams.searchTerm"></app-search>
     <div class="card only-desktop hidden"></div>
     <div class="card"><button class="card-button" id="select-cards" (click)="toggleShowSelectCards()">{{isSelectionMode ? 'Remove Selection' : 'Select Card(s)'}}</button></div>
