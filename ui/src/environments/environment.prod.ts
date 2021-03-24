@@ -1,9 +1,9 @@
 export const environment = {
-  feedApiUrl: 'https://api.thesuperheroes.in/feed',
-  autoCompleteUrl: 'https://api.thesuperheroes.in/auto-complete',
-  feedConfigApiUrl: 'https://api.thesuperheroes.in/config',
-  liveMatchUrl: 'https://api.thesuperheroes.in/live-match',
-  fetchVotesUrl: 'https://voting.thesuperheroes.in/fetch-votes',
-  castVoteUrl: 'https://voting.thesuperheroes.in/cast-vote',
+  feedApiUrl: 'https://d2kl7ka14uumjs.cloudfront.net/feed',
+  autoCompleteUrl: 'https://d2kl7ka14uumjs.cloudfront.net/auto-complete',
+  feedConfigApiUrl: 'https://d2kl7ka14uumjs.cloudfront.net/config',
+  liveMatchUrl: 'https://d2kl7ka14uumjs.cloudfront.net/live-match',
+  fetchVotesUrl: 'https://d2kl7ka14uumjs.cloudfront.net/fetch-votes',
+  castVoteUrl: 'https://d2kl7ka14uumjs.cloudfront.net/cast-vote',
   production: true
 };
