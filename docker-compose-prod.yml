@@ -1,7 +1,14 @@
 version: "3.7"
 services: 
+  nginx:
+    image: nginx:latest
+    volumes: 
+      - ./nginx/nginx.conf:/etc/nginx/conf.d
+    depends_on: 
+      - web
+      - voting-service
   web:
-    image: yogesh8177/heroes-web-prod:419
+    image: yogesh8177/heroes-web-prod:640
     env_file: .env-web
     ports:
       - 8000:8000
