@@ -125,6 +125,11 @@ const requestListener = async (req, res) => {
             refreshController.refresh(req, res);
         break;
 
+        case '/blog':
+            let blogController = new Controllers.BlogController();
+            blogController.fetchBlog(req, res);
+        break;
+
         case '/test':
             let homeTestController = new Controllers.HomeController();
             homeTestController.test(req, res);
