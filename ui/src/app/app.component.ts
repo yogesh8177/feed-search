@@ -23,6 +23,7 @@ export class AppComponent {
   isSelectionMode: boolean = false;
   errors: string[] = [];
   @ViewChild('cardSection') cardSection: ElementRef;
+  @ViewChild('topSection') topSection: ElementRef;
 
   tableHeaders: object[] = [
     {title: 'id', type: TableData.STRING},
@@ -99,7 +100,7 @@ export class AppComponent {
       feedResponse => {
         this.totalResults = feedResponse.total;
         this.feed = feedResponse.documents;
-        this.scrollTo(this.cardSection);
+        this.scrollTo(this.topSection);
         //console.log(`feed loaded`, this.feed);
         (this.feed.length === 0 && params.searchTerm) && this.errors.push(`No search results, please use double quotes for exact match. Eg: ["iron man"] instead of [iron man].`);
       },
