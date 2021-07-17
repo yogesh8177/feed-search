@@ -1,5 +1,5 @@
 <!-- Toolbar -->
-<div class="toolbar" role="banner">
+<div class="toolbar" role="banner" #topSection>
   <h1 class="app-title">{{title}}</h1>
   <h3></h3>
   <h3 *ngIf="!isSelectionMode" class="page-status">Page: {{feedQueryParams.page}} Total: {{totalResults}}</h3>
@@ -8,7 +8,7 @@
 
 <app-loader></app-loader>
 
-<div class="content" role="main" #topSection>
+<div class="content" role="main">
   <app-live-match *ngIf="!isSelectionMode"></app-live-match>
   <p class="center-text">
     <span class="info-tip">Find the comparison tool at the bottom of the page. </span>
