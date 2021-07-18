@@ -3,6 +3,7 @@ import { Feed, CardLabel } from '../models/Feed';
 import { Vote, VoteResponse } from '../models/Votes';
 import { GoogleAnalyticsService } from '../Services/analytics/google-analytics.service';
 import { LiveMatchService } from '../Services/live-match/live-match.service';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-live-match',
@@ -24,8 +25,16 @@ export class LiveMatchComponent implements OnInit {
 
   constructor(
     private googleAnalytics: GoogleAnalyticsService,
-    private liveMatchService: LiveMatchService
-    ) { }
+    private liveMatchService: LiveMatchService,
+    private activatedRoute: ActivatedRoute
+    ) { 
+      this.activatedRoute.queryParams.subscribe(params => {
+        const fbclid = params['fbclid'];
+        if (fbclid) {
+          this.showLiveMatchUI();
+        }
+      });
+     }
 
   ngOnInit(): void {
   }
