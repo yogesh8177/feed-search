@@ -1,5 +1,6 @@
 export const environment = {
     feedApiUrl: 'http://web:8000/feed',
+    blogApiUrl: 'http://web:8000/blog',
     autoCompleteUrl: 'http://web:8000/auto-complete',
     feedConfigApiUrl: 'http://web:8000/config',
     liveMatchUrl: 'http://web:8000/live-match',

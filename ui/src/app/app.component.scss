@@ -357,6 +357,20 @@
     background-color: orangered;
   }
 
+  .blog-title {
+    text-align: center;
+  }
+
+  .blog-content {
+    color: white !important;
+  }
+  
+  .blog-image, .ads, .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
 
   /* Responsive Styles */
   @media screen and (max-width: 768px) {
