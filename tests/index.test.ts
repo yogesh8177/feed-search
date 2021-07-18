@@ -170,4 +170,23 @@ describe('Server', () => {
         done();
       });
   });
+
+  it('Should return 200 for /blog url', done => {
+    const responseProperties = [
+      'title',
+      'titleImage',
+      'content',
+      'buildVersion'
+    ];
+    chai
+      .request(server)
+      .get('/blog?slug=dummy')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        responseProperties.forEach(key => {
+          expect(res.body).to.have.property(key);
+        });
+        done();
+      });
+  })
 });
