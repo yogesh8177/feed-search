@@ -5,9 +5,7 @@
     <h3 *ngIf="!isSelectionMode" class="page-status">Page: {{feedQueryParams.page}} Total: {{totalResults}}</h3>
     <h3 *ngIf="isSelectionMode" class="page-status">Selected ({{selectedFeedCards.length}})</h3>
 </div>
-  
-  <app-loader></app-loader>
-  
+
   <app-live-match *ngIf="!isSelectionMode"></app-live-match>
 
 <div class="content" role="main">
