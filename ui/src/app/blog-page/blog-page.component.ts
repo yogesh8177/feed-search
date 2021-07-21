@@ -45,6 +45,10 @@ export class BlogPageComponent implements OnInit {
       this.metaService.addTags( 
         [
           { 
+            name: 'title',
+            content: blog.title
+          },
+          { 
             name: 'description',
             content: blog.excerpt
           },
