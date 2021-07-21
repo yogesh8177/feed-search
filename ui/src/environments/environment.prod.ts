@@ -6,5 +6,6 @@ export const environment = {
   liveMatchUrl: 'https://heroes-search.herokuapp.com/live-match',
   fetchVotesUrl: 'https://heroes-voting-service.herokuapp.com/fetch-votes',
   castVoteUrl: 'https://heroes-voting-service.herokuapp.com/cast-vote',
+  facebookBaseUrl: 'https://heroes-search.ytechspark.com/blog',
   production: true
 };
