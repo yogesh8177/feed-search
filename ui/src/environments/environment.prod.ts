@@ -1,10 +1,10 @@
 export const environment = {
-  feedApiUrl: 'https://d2kl7ka14uumjs.cloudfront.net/feed',
-  blogApiUrl: 'https://d2kl7ka14uumjs.cloudfront.net/blog',
-  autoCompleteUrl: 'https://d2kl7ka14uumjs.cloudfront.net/auto-complete',
-  feedConfigApiUrl: 'https://d2kl7ka14uumjs.cloudfront.net/config',
-  liveMatchUrl: 'https://d2kl7ka14uumjs.cloudfront.net/live-match',
-  fetchVotesUrl: 'https://d2kl7ka14uumjs.cloudfront.net/fetch-votes',
-  castVoteUrl: 'https://d2kl7ka14uumjs.cloudfront.net/cast-vote',
+  feedApiUrl: 'https://heroes-search.herokuapp.com/feed',
+  blogApiUrl: 'https://heroes-search.herokuapp.com/blog',
+  autoCompleteUrl: 'https://heroes-search.herokuapp.com/auto-complete',
+  feedConfigApiUrl: 'https://heroes-search.herokuapp.com/config',
+  liveMatchUrl: 'https://heroes-search.herokuapp.com/live-match',
+  fetchVotesUrl: 'https://heroes-search.herokuapp.com/fetch-votes',
+  castVoteUrl: 'https://heroes-search.herokuapp.com/cast-vote',
   production: true
 };
