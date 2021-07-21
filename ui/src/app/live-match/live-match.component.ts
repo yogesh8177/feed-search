@@ -29,8 +29,8 @@ export class LiveMatchComponent implements OnInit {
     private activatedRoute: ActivatedRoute
     ) { 
       this.activatedRoute.queryParams.subscribe(params => {
-        const fbclid = params['fbclid'];
-        if (fbclid) {
+        const openMatchWindow = params['openMatchWindow'];
+        if (openMatchWindow) {
           this.showLiveMatchUI();
         }
       });
