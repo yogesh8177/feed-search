@@ -3,10 +3,10 @@
     <h1 class="app-title">{{blog?.title}}</h1>
     <h3></h3>
 </div>
-
+<app-live-match></app-live-match>
 <div class="content" role="main">
     <div class="blog-content">
-        <h3 class="blog-title">{{blog?.title}}</h3>
+        <h1 class="blog-title">{{blog?.title}}</h1>
         <img class="blog-image" src="{{blog?.titleImage}}" />
         <div class="blog-content" [innerHTML] = "safeHTML"></div>
     </div>
