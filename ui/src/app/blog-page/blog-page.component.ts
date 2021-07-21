@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BlogService } from '../Services/blog.service';
 import { Blog } from '../models/Blog';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, Meta, MetaDefinition } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -22,7 +22,8 @@ export class BlogPageComponent implements OnInit {
     constructor(
       private blogService: BlogService,
       private route: ActivatedRoute,
-      private sanitizer: DomSanitizer
+      private sanitizer: DomSanitizer,
+      private metaService: Meta
     ){}
 
     ngOnInit(): void {
@@ -32,10 +33,26 @@ export class BlogPageComponent implements OnInit {
           this.blog = blogResponse;
           this.safeHTML = this.sanitizer.bypassSecurityTrustHtml(this.blog.content);
           this.facebookCommentsUrl = `${environment.facebookBaseUrl}?slug=${this.blog.slug}`;
+          this.addMetaTags(this.blog);
         });
         // this.blog = this.blogService.getBlog(this.slug) as Blog;
         // console.log({content: this.blog.content});
         // this.safeHTML = this.sanitizer.bypassSecurityTrustHtml(this.blog.content);
       });
+    }
+
+    addMetaTags(blog: Blog) {
+      this.metaService.addTags( 
+        [
+          { 
+            name: 'description',
+            content: blog.excerpt
+          },
+          {
+            name: 'keywords',
+            content: blog.keywords
+          }
+        ]
+      );
     }
 }
