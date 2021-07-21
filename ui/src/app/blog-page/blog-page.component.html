@@ -8,6 +8,6 @@
     <div class="blog-content">
         <h3 class="blog-title">{{blog?.title}}</h3>
         <img class="blog-image" src="{{blog?.titleImage}}" />
-        <div [innerHTML] = "safeHTML"></div>
+        <div class="blog-content" [innerHTML] = "safeHTML"></div>
     </div>
 </div>

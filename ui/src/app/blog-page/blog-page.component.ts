@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BlogService } from '../Services/blog.service';
 import { Blog } from '../models/Blog';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -7,7 +7,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 @Component({
     selector: 'blog-page',
     templateUrl: './blog-page.component.html',
-    styleUrls: ['../app.component.scss']
+    styleUrls: ['../app.component.scss'],
+    encapsulation: ViewEncapsulation.None
   })
 export class BlogPageComponent implements OnInit {
     blog: Blog;
