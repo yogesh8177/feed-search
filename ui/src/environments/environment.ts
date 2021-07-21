@@ -10,6 +10,7 @@ export const environment = {
   liveMatchUrl: 'http://localhost:8000/live-match',
   fetchVotesUrl: 'http://localhost:3000/fetch-votes',
   castVoteUrl: 'http://localhost:3000/cast-vote',
+  facebookBaseUrl: 'http://localhost:3000/blog',
   production: false
 };
 

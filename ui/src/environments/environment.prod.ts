@@ -6,5 +6,6 @@ export const environment = {
   liveMatchUrl: 'https://d2kl7ka14uumjs.cloudfront.net/live-match',
   fetchVotesUrl: 'https://d2kl7ka14uumjs.cloudfront.net/fetch-votes',
   castVoteUrl: 'https://d2kl7ka14uumjs.cloudfront.net/cast-vote',
+  facebookBaseUrl: 'https://thesuperheroes.in/blog',
   production: true
 };
