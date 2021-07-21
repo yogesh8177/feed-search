@@ -8,9 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
     selector: 'blog-page',
     templateUrl: './blog-page.component.html',
     styleUrls: [
-      '../app.component.scss', 
-      '../feed-card/feed-card.component.scss',
-      '../live-match/live-match.component.scss'
+      './blog-page.component.scss',
     ],
     encapsulation: ViewEncapsulation.None
   })

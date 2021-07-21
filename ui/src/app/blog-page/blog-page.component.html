@@ -1,12 +1,12 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner" #topSection>
-    <h1 class="app-title">{{blog?.title}}</h1>
+    <h1 class="blog-title">{{blog?.title}}</h1>
     <h3></h3>
 </div>
-<app-live-match></app-live-match>
+
 <div class="content" role="main">
     <div class="blog-content">
-        <img class="blog-image" src="{{blog?.titleImage}}" />
+        <img class="title-image" src="{{blog?.titleImage}}" />
         <div class="blog-content" [innerHTML] = "safeHTML"></div>
     </div>
 </div>
