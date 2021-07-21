@@ -3,6 +3,7 @@ import { SocialMedia } from './SocialMedia';
 export class Blog {
     title: string;
     titleImage: string;
+    slug: string;
     excerpt: string;
     content: string;
     author: Author;
