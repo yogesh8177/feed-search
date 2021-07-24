@@ -1,4 +1,4 @@
-import { BrowserModule, Meta } from '@angular/platform-browser';
+import { BrowserModule, Meta, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MyHttpInterceptor } from './Interceptor/httpInterceptor';
@@ -35,7 +35,11 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule,
     AppRoutingModule,
   ],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: MyHttpInterceptor, multi: true }, Meta],
+  providers: [ 
+    { provide: HTTP_INTERCEPTORS, useClass: MyHttpInterceptor, multi: true },
+     Meta,
+     Title,
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
