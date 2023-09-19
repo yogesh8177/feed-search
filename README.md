@@ -105,7 +105,7 @@ You can now view the app at: `http://localhost:4200`
 
 ## Local run (headless)
 
-Assuming you have ran all the steps mentioned in Angular ui section, follow the given steps.
+Assuming you have run all the steps mentioned in Angular ui section, follow the given steps.
 
 1. `npm start` # start web server
 1. `cd ui`
@@ -116,7 +116,7 @@ Assuming you have ran all the steps mentioned in Angular ui section, follow the 
 
 ## Local run (Chrome direct)
 
-Assuming you have ran all the steps mentioned in Angular ui section, follow the given steps.
+Assuming you have run all the steps mentioned in Angular ui section, follow the given steps.
 
 1. `npm start` # start web server
 1. `cd ui`
